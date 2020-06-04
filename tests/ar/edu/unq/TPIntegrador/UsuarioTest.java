@@ -1,4 +1,4 @@
-package ar.edu.unq.TPIntegrador.tests;
+package ar.edu.unq.TPIntegrador;
 
 import static org.junit.jupiter.api.Assertions.*;
 

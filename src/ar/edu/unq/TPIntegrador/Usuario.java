@@ -25,8 +25,7 @@ public class Usuario {
 	}
 	
 	public void opinarSobreMuestra(Muestra muestra, Opinion opinion) {
-		muestra.agregarOpinion(opinion, this);
-		opinionesEnviadas.add(opinion);
+		this.estadoDeUsuario.opinarSobreMuestra(muestra, opinion, this);
 	}
 
 	public Integer getEnvios() {
@@ -43,6 +42,10 @@ public class Usuario {
 	
 	public EstadoDeUsuario getEstadoDeUsuario() {
 		return this.estadoDeUsuario;
+	}
+	
+	public void agregarOpinionEnviada(Opinion opinion) {
+		this.opinionesEnviadas.add(opinion);
 	}
 
 }
