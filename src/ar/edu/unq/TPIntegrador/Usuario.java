@@ -48,4 +48,8 @@ public class Usuario {
 		this.opinionesEnviadas.add(opinion);
 	}
 
+	public List<Opinion> getOpinionesEnviadas() {
+		return this.opinionesEnviadas;
+	}
+
 }

@@ -4,8 +4,10 @@ public class EstadoDeUsuarioBasico extends EstadoDeUsuario{
 
 	@Override
 	public void opinarSobreMuestra(Muestra muestra, Opinion opinion, Usuario usuario) {
-		// TODO Auto-generated method stub
-		
+		if(muestra.usuarioAptoParaVotar(usuario)) {
+			muestra.agregarOpinion(opinion, usuario);
+			usuario.agregarOpinionEnviada(opinion);
+		}
 	}
 
 }

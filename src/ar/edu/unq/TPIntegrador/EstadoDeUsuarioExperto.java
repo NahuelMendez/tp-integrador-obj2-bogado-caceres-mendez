@@ -8,7 +8,6 @@ public class EstadoDeUsuarioExperto extends EstadoDeUsuario{
 			muestra.agregarOpinion(opinion, usuario);
 			usuario.agregarOpinionEnviada(opinion);
 		}
-		
 	}
 
 }

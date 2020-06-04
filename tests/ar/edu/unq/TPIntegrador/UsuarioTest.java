@@ -20,7 +20,7 @@ class UsuarioTest {
 	
 	@BeforeEach
 	public void setUp() {
-		usuario = new Usuario("30120240");
+		usuario = new UsuarioNovato("30120240");
 		muestra = mock(Muestra.class);
 		opinion = mock(Opinion.class);
 	}
@@ -39,6 +39,7 @@ class UsuarioTest {
 	
 	@Test
 	void test_UnUsuarioEmiteUnaOpinionYTiene1CantidadDeOpiniones() {
+		when(muestra.usuarioAptoParaVotar(usuario)).thenReturn(true);
 		usuario.opinarSobreMuestra(muestra, opinion);
 		Integer result = usuario.getRevisiones();
 		assertEquals(1, result);
