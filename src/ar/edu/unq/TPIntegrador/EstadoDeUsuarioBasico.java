@@ -10,4 +10,22 @@ public class EstadoDeUsuarioBasico extends EstadoDeUsuario{
 		}
 	}
 
+	@Override
+	public Boolean esUsuarioBasico() {
+		return true;
+	}
+
+	@Override
+	public Boolean esUsuarioExperto() {
+		return false;
+	}
+
+	@Override
+	protected void actualizarCateogiriaDeUsuarioNovato(UsuarioNovato usuarioNovato) {
+		if (usuarioNovato.cumpleConRevisionesNecesarias()
+				&& usuarioNovato.cumpleConEnviosNecesarios()) {
+			usuarioNovato.setEstadoDeUsuario(new EstadoDeUsuarioExperto());
+		}
+	}
+
 }

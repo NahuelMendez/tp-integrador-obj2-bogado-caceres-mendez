@@ -8,12 +8,14 @@ public class Usuario {
 	private String identificacion;
 	private List<Muestra> muestras;
 	private List<Opinion> opinionesEnviadas;
+	private AplicacionWeb aplicacionWeb;
 	private EstadoDeUsuario estadoDeUsuario;
 	
-	public Usuario (String identificacion) {
+	public Usuario (String identificacion, AplicacionWeb aplicacionWeb) {
 		this.identificacion = identificacion;
 		this.muestras = new ArrayList<Muestra>();
 		this.opinionesEnviadas = new ArrayList<Opinion>();
+		this.aplicacionWeb = aplicacionWeb;
 	}
 
 	public String getIdentificacion() {
@@ -34,6 +36,7 @@ public class Usuario {
 
 	public void enviarMuestra(Muestra muestra) {
 		this.muestras.add(muestra);
+		this.aplicacionWeb.registrarMuestra(muestra);
 	}
 	
 	protected void setEstadoDeUsuario(EstadoDeUsuario estadoDeUsuario) {
@@ -50,6 +53,10 @@ public class Usuario {
 
 	public List<Opinion> getOpinionesEnviadas() {
 		return this.opinionesEnviadas;
+	}
+
+	public List<Muestra> getMuestrasEnviadas() {
+		return this.muestras;
 	}
 
 }

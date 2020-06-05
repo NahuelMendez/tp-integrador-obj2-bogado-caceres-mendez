@@ -5,44 +5,59 @@ import java.util.ArrayList;
 
 public class UsuarioNovato extends Usuario {
 	
-	public UsuarioNovato(String identificacion) {
-		super(identificacion);
+	public UsuarioNovato(String identificacion, AplicacionWeb aplicacionWeb) {
+		super(identificacion, aplicacionWeb);
 		super.setEstadoDeUsuario(new EstadoDeUsuarioBasico());
 	}
 	
-	private ArrayList<Opinion> opinionesDelUltimoMes(LocalDate fechaActual){
+	public void actualizarCategoria() {
+		this.getEstadoDeUsuario().actualizarCateogiriaDeUsuarioNovato(this);
+	}
+	
+	public Boolean cumpleConRevisionesNecesarias() {
+		return this.cantidadDeOpinionesEnLosUltimos30Dias() >= 20;
+	}
+	
+	public Integer cantidadDeOpinionesEnLosUltimos30Dias() {
+		return this.opinionesDelUltimoMes().size();
+	}
+	
+	private ArrayList<Opinion> opinionesDelUltimoMes(){
 		ArrayList<Opinion> opinionesDelUltimoMes = new ArrayList<Opinion>();
 		for (Opinion opinion : super.getOpinionesEnviadas()) {
-			if(opinion.getFecha().until(fechaActual).getDays() <= 30) {
-				opinionesDelUltimoMes.add(opinion);
-			}
+			agregarAListaDeOpinionesDeUltimoMesSi(opinionesDelUltimoMes, opinion);
 		}
 		return opinionesDelUltimoMes;
 	}
-	
-	public Integer cantidadDeOpinionesEnElUltimoMes(LocalDate fechaActual) {
-		return this.opinionesDelUltimoMes(fechaActual).size();
-	}
-	
-	public void actualizarCategoria() {
+
+	private void agregarAListaDeOpinionesDeUltimoMesSi(ArrayList<Opinion> opinionesDelUltimoMes, Opinion opinion) {
 		LocalDate fechaActual = LocalDate.now();
-		if (cumpleConRevisionesNecesarias(fechaActual)
-				&& cumpleConEnviosNecesarios(fechaActual)) {
-			super.setEstadoDeUsuario(new EstadoDeUsuarioExperto());
+		if((opinion.getFechaDeEmision().until(fechaActual).getMonths()) <= 1) {
+			opinionesDelUltimoMes.add(opinion);
 		}
 	}
 
-	private boolean cumpleConEnviosNecesarios(LocalDate fechaActual) {
-		return this.cantidadDeEnviosEnLosUltimos30Dias(fechaActual) >= 10;
+	public Boolean cumpleConEnviosNecesarios() {
+		return this.cantidadDeEnviosEnLosUltimos30Dias() >= 10;
 	}
 
-	private boolean cumpleConRevisionesNecesarias(LocalDate fechaActual) {
-		return this.cantidadDeOpinionesEnElUltimoMes(fechaActual) >= 20;
+	public Integer cantidadDeEnviosEnLosUltimos30Dias() {
+		return this.enviosDelUltimoMes().size();
 	}
 
-	public Integer cantidadDeEnviosEnLosUltimos30Dias(LocalDate fechaActual) {
-		// TODO Auto-generated method stub
-		return 0;
+	private ArrayList<Muestra> enviosDelUltimoMes() {
+		ArrayList<Muestra> enviosDelUltimoMes = new ArrayList<Muestra>();
+		for (Muestra muestra : super.getMuestrasEnviadas()) {
+			agregarAListaDeMuestrasDelUltimoMesSI(enviosDelUltimoMes, muestra);
+		}
+		return enviosDelUltimoMes;
+	}
+
+	private void agregarAListaDeMuestrasDelUltimoMesSI(ArrayList<Muestra> enviosDelUltimoMes, Muestra muestra) {
+		LocalDate fechaActual = LocalDate.now();
+		if(muestra.getFechaDeCreacion().until(fechaActual).getMonths() <= 1) {
+			enviosDelUltimoMes.add(muestra);
+		}
 	}
 	
 	

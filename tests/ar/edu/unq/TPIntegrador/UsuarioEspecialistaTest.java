@@ -14,12 +14,14 @@ import ar.edu.unq.TPIntegrador.UsuarioEspecialista;
 class UsuarioEspecialistaTest {
 	
 	private UsuarioEspecialista usuarioE;
+	@Mock private AplicacionWeb sistema;
 	@Mock private Muestra muestra;
 	@Mock private Opinion opinion;
 	
 	@BeforeEach
 	public void setUp() {
-		usuarioE = new UsuarioEspecialista("36001002");
+		sistema = mock(AplicacionWeb.class);
+		usuarioE = new UsuarioEspecialista("36001002", sistema);
 		muestra = mock(Muestra.class);
 		opinion = mock(Opinion.class);
 	}

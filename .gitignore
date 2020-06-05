@@ -1,1 +1,5 @@
 /bin/
+# Eclipse IDE: Archivos de configuracion
+.classpath
+.project
+.settings/

@@ -15,12 +15,14 @@ import static org.mockito.Mockito.*;
 class UsuarioTest {
 	
 	private Usuario usuario;
+	private AplicacionWeb sistema;
 	@Mock private Muestra muestra;
 	@Mock private Opinion opinion;
 	
 	@BeforeEach
 	public void setUp() {
-		usuario = new UsuarioNovato("30120240");
+		sistema = new AplicacionWeb();
+		usuario = new UsuarioNovato("30120240", sistema);
 		muestra = mock(Muestra.class);
 		opinion = mock(Opinion.class);
 	}
