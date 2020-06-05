@@ -11,26 +11,16 @@ class OpinionTest {
 	@Test
 	void test_SeCreaUnaOpinionConLaFechaDeHoyYTieneLaFechaDeHoy() {
 		Descripcion descripcion = Descripcion.VINCHUCA_INFESTANS;
-		Opinion opinion = new Opinion(descripcion, LocalDate.now());
+		Opinion opinion = new Opinion(descripcion);
 		
 		assertEquals(LocalDate.now() , opinion.getFechaDeEmision());
-	}
-	
-	@Test
-	void test_SeCreaUnaOpinionConLaFechaDelAño2020Mes6Dia3YAlPedirleSuFechaDeEmisionEsAño2020Mes6Dia3() {
-		Descripcion descripcion = Descripcion.VINCHUCA_INFESTANS;
-		LocalDate fecha = LocalDate.of(2020, 6, 3);
-		
-		Opinion opinion = new Opinion(descripcion, fecha);
-		
-		assertEquals(fecha , opinion.getFechaDeEmision());
 	}
 	
 	@Test
 	void test_SeCreaUnaOpinionConLaDescripcionDeVinchucaInfestansYSuDescipcrionEsVinchucaInfestans() {
 		Descripcion descripcion = Descripcion.VINCHUCA_INFESTANS;
 		
-		Opinion opinion = new Opinion(descripcion, LocalDate.now());
+		Opinion opinion = new Opinion(descripcion);
 		
 		assertEquals(descripcion, opinion.getDescripcion());
 	}
@@ -39,7 +29,7 @@ class OpinionTest {
 	void test_SeCreaUnaOpinionConLaDescripcionDeVinchucaSordidaYSuDescipcrionEsVinchucaSordida() {
 		Descripcion descripcion = Descripcion.VINCHUCA_SORDIDA;
 		
-		Opinion opinion = new Opinion(descripcion, LocalDate.now());
+		Opinion opinion = new Opinion(descripcion);
 		
 		assertEquals(descripcion, opinion.getDescripcion());
 	}

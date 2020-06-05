@@ -33,12 +33,12 @@ public class Organizacion implements IObserver{
 	}
 
 	public void registrarseAZonaDeCobertura(ZonaDeCobertura zonaDeCobertura) {
-		zonaDeCobertura.agregarOrganizacion(this);
+		zonaDeCobertura.agregarObserver(this);
 		
 	}
 
 	public void dejarZonaDeCobertura(ZonaDeCobertura zonaDeCobertura) {
-		zonaDeCobertura.quitarOrganizacion(this);
+		zonaDeCobertura.quitarObserver(this);
 		
 	}
 
@@ -60,7 +60,7 @@ public class Organizacion implements IObserver{
 		
 	}
 
-	public void ejecutarFuncionalidadExterna(ZonaDeCobertura zonaDeCobertura, Muestra muestra, String aviso) {
+	public void actualizar(ZonaDeCobertura zonaDeCobertura, Muestra muestra, String aviso) {
 		if (aviso == "Nueva muestra") {
 			funcionalidadParaNuevaMuestra.nuevoEvento(this, zonaDeCobertura, muestra);
 		}else {

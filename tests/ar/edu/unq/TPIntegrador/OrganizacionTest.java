@@ -64,7 +64,7 @@ class OrganizacionTest {
 		
 		organizacionSalud.registrarseAZonaDeCobertura(zonaDeCobertura);
 		
-		verify(zonaDeCobertura).agregarOrganizacion(organizacionSalud);
+		verify(zonaDeCobertura).agregarObserver(organizacionSalud);
 	
 	}
 	
@@ -74,7 +74,7 @@ class OrganizacionTest {
 		
 		organizacionSalud.dejarZonaDeCobertura(zonaDeCobertura);
 		
-		verify(zonaDeCobertura).quitarOrganizacion(organizacionSalud);
+		verify(zonaDeCobertura).quitarObserver(organizacionSalud);
 	
 	}
 	
@@ -117,7 +117,7 @@ class OrganizacionTest {
 		ZonaDeCobertura zonaDeCobertura = mock(ZonaDeCobertura.class);
 		Muestra muestra = mock(Muestra.class);
 		
-		organizacionSalud.ejecutarFuncionalidadExterna(zonaDeCobertura, muestra, "Nueva muestra");
+		organizacionSalud.actualizar(zonaDeCobertura, muestra, "Nueva muestra");
 		
 		verify(funcionalidadMuestra).nuevoEvento(organizacionSalud, zonaDeCobertura, muestra);
 	
@@ -128,7 +128,7 @@ class OrganizacionTest {
 		ZonaDeCobertura zonaDeCobertura = mock(ZonaDeCobertura.class);
 		Muestra muestra = mock(Muestra.class);
 		
-		organizacionSalud.ejecutarFuncionalidadExterna(zonaDeCobertura, muestra, "Nueva verificacion");
+		organizacionSalud.actualizar(zonaDeCobertura, muestra, "Nueva verificacion");
 		
 		verify(funcionalidadVerificacion).nuevoEvento(organizacionSalud, zonaDeCobertura, muestra);
 	

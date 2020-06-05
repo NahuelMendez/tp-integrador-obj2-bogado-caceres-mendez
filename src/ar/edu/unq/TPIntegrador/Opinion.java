@@ -7,8 +7,8 @@ public class Opinion {
 	private LocalDate fechaDeEmision;
 	private Descripcion descripcion;
 
-	public Opinion(Descripcion descripcion, LocalDate fechaDeEmision) {
-		this.fechaDeEmision = fechaDeEmision;
+	public Opinion(Descripcion descripcion) {
+		this.fechaDeEmision = LocalDate.now();
 		this.descripcion = descripcion;
 	}
 

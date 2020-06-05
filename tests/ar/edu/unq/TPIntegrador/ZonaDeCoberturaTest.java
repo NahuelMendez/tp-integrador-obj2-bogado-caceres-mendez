@@ -86,36 +86,28 @@ class ZonaDeCoberturaTest {
 	@Test
 	void test_ZonaDeCobertura1NoTieneOrganizacionesRegistradas() {
 		
-		assertEquals(0 , zonaDeCobertura1.organizacionesRegistradas().size());
+		assertEquals(0 , zonaDeCobertura1.observerRegistrados().size());
 	}
 	
 	@Test
 	void test_ZonaDeCoberturaTieneUnaOrganizacionRegistrada() {
 		Organizacion organizacion = mock(Organizacion.class);
 		
-		zonaDeCobertura1.agregarOrganizacion(organizacion);
+		zonaDeCobertura1.agregarObserver(organizacion);
 		
-		assertEquals(1 , zonaDeCobertura1.organizacionesRegistradas().size());
+		assertEquals(1 , zonaDeCobertura1.observerRegistrados().size());
 	}
 	
 	@Test
 	void test_ZonaDeCoberturaQuitoLaUnicaOrganizacionQueTeniaYAhoraTieneCeroOrganizaciones() {
 		Organizacion organizacion = mock(Organizacion.class);
 		
-		zonaDeCobertura1.agregarOrganizacion(organizacion);
-		zonaDeCobertura1.quitarOrganizacion(organizacion);
+		zonaDeCobertura1.agregarObserver(organizacion);
+		zonaDeCobertura1.quitarObserver(organizacion);
 		
-		assertEquals(0 , zonaDeCobertura1.organizacionesRegistradas().size());
+		assertEquals(0 , zonaDeCobertura1.observerRegistrados().size());
 	}
 	
-	@Test
-	void test_ZonaDeCoberturaQuiereQuitarUnaOrganizacionQueNoEstaRegistradaYTiraUnaExcepcion() {
-		Organizacion organizacion = mock(Organizacion.class);
-		//REVEER hacer que tira una exception cuando se desuscribe y no esta suscripto
-		zonaDeCobertura1.quitarOrganizacion(organizacion);
-		
-		assertEquals(0 , zonaDeCobertura1.organizacionesRegistradas().size());
-	}
 	
 	@Test
 	void test_ZonaDeCoberturaNoTieneMuestrasRegistradasYSuCantidadDeMuestrasEsCero() {
@@ -127,15 +119,30 @@ class ZonaDeCoberturaTest {
 	void test_ZonaDeCoberturaAgregarUnaNuevaMuestraASuListaDeMuestrasYNotificaALasOrganizaciones() {
 		Organizacion organizacion1 = mock(Organizacion.class);
 		Organizacion organizacion2 = mock(Organizacion.class);
+		Ubicacion ubicacionMuestra = mock(Ubicacion.class);
 		Muestra muestra = mock(Muestra.class);
 		
-		zonaDeCobertura1.agregarOrganizacion(organizacion1);
-		zonaDeCobertura1.agregarOrganizacion(organizacion2);
+		zonaDeCobertura1.agregarObserver(organizacion1);
+		zonaDeCobertura1.agregarObserver(organizacion2);
+		when(muestra.getUbicacion()).thenReturn(ubicacionMuestra);
+		when(epicentro1.medirDistancias(ubicacionMuestra)).thenReturn(3);
 		zonaDeCobertura1.agregarNuevaMuestra(muestra);
 		
-		verify(organizacion1).ejecutarFuncionalidadExterna(zonaDeCobertura1, muestra, "Nueva muestra");
-		verify(organizacion2).ejecutarFuncionalidadExterna(zonaDeCobertura1, muestra, "Nueva muestra");
+		verify(organizacion1).actualizar(zonaDeCobertura1, muestra, "Nueva muestra");
+		verify(organizacion2).actualizar(zonaDeCobertura1, muestra, "Nueva muestra");
 		assertEquals(1, zonaDeCobertura1.muestrasRegistradas().size());
+	}
+	
+	@Test
+	void test_ZonaDeCoberturaIntentaAgregarUnaMuestraPeroNoPerteneceASuZonaDeCoberturaYSuCantidadDeMuestrasEsCero() {
+		Muestra muestra = mock(Muestra.class);
+		Ubicacion ubicacionMuestra = mock(Ubicacion.class);
+		
+		when(muestra.getUbicacion()).thenReturn(ubicacionMuestra);
+		when(epicentro1.medirDistancias(ubicacionMuestra)).thenReturn(6);
+		zonaDeCobertura1.agregarNuevaMuestra(muestra);
+		
+		assertEquals(0, zonaDeCobertura1.muestrasRegistradas().size());
 	}
 	
 	@Test
@@ -144,12 +151,12 @@ class ZonaDeCoberturaTest {
 		Organizacion organizacion2 = mock(Organizacion.class);
 		Muestra muestra = mock(Muestra.class);
 		
-		zonaDeCobertura1.agregarOrganizacion(organizacion1);
-		zonaDeCobertura1.agregarOrganizacion(organizacion2);
+		zonaDeCobertura1.agregarObserver(organizacion1);
+		zonaDeCobertura1.agregarObserver(organizacion2);
 		zonaDeCobertura1.muestraVerificada(muestra);
 		
-		verify(organizacion1).ejecutarFuncionalidadExterna(zonaDeCobertura1, muestra, "Nueva verificacion");
-		verify(organizacion2).ejecutarFuncionalidadExterna(zonaDeCobertura1, muestra, "Nueva verificacion");
+		verify(organizacion1).actualizar(zonaDeCobertura1, muestra, "Nueva verificacion");
+		verify(organizacion2).actualizar(zonaDeCobertura1, muestra, "Nueva verificacion");
 	}
 
 }

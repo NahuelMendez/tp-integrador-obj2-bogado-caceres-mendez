@@ -8,23 +8,23 @@ public class ZonaDeCobertura {
 	private String nombre;
 	private Integer radio;
 	private Ubicacion epicentro;
-	private List<Organizacion> organizaciones;
+	private List<IObserver> observers;
 	private List<Muestra> muestrasRegistradas;
 
 	public ZonaDeCobertura(String nombre, Integer radio, Ubicacion epicentro) {
 		this.nombre = nombre;
 		this.radio = radio;
 		this.epicentro = epicentro;
-		this.organizaciones = new ArrayList<Organizacion>();
+		this.observers = new ArrayList<IObserver>();
 		this.muestrasRegistradas = new ArrayList<Muestra>();
 	}
 
-	public void agregarOrganizacion(Organizacion organizacion) {
-		organizaciones.add(organizacion);
+	public void agregarObserver(IObserver observer) {
+		observers.add(observer);
 	}
 
-	public void quitarOrganizacion(Organizacion organizacion) {
-		organizaciones.remove(organizacion);
+	public void quitarObserver(IObserver observer) {
+		observers.remove(observer);
 		
 	}
 
@@ -57,17 +57,27 @@ public class ZonaDeCobertura {
 		
 	}
 
-	public List<Organizacion> organizacionesRegistradas() {
-		return organizaciones;
+	public List<IObserver> observerRegistrados() {
+		return observers;
 	}
 
 	public void agregarNuevaMuestra(Muestra muestra) {
-		muestrasRegistradas.add(muestra);
-		
-		for (Organizacion organizacion: organizaciones) {
-			organizacion.ejecutarFuncionalidadExterna(this, muestra, "Nueva muestra");
+		if (this.perteneceAZonaDeCobertura(muestra)) {
+			muestrasRegistradas.add(muestra);
+			this.avisarAZonasDeCobertura(muestra, "Nueva muestra");
 		}
 		
+	}
+
+	private Boolean perteneceAZonaDeCobertura(Muestra muestra) {
+		
+		return epicentro.medirDistancias(muestra.getUbicacion()) < radio;
+	}
+
+	private void avisarAZonasDeCobertura(Muestra muestra, String mensaje) {
+		for (IObserver observer: observers) {
+			observer.actualizar(this, muestra, mensaje);
+		}
 	}
 
 
@@ -76,9 +86,7 @@ public class ZonaDeCobertura {
 	}
 
 	public void muestraVerificada(Muestra muestra) {
-		for (Organizacion organizacion: organizaciones) {
-			organizacion.ejecutarFuncionalidadExterna(this, muestra, "Nueva verificacion");
-		}
+		this.avisarAZonasDeCobertura(muestra, "Nueva verificacion");
 	}
 
 }
