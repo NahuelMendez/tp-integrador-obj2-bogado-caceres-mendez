@@ -21,7 +21,7 @@ class UsuarioTest {
 	
 	@BeforeEach
 	public void setUp() {
-		sistema = new AplicacionWeb();
+		sistema = mock(AplicacionWeb.class);
 		usuario = new UsuarioNovato("30120240", sistema);
 		muestra = mock(Muestra.class);
 		opinion = mock(Opinion.class);
@@ -48,6 +48,12 @@ class UsuarioTest {
 	}
 	
 	@Test
+	void test_UnUsuarioQueNoEmitioOpinionesTieneUnaListaVaciaDeOpinionesEnviadas() {
+		Integer result = usuario.getOpinionesEnviadas().size();
+		assertEquals(0, result);
+	}
+	
+	@Test
 	void test_UnUsuarioQueNoEnvioNingunaMuestraTiene0CantidadDeEnvios() {
 		Integer result = usuario.getEnvios();
 		assertEquals(0, result);
@@ -60,6 +66,33 @@ class UsuarioTest {
 		assertEquals(1, result);
 	}
 	
+	@Test
+	void test_UnUsuarioQueEnviaUnaMuestraLeEnviaElMensajeALaAplicionWebParaRegistrarla() {
+		usuario.enviarMuestra(muestra);
+		verify(sistema).registrarMuestra(muestra);
+	}
 	
+	@Test
+	void test_UnUsuarioEmiteUnaOpinionYLeEnviaElMensajeDeAgregarOpinionALaMuestra() {
+		when(muestra.usuarioAptoParaVotar(usuario)).thenReturn(true);
+		usuario.opinarSobreMuestra(muestra, opinion);
+		verify(muestra).agregarOpinion(opinion, usuario);
+	}
+	
+	@Test
+	void test_UnUsuarioNuevoTieneUnEstadoDeUsuarioBasico() {
+		Class<? extends EstadoDeUsuario> result = usuario.getEstadoDeUsuario().getClass();
+		assertEquals(EstadoDeUsuarioBasico.class, result);
+	}
+	
+	@Test
+	void test_UnUsuarioSiempreComienzaSiendoBasico() {
+		assertTrue(usuario.esUsuarioBasico());
+	}
+	
+	@Test
+	void test_UnUsuarioAlEmpezarSiempreSiendoBasicoNoPuedeSerExpertoAlSerCreado() {
+		assertFalse(usuario.esUsuarioExperto());
+	}
 
 }

@@ -11,7 +11,7 @@ public class UsuarioNovato extends Usuario {
 	}
 	
 	public void actualizarCategoria() {
-		this.getEstadoDeUsuario().actualizarCateogiriaDeUsuarioNovato(this);
+		super.getEstadoDeUsuario().actualizarCateogiriaDeUsuarioNovato(this);
 	}
 	
 	public Boolean cumpleConRevisionesNecesarias() {

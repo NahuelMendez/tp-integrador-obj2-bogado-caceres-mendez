@@ -61,6 +61,7 @@ public class FixtureUsuarioNovatoTest {
 	private @Mock Opinion opinion18;
 	private @Mock Opinion opinion19;
 	private @Mock Opinion opinion20;
+	private @Mock Opinion opinionVieja;
 	
 	private LocalDate now;
 	
@@ -170,6 +171,9 @@ public class FixtureUsuarioNovatoTest {
 		when(opinion19.getFechaDeEmision()).thenReturn(now);
 		opinion20 = mock(Opinion.class);
 		when(opinion20.getFechaDeEmision()).thenReturn(now);
+		opinionVieja = mock(Opinion.class);
+		when(opinionVieja.getFechaDeEmision()).thenReturn(now.minusMonths(5));
+		
 		
 	}
 	

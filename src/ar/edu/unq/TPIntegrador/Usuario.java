@@ -51,12 +51,20 @@ public class Usuario {
 		this.opinionesEnviadas.add(opinion);
 	}
 
-	public List<Opinion> getOpinionesEnviadas() {
+	protected List<Opinion> getOpinionesEnviadas() {
 		return this.opinionesEnviadas;
 	}
 
-	public List<Muestra> getMuestrasEnviadas() {
+	protected List<Muestra> getMuestrasEnviadas() {
 		return this.muestras;
+	}
+
+	public Boolean esUsuarioExperto() {
+		return this.getEstadoDeUsuario().esUsuarioExperto();
+	}
+	
+	public Boolean esUsuarioBasico() {
+		return this.getEstadoDeUsuario().esUsuarioBasico();
 	}
 
 }

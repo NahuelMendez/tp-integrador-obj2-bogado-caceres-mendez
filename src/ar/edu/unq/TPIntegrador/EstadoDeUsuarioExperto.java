@@ -1,6 +1,6 @@
 package ar.edu.unq.TPIntegrador;
 
-public class EstadoDeUsuarioExperto extends EstadoDeUsuario{
+public class EstadoDeUsuarioExperto implements EstadoDeUsuario{
 
 	@Override
 	public void opinarSobreMuestra(Muestra muestra, Opinion opinion, Usuario usuario) {
@@ -21,7 +21,7 @@ public class EstadoDeUsuarioExperto extends EstadoDeUsuario{
 	}
 
 	@Override
-	protected void actualizarCateogiriaDeUsuarioNovato(UsuarioNovato usuarioNovato) {
+	public void actualizarCateogiriaDeUsuarioNovato(UsuarioNovato usuarioNovato) {
 		if (!usuarioNovato.cumpleConRevisionesNecesarias()
 				&& !usuarioNovato.cumpleConEnviosNecesarios()) {
 			usuarioNovato.setEstadoDeUsuario(new EstadoDeUsuarioBasico());

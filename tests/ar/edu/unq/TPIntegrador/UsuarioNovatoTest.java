@@ -14,6 +14,7 @@ class UsuarioNovatoTest {
 	private UsuarioNovato usuarioN;
 	private LocalDate fechaActual;
 	private FixtureUsuarioNovatoTest fixture;
+	private FixtureUsuarioNovatoParaBajarDeCategoriaTest fixture2;
 	@Mock private AplicacionWeb sistema;
 	@Mock private Opinion opinion1;
 	@Mock private Opinion opinion2;
@@ -32,6 +33,7 @@ class UsuarioNovatoTest {
 		when(muestra1.getFechaDeCreacion()).thenReturn(fechaActual);
 		when(muestra1.usuarioAptoParaVotar(usuarioN)).thenReturn(true);
 		fixture = new FixtureUsuarioNovatoTest();
+		fixture2 = new FixtureUsuarioNovatoParaBajarDeCategoriaTest("23444555", sistema);
 	}
 
 	@Test
@@ -71,12 +73,32 @@ class UsuarioNovatoTest {
 	}
 	
 	@Test
+	void test_UnUsuarioNovatoNoEsExpertoAlSerCreado() {
+		Boolean result = usuarioN.esUsuarioExperto();
+		assertFalse(result);
+	}
+	
+	@Test
+	void test_UnUsuarioNovatoConCondicionesParaSerExpertoTieneEstadoDeUsuarioBasico() {
+		UsuarioNovato usuarioBasico = this.fixture.nuevoUsuarioListoParaActualizarCategoria();
+		assertTrue(usuarioBasico.esUsuarioBasico());
+	}
+	
+	@Test
 	void test_UnUsuarioNovatoActualizaSuCategoriaDeUsuarioBasicoLuegoDeCumplirLosRequisitosParaSubirAExperto() {
 		UsuarioNovato usuarioNuevoExperto = this.fixture.nuevoUsuarioListoParaActualizarCategoria();
-		String result = usuarioNuevoExperto.getEstadoDeUsuario().getClass().getSimpleName();
-		System.out.println(usuarioNuevoExperto.cantidadDeEnviosEnLosUltimos30Dias());
-		System.out.println(usuarioNuevoExperto.cantidadDeOpinionesEnLosUltimos30Dias());
-		assertEquals("EstadoDeUsuarioExperto", result);
+		usuarioNuevoExperto.actualizarCategoria();
+		assertTrue(usuarioNuevoExperto.esUsuarioExperto());
+	}
+	
+	@Test
+	void test_UnUsuarioNovatoQueTieneCategoriaExpertoBajaACategoriaBasicoPorNoCumplirLosRequisitos() {
+		UsuarioNovato usuarioNuevoBasico = this.fixture2;
+		Boolean estadoAnteriorEraExperto = usuarioNuevoBasico.esUsuarioExperto();
+		usuarioNuevoBasico.actualizarCategoria();
+		Boolean estadoNuevoEsBasico = usuarioNuevoBasico.esUsuarioBasico();
+		assertTrue(estadoAnteriorEraExperto);
+		assertTrue(estadoNuevoEsBasico);
 	}
 
 }

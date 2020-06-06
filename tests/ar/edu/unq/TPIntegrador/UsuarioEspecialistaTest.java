@@ -42,8 +42,18 @@ class UsuarioEspecialistaTest {
 	
 	@Test
 	void test_ElEstadoDeUsuarioDeUnUsuarioEspecialistaEsEstadoExperto() {
-		String result = usuarioE.getEstadoDeUsuario().getClass().getSimpleName();
-		assertEquals("EstadoDeUsuarioExperto", result);
+		assertTrue(usuarioE.esUsuarioExperto());
+	}
+	
+	@Test
+	void test_UnUsuarioEspecialistaSiempretieneEstadoExperto() {
+		assertFalse(usuarioE.esUsuarioBasico());
+	}
+	
+	@Test
+	void test_UnUsuarioEspecialistaSiempretieneUnEstadoDeUsuarioExperto() {
+		Boolean result = usuarioE.esUsuarioExperto();
+		assertTrue(result);
 	}
 	
 	@Test
