@@ -1,51 +1,64 @@
 package ar.edu.unq.TPIntegrador;
 
 import static org.junit.Assert.assertTrue;
+import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 import java.awt.image.BufferedImage;
 import java.time.LocalDate;
+import java.util.ArrayList;
+
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
+
 
 class MuestraTest {
+	private Muestra muestra;
+	private Usuario gonzaBasico_propietario;
+	private Usuario usuarioBasico;
+	private Usuario nahueExperto;
+	private Usuario ximeExperto;
+	private Opinion opinion;
 	
-	//usuarios concretos para testear el pasaje entre estados de Muestra
-	
-	
-	private Usuario propietario;
-	private Usuario usuarioAjeno;
+	private Muestra muestra1;
+	private Usuario userPropietario;
 	private BufferedImage fotoVinchuca;
 	private Ubicacion ubicacionVinchuca;
-	private Muestra muestra;
-	public Opinion opinionDelPropietario;
-	private Opinion opinion2;
+	public Opinion opinion2;
 	private ZonaDeCobertura zona;
-		
+	private AplicacionWeb app;
+
 	@BeforeEach
 	void setUp() throws Exception {
-	
-		propietario = mock(Usuario.class);
-		usuarioAjeno = mock(Usuario.class);
+		userPropietario = mock(Usuario.class);
 		fotoVinchuca = mock(BufferedImage.class);
 		ubicacionVinchuca = mock(Ubicacion.class);
-		opinionDelPropietario = mock(Opinion.class);
 		opinion2 = mock(Opinion.class);
 		zona = mock(ZonaDeCobertura.class);
-		muestra = new Muestra(propietario, opinionDelPropietario, fotoVinchuca, ubicacionVinchuca , LocalDate.of(2020,12,01));
-		Usuario userExperto = new Usuario("Juan", null);
-		userExperto.setEstadoDeUsuario(new EstadoDeUsuarioExperto());
-		Usuario userExperto2 = new Usuario("Pepe", null);
-		userExperto2.setEstadoDeUsuario(new EstadoDeUsuarioExperto());
-	}
-
-	@Test
-	void test_UnaMuestraTieneUnaEspecieDeVinchucaPtiaChinche() {
-		when(muestra.getEspecieDeVinchuca()).thenReturn("Ptia Chinche");
-		assertEquals("Ptia Chinche", muestra.getEspecieDeVinchuca());
+		app = mock(AplicacionWeb.class);
+		
+		gonzaBasico_propietario = new Usuario("Gonza", app);
+		gonzaBasico_propietario.setEstadoDeUsuario(new EstadoDeUsuarioBasico());
+		nahueExperto = new Usuario("Nahue", app);
+		nahueExperto.setEstadoDeUsuario(new EstadoDeUsuarioExperto());
+		ximeExperto = new Usuario("Xime", app);
+		ximeExperto.setEstadoDeUsuario(new EstadoDeUsuarioExperto());
+		usuarioBasico = new Usuario("Pepite", app);
+		usuarioBasico.setEstadoDeUsuario(new EstadoDeUsuarioBasico());
+		opinion = new Opinion(Descripcion.VINCHUCA_SORDIDA);
+	
+		//Muestra con instancias de clases concretas
+		muestra = new Muestra(gonzaBasico_propietario, opinion, fotoVinchuca, ubicacionVinchuca , LocalDate.of(2020,12,01));
+		
+		//Muestra con dummy objects.
+		muestra1 = new Muestra(userPropietario, opinion2, fotoVinchuca, ubicacionVinchuca , LocalDate.of(2020,05,05));
 	}
 	
+	@Test
+	void test_UnaMuestraTieneUnaEspecieDeVinchucaVINCHUCA_SORDIDA() {
+		assertEquals("VINCHUCA_SORDIDA", muestra.getEspecieDeVinchuca());
+	}
+
 	@Test
 	void test_UnaMuestraTieneUnaFoto() {
 		assertEquals(fotoVinchuca, muestra.getFotoDeLaVinchuca());
@@ -56,10 +69,16 @@ class MuestraTest {
 		assertEquals(ubicacionVinchuca, muestra.getUbicacion());
 	}
 	
+	
 	@Test
 	void test_UnaMuestraTieneUnPropietarioDeNombreJuan() {
-		when(muestra.getIdentificacionPropietarioDeLaMuestra()).thenReturn("cazador de vinchucas");
-		assertEquals("cazador de vinchucas", muestra.getIdentificacionPropietarioDeLaMuestra());
+		when(muestra1.getIdentificacionPropietarioDeLaMuestra()).thenReturn("juan");
+		assertEquals("juan", muestra1.getIdentificacionPropietarioDeLaMuestra());
+	}
+
+	@Test
+	void test_UnaMuestraTieneUnPropietarioDeNombreGonza() {
+		assertEquals("Gonza", muestra.getIdentificacionPropietarioDeLaMuestra());
 	}
 	
 	@Test
@@ -68,9 +87,8 @@ class MuestraTest {
 	}
 	
 	@Test
-	void test_UnaMuestraTieneUnaFechaDeUltimaVotacion2020_12_01() {
-		when(muestra.getFechaUltimaVotacion()).thenReturn(LocalDate.of(2020,12,01));
-		assertEquals(LocalDate.of(2020,12,01), muestra.getFechaUltimaVotacion());
+	void test_UnaMuestraTieneUnaFechaDeUltimaVotacion2020_06_06() {
+		assertEquals(LocalDate.now(), muestra.getFechaUltimaVotacion());
 	}
 	
 	@Test
@@ -86,7 +104,7 @@ class MuestraTest {
 	
 	@Test
 	void test_UnaMuestraCuandoSeCreaTienelaOpinionDelPropietario() {
-		assertTrue(muestra.getHistorialDeOpiniones().containsValue(opinionDelPropietario));
+		assertTrue(muestra.getHistorialDeOpiniones().containsValue(opinion));
 	}
 	
 	@Test
@@ -95,19 +113,19 @@ class MuestraTest {
 	}
 
 	@Test
-	void test_UnaMuestraNoContieneLaOpinionDelUsuarioAjeno() {
-		assertTrue(muestra.noContieneLaOpinionDelUsuario(usuarioAjeno));
+	void test_UnaMuestraNoContieneLaOpinionDeUnUsuarioQueNoOpino() {
+		assertTrue(muestra.noContieneLaOpinionDelUsuario(ximeExperto));
 	}
 	
 	@Test
 	void test_UnaMuestraTieneUnEstadoAcordeASuPropietario_MuestraVotada_UsuarioBasico() {
-		assertEquals(new EstadoDeMuestraVotada().getClass(), muestra.getEstadoSegunEstadoDeUsuario(propietario).getClass());
+		assertEquals(new EstadoDeMuestraVotada().getClass(), muestra.getEstadoSegunEstadoDeUsuario(gonzaBasico_propietario).getClass());
 	}
 	
 	@Test
 	void test_UnaMuestraNoPuedeVolverASerComentadaPorSuPropietario() throws Exception {
 		try {
-			muestra.agregarOpinion(opinion2, propietario);
+			muestra.agregarOpinion(opinion2, gonzaBasico_propietario);
 	    }
 	    catch (Exception exception){
 	               assertEquals(exception.getMessage(), "El usuario no puede opinar sobre la muestra.");
@@ -116,97 +134,89 @@ class MuestraTest {
 	
 	@Test
 	void test_UnaMuestraCuandoAgregaUnaOpinionSeLeAgregaAsuHistorialDeOpiniones() throws Exception {
-		
-		try {
-			muestra.agregarOpinion(opinion2, usuarioAjeno);
-	    }
-	    catch (Exception exception){
-	               assertEquals(exception.getMessage(), "La Muestra no puede verificarse aun");
-	     } 
-		assertTrue(muestra.getHistorialDeOpiniones().containsKey(usuarioAjeno)); 
+		muestra.agregarOpinion(opinion2, usuarioBasico);
+		assertTrue(muestra.getHistorialDeOpiniones().containsKey(usuarioBasico)); 
 		assertEquals(new EstadoDeMuestraVotada().getClass(), muestra.getEstadoDeMuestra().getClass());
 	}
-	
 	
 	@Test
 	void test_CuandoSeIntentaVerificarUnaMuestraVotadaSeArrojaUnaExcepcion() throws Exception {
 		try {
-		muestra.verificarMuestra();
+			muestra.verificarMuestra();
 		 }
 	    catch (Exception exception){
 	               assertEquals(exception.getMessage(), "La Muestra no puede verificarse aun");
 	    }
-		assertNotEquals(new EstadoDeMuestraVerificada().getClass(), muestra.getEstadoDeMuestra().getClass());
+		assertEquals(new EstadoDeMuestraVotada().getClass(), muestra.getEstadoDeMuestra().getClass());
 	}
 	
 	@Test
 	void test_UnaMuestraEstaEnEstadoVotadaPorExperto() throws Exception {
 		muestra.cerrarOpinionesParaUsuariosBasicos();
 		assertEquals(new EstadoMuestraVotadaPorExperto().getClass(), muestra.getEstadoDeMuestra().getClass());
-		assertNotEquals(new EstadoDeMuestraVerificada().getClass(), muestra.getEstadoDeMuestra().getClass());
-		assertNotEquals(new EstadoDeMuestraVotada().getClass(), muestra.getEstadoDeMuestra().getClass());
 	}
 	
 	@Test
 	void test_CuandoUnaMuestraEstaEnEstadoVotadaPorExpertoNoPuedeVotarUnUsuarioBasico() throws Exception {
 		muestra.cerrarOpinionesParaUsuariosBasicos();
-		assertFalse(muestra.usuarioEsAptoParaVotar(usuarioAjeno));
+		assertFalse(muestra.usuarioAptoParaVotar(usuarioBasico));
 	}
 	
 	@Test
 	void test_cuandoUnUsuarioExpertoOpinaSobreUnaMuestraEstaQuedaVotadaPorExperto() throws Exception {
-		Usuario userNovato = new Usuario("Juan", null);
-		userNovato.setEstadoDeUsuario(new EstadoDeUsuarioBasico());
-		Usuario userExperto = new Usuario("Pepe", null);
-		userExperto.setEstadoDeUsuario(new EstadoDeUsuarioExperto());
-		Opinion opinion = new Opinion(Descripcion.VINCHUCA_SORDIDA);
-		Muestra muestraNovato = new Muestra(userNovato, opinion, fotoVinchuca, ubicacionVinchuca , LocalDate.of(2020,12,01));
-		muestraNovato.agregarOpinion(opinion, userExperto);
-		
-		assertEquals(new EstadoMuestraVotadaPorExperto().getClass(), muestraNovato.getEstadoDeMuestra().getClass());
-		assertEquals(LocalDate.now(), muestraNovato.getFechaUltimaVotacion());
-		assertTrue(muestraNovato.getHistorialDeOpiniones().containsKey(userExperto));
-		assertTrue(muestraNovato.getHistorialDeOpiniones().containsKey(userNovato));
+		muestra.agregarOpinion(opinion, ximeExperto);
+		assertEquals(new EstadoMuestraVotadaPorExperto().getClass(), muestra.getEstadoDeMuestra().getClass());
+		assertEquals(LocalDate.now(), muestra.getFechaUltimaVotacion());
+		assertTrue(muestra.getHistorialDeOpiniones().containsKey(ximeExperto));
 	}
 
 	@Test
 	void test_cuandoDosUsuariosExpertosCoincidenEnLaOpinionSobreUnaMuestraEstaQuedaVerificada() throws Exception {
-		Usuario userExperto = new Usuario("Juan", null);
-		userExperto.setEstadoDeUsuario(new EstadoDeUsuarioExperto());
-		Usuario userExperto2 = new Usuario("Pepe", null);
-		userExperto2.setEstadoDeUsuario(new EstadoDeUsuarioExperto());
-		Opinion opinion = new Opinion(Descripcion.VINCHUCA_SORDIDA);
-		Muestra muestraExperto = new Muestra(userExperto, opinion, fotoVinchuca, ubicacionVinchuca , LocalDate.of(2020,12,01));
-		
-		muestraExperto.agregarOpinion(opinion, userExperto2);
-		
-		assertEquals(new EstadoDeMuestraVerificada().getClass(), muestraExperto.getEstadoDeMuestra().getClass());
-		assertEquals(LocalDate.now(), muestraExperto.getFechaUltimaVotacion());
-		assertTrue(muestraExperto.getHistorialDeOpiniones().containsKey(userExperto));
-		assertTrue(muestraExperto.getHistorialDeOpiniones().containsKey(userExperto2));
+		muestra.agregarOpinion(opinion, nahueExperto);
+		muestra.agregarOpinion(opinion, ximeExperto);
+		assertEquals(new EstadoDeMuestraVerificada().getClass(), muestra.getEstadoDeMuestra().getClass());
+		assertEquals(LocalDate.now(), muestra.getFechaUltimaVotacion());
+		assertTrue(muestra.getHistorialDeOpiniones().containsKey(nahueExperto));
 	}
-	
 	
 	@Test
 	void test_CuandoUnUsuarioExpertoTrataDeVotarUnaMuestraVerificadaSeArrojaUnaExcepcion() throws Exception {
-		Usuario userExperto = new Usuario("Juan", null);
-		userExperto.setEstadoDeUsuario(new EstadoDeUsuarioBasico());
-		Usuario userExperto2 = new Usuario("Pepe", null);
-		userExperto2.setEstadoDeUsuario(new EstadoDeUsuarioBasico());
-		Usuario userExperto3 = new Usuario("Pepe", null);
-		userExperto3.setEstadoDeUsuario(new EstadoDeUsuarioBasico());
-		Opinion opinionDeExperto = new Opinion(Descripcion.VINCHUCA_SORDIDA);
-		Muestra muestraExperto = new Muestra(userExperto, opinionDeExperto, fotoVinchuca, ubicacionVinchuca , LocalDate.of(2020,12,01));
-		
 		try {
-			muestraExperto.agregarOpinion(opinionDeExperto, userExperto3);
-			muestraExperto.agregarOpinion(opinionDeExperto, userExperto2);			
+			muestra.agregarOpinion(opinion, nahueExperto);
+			muestra.agregarOpinion(opinion, ximeExperto);			
 		 }
 	    catch (Exception exception){
 	               assertEquals(exception.getMessage(), "La Muestra no puede verificarse aun");
 	    }
-		//assertEquals(new EstadoDeMuestraVotada().getClass(), muestra.getEstadoDeMuestra().getClass());
+		assertEquals(new EstadoDeMuestraVerificada().getClass(), muestra.getEstadoDeMuestra().getClass());
 	}
+	
+	@Test
+	void test_cuandoSeLePideAUnaMuestraSuResultadoActualRetornaSusOpiniones() throws Exception {
+		ArrayList<String> opiniones = new ArrayList<String>();
+		opiniones.add("VINCHUCA_SORDIDA");
+		opiniones.add("VINCHUCA_SORDIDA");
+		opiniones.add("VINCHUCA_SORDIDA");
+		
+		muestra.agregarOpinion(opinion, nahueExperto);
+		muestra.agregarOpinion(opinion, ximeExperto);
+		assertEquals(opiniones, muestra.getOpiniones());
+	}
+	
+	@Test
+	void test_cuandoSeLePideAUnaMuestraSuResultadoActualRetornaLaOpinionMasOpinada() throws Exception {
+		muestra.agregarOpinion(opinion, nahueExperto);
+		muestra.agregarOpinion(opinion, ximeExperto);
+		assertEquals("VINCHUCA_SORDIDA", muestra.getResultadoActual());
+	}
+	
+	@Test
+	void test_cuandoUnaMuestraSeVerificaSeLeAvisaASusZonasDeCobertura() throws Exception {
+		muestra.agregarOpinion(opinion, nahueExperto);
+		muestra.agregarOpinion(opinion, ximeExperto);
+		assertEquals("VINCHUCA_SORDIDA", muestra.getResultadoActual());
+	}
+	
 	
 }
 	
