@@ -3,8 +3,8 @@ package ar.edu.unq.TPIntegrador;
 public class EstadoDeUsuarioExperto implements EstadoDeUsuario{
 
 	@Override
-	public void opinarSobreMuestra(Muestra muestra, Opinion opinion, Usuario usuario) {
-		if (muestra.usuarioAptoParaVotar(usuario)) {
+	public void opinarSobreMuestra(Muestra muestra, Opinion opinion, Usuario usuario) throws Exception {
+		if (muestra.usuarioEsAptoParaVotar(usuario)) {
 			muestra.agregarOpinion(opinion, usuario);
 			usuario.agregarOpinionEnviada(opinion);
 		}

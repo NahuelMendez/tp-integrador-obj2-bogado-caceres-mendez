@@ -3,10 +3,15 @@ package ar.edu.unq.TPIntegrador;
 public class EstadoDeUsuarioBasico implements EstadoDeUsuario{
 
 	@Override
-	public void opinarSobreMuestra(Muestra muestra, Opinion opinion, Usuario usuario) {
-		if(muestra.usuarioAptoParaVotar(usuario)) {
-			muestra.agregarOpinion(opinion, usuario);
-			usuario.agregarOpinionEnviada(opinion);
+	public void opinarSobreMuestra(Muestra muestra, Opinion opinion, Usuario usuario) throws Exception {
+		try {
+			if(muestra.usuarioEsAptoParaVotar(usuario)) {
+				muestra.agregarOpinion(opinion, usuario);
+				usuario.agregarOpinionEnviada(opinion);
+			}
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 	}
 

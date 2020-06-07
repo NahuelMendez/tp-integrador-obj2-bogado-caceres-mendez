@@ -26,7 +26,7 @@ public class Usuario {
 		return this.opinionesEnviadas.size();
 	}
 	
-	public void opinarSobreMuestra(Muestra muestra, Opinion opinion) {
+	public void opinarSobreMuestra(Muestra muestra, Opinion opinion) throws Exception {
 		this.estadoDeUsuario.opinarSobreMuestra(muestra, opinion, this);
 	}
 

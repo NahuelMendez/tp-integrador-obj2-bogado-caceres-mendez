@@ -2,7 +2,7 @@ package ar.edu.unq.TPIntegrador;
 
 public interface EstadoDeUsuario {
 	
-	public abstract void opinarSobreMuestra(Muestra muestra, Opinion opinion, Usuario usuario);
+	public abstract void opinarSobreMuestra(Muestra muestra, Opinion opinion, Usuario usuario) throws Exception;
 	
 	public abstract Boolean esUsuarioBasico();
 	

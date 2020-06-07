@@ -31,7 +31,7 @@ class UsuarioNovatoTest {
 		when(opinion2.getFechaDeEmision()).thenReturn(fechaActual);
 		muestra1 = mock(Muestra.class);
 		when(muestra1.getFechaDeCreacion()).thenReturn(fechaActual);
-		when(muestra1.usuarioAptoParaVotar(usuarioN)).thenReturn(true);
+		when(muestra1.usuarioEsAptoParaVotar(usuarioN)).thenReturn(true);
 		fixture = new FixtureUsuarioNovatoTest();
 		fixture2 = new FixtureUsuarioNovatoParaBajarDeCategoriaTest("23444555", sistema);
 	}
@@ -43,7 +43,7 @@ class UsuarioNovatoTest {
 	}
 	
 	@Test
-	void test_UnUsuarioEmiteUnaOpinionYSuCantidadDeOpinionesEnLosUltimos30DiasEs1() {
+	void test_UnUsuarioEmiteUnaOpinionYSuCantidadDeOpinionesEnLosUltimos30DiasEs1() throws Exception {
 		usuarioN.opinarSobreMuestra(muestra1, opinion1);
 		Integer result = usuarioN.cantidadDeOpinionesEnLosUltimos30Dias();
 		assertEquals(1, result);
@@ -63,7 +63,7 @@ class UsuarioNovatoTest {
 	}
 	
 	@Test
-	void test_UnUsuarioNovatoQueEmitioUnaOpinion2MesesAtrasTieneCantidad0DeEnviosEnLosUltimos30Dias() {
+	void test_UnUsuarioNovatoQueEmitioUnaOpinion2MesesAtrasTieneCantidad0DeEnviosEnLosUltimos30Dias() throws Exception {
 		LocalDate fechaAnterior = LocalDate.now().minusMonths(2);
 		Opinion opinion2MesesAtras = mock(Opinion.class);
 		when(opinion2MesesAtras.getFechaDeEmision()).thenReturn(fechaAnterior);
@@ -79,13 +79,13 @@ class UsuarioNovatoTest {
 	}
 	
 	@Test
-	void test_UnUsuarioNovatoConCondicionesParaSerExpertoTieneEstadoDeUsuarioBasico() {
+	void test_UnUsuarioNovatoConCondicionesParaSerExpertoTieneEstadoDeUsuarioBasico() throws Exception {
 		UsuarioNovato usuarioBasico = this.fixture.nuevoUsuarioListoParaActualizarCategoria();
 		assertTrue(usuarioBasico.esUsuarioBasico());
 	}
 	
 	@Test
-	void test_UnUsuarioNovatoActualizaSuCategoriaDeUsuarioBasicoLuegoDeCumplirLosRequisitosParaSubirAExperto() {
+	void test_UnUsuarioNovatoActualizaSuCategoriaDeUsuarioBasicoLuegoDeCumplirLosRequisitosParaSubirAExperto() throws Exception {
 		UsuarioNovato usuarioNuevoExperto = this.fixture.nuevoUsuarioListoParaActualizarCategoria();
 		usuarioNuevoExperto.actualizarCategoria();
 		assertTrue(usuarioNuevoExperto.esUsuarioExperto());
