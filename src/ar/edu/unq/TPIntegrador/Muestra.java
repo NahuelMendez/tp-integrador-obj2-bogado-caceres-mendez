@@ -149,14 +149,14 @@ public class Muestra {
 		return retorno;	
 	}
 	
+	//public Set<Muestra> muestrasCercanas(Set<Muestra> muestras, Integer distancia)){
 	
-	//hace do s
 	
 	
 }
 	
 
-	//public Set<Muestra> muestrasCercanas(Set<Muestra> muestras, Integer distancia)){
+	
 
 
 

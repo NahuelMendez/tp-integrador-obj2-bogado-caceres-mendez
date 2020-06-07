@@ -1,5 +1,5 @@
 package ar.edu.unq.TPIntegrador;
-/*
+
 import static org.junit.Assert.assertTrue;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
@@ -159,7 +159,7 @@ class MuestraTest {
 		userNovato.setEstadoDeUsuario(new EstadoDeUsuarioBasico());
 		Usuario userExperto = new Usuario("Pepe", null);
 		userExperto.setEstadoDeUsuario(new EstadoDeUsuarioExperto());
-		Opinion opinion = new Opinion("bicho!");
+		Opinion opinion = new Opinion(Descripcion.VINCHUCA_SORDIDA);
 		Muestra muestraNovato = new Muestra(userNovato, opinion, fotoVinchuca, ubicacionVinchuca , LocalDate.of(2020,12,01));
 		muestraNovato.agregarOpinion(opinion, userExperto);
 		
@@ -175,10 +175,10 @@ class MuestraTest {
 		userExperto.setEstadoDeUsuario(new EstadoDeUsuarioExperto());
 		Usuario userExperto2 = new Usuario("Pepe", null);
 		userExperto2.setEstadoDeUsuario(new EstadoDeUsuarioExperto());
-		Opinion opinionDeExperto = new Opinion("bicho!");
-		Muestra muestraExperto = new Muestra(userExperto, opinionDeExperto, fotoVinchuca, ubicacionVinchuca , LocalDate.of(2020,12,01));
+		Opinion opinion = new Opinion(Descripcion.VINCHUCA_SORDIDA);
+		Muestra muestraExperto = new Muestra(userExperto, opinion, fotoVinchuca, ubicacionVinchuca , LocalDate.of(2020,12,01));
 		
-		muestraExperto.agregarOpinion(opinionDeExperto, userExperto2);
+		muestraExperto.agregarOpinion(opinion, userExperto2);
 		
 		assertEquals(new EstadoDeMuestraVerificada().getClass(), muestraExperto.getEstadoDeMuestra().getClass());
 		assertEquals(LocalDate.now(), muestraExperto.getFechaUltimaVotacion());
@@ -195,7 +195,7 @@ class MuestraTest {
 		userExperto2.setEstadoDeUsuario(new EstadoDeUsuarioBasico());
 		Usuario userExperto3 = new Usuario("Pepe", null);
 		userExperto3.setEstadoDeUsuario(new EstadoDeUsuarioBasico());
-		Opinion opinionDeExperto = new Opinion("bicho!");
+		Opinion opinionDeExperto = new Opinion(Descripcion.VINCHUCA_SORDIDA);
 		Muestra muestraExperto = new Muestra(userExperto, opinionDeExperto, fotoVinchuca, ubicacionVinchuca , LocalDate.of(2020,12,01));
 		
 		try {
@@ -207,8 +207,10 @@ class MuestraTest {
 	    }
 		//assertEquals(new EstadoDeMuestraVotada().getClass(), muestra.getEstadoDeMuestra().getClass());
 	}
-}	
-*/	
+	
+}
+	
+	
 	
 	
 	
