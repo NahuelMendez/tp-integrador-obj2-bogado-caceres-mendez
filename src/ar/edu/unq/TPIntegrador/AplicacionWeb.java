@@ -16,7 +16,7 @@ public class AplicacionWeb {
 	}
 
 	public Set<Muestra> muestrasRegistradas() {
-		// TODO Auto-generated method stub
+		
 		return muestrasRegistradas;
 	}
 
@@ -33,7 +33,7 @@ public class AplicacionWeb {
 	}
 
 	public Set<Usuario> usuariosRegistrados() {
-		// TODO Auto-generated method stub
+		
 		return usuariosRegistrados;
 	}
 
@@ -43,7 +43,6 @@ public class AplicacionWeb {
 	}
 
 	public Set<ZonaDeCobertura> zonasDeCobertura() {
-		// TODO Auto-generated method stub
 		return zonasDeCobertura;
 	}
 
@@ -60,15 +59,29 @@ public class AplicacionWeb {
 	private Set<Muestra> listaDeMuestrasSin(Muestra muestra1) {
 		Set<Muestra> listaNueva = new HashSet<Muestra>();
 		for (Muestra muestra: muestrasRegistradas) {
-			this.agregarSiNoEs(muestra1, muestra, listaNueva);
+			listaNueva.add(muestra);
 		}
+		listaNueva.remove(muestra1);
 		return listaNueva;
 	}
 
-	private void agregarSiNoEs(Muestra muestra1, Muestra muestraAgregar, Set<Muestra> listaNueva) {
-		if (muestra1 != muestraAgregar) {
-			listaNueva.add(muestraAgregar);
-		}
+	public Set<Muestra> filtrarMuestras(IFiltro filtro) {
+		return filtro.filtrar(muestrasRegistradas);
 	}
+
+	public Set<ZonaDeCobertura> zonasQueSeSolapanCon(ZonaDeCobertura zonaDeCobertura1) {
+		return zonaDeCobertura1.zonasQueSolapan(this.listaDeZonasSin(zonaDeCobertura1));
+		
+	}
+
+	private Set<ZonaDeCobertura> listaDeZonasSin(ZonaDeCobertura zonaDeCobertura1) {
+		Set<ZonaDeCobertura> listaNueva = new HashSet<ZonaDeCobertura>();
+		for (ZonaDeCobertura zona: zonasDeCobertura) {
+			listaNueva.add(zona);
+		}
+		listaNueva.remove(zonaDeCobertura1);
+		return listaNueva;
+	}
+
 
 }

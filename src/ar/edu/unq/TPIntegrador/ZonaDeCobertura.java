@@ -1,22 +1,23 @@
 package ar.edu.unq.TPIntegrador;
 
-import java.util.ArrayList;
-import java.util.List;
+
+import java.util.HashSet;
+import java.util.Set;
 
 public class ZonaDeCobertura {
 
 	private String nombre;
 	private Integer radio;
 	private Ubicacion epicentro;
-	private List<IObserver> observers;
-	private List<Muestra> muestrasRegistradas;
+	private Set<IObserver> observers;
+	private Set<Muestra> muestrasRegistradas;
 
 	public ZonaDeCobertura(String nombre, Integer radio, Ubicacion epicentro) {
 		this.nombre = nombre;
 		this.radio = radio;
 		this.epicentro = epicentro;
-		this.observers = new ArrayList<IObserver>();
-		this.muestrasRegistradas = new ArrayList<Muestra>();
+		this.observers = new HashSet<IObserver>();
+		this.muestrasRegistradas = new HashSet<Muestra>();
 	}
 
 	public void agregarObserver(IObserver observer) {
@@ -40,8 +41,8 @@ public class ZonaDeCobertura {
 		return epicentro;
 	}
 
-	public List<ZonaDeCobertura> zonasQueSolapan(List<ZonaDeCobertura> listaDeZonas) {
-		List<ZonaDeCobertura> zonasQueSolapan = new ArrayList<ZonaDeCobertura>();
+	public Set<ZonaDeCobertura> zonasQueSolapan(Set<ZonaDeCobertura> listaDeZonas) {
+		Set<ZonaDeCobertura> zonasQueSolapan = new HashSet<ZonaDeCobertura>();
 		
 		for (ZonaDeCobertura zona: listaDeZonas) {
 			this.agregarSiSeSolapa(zona, zonasQueSolapan);
@@ -50,14 +51,14 @@ public class ZonaDeCobertura {
 		return zonasQueSolapan;
 	}
 
-	private void agregarSiSeSolapa(ZonaDeCobertura zona, List<ZonaDeCobertura> zonasQueSolapan) {
+	private void agregarSiSeSolapa(ZonaDeCobertura zona, Set<ZonaDeCobertura> zonasQueSolapan) {
 		if (this.epicentro.medirDistancias(zona.epicentro) < this.radio + zona.radio) {
 			zonasQueSolapan.add(zona);
 		}
 		
 	}
 
-	public List<IObserver> observerRegistrados() {
+	public Set<IObserver> observerRegistrados() {
 		return observers;
 	}
 
@@ -81,7 +82,7 @@ public class ZonaDeCobertura {
 	}
 
 
-	public List<Muestra> muestrasRegistradas() {
+	public Set<Muestra> muestrasRegistradas() {
 		return muestrasRegistradas;
 	}
 

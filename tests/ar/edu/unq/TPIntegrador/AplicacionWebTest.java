@@ -12,10 +12,22 @@ import org.junit.jupiter.api.Test;
 class AplicacionWebTest {
 
 	private AplicacionWeb aplicacionWeb;
+	private Muestra muestra1;
+	private Muestra muestra2;
+	private Muestra muestra3;
+	private ZonaDeCobertura zonaDeCobertura1;
+	private ZonaDeCobertura zonaDeCobertura2;
+	private ZonaDeCobertura zonaDeCobertura3;
 
 	@BeforeEach
 	public void setUp() {
 		aplicacionWeb = new AplicacionWeb();
+		muestra1 = mock(Muestra.class);
+		muestra2 = mock(Muestra.class);
+		muestra3 = mock(Muestra.class);
+	    zonaDeCobertura1 = mock(ZonaDeCobertura.class);
+		zonaDeCobertura2 = mock(ZonaDeCobertura.class);
+		zonaDeCobertura3 = mock(ZonaDeCobertura.class);
 	}
 	
 	@Test
@@ -26,9 +38,9 @@ class AplicacionWebTest {
 	
 	@Test
 	void test_AplicacionWebTieneUnaMuestraRegistradaYSuCantidadDeMuestrasEsUno() {
-		Muestra muestra = mock(Muestra.class);
 		
-		aplicacionWeb.registrarMuestra(muestra);
+		
+		aplicacionWeb.registrarMuestra(muestra1);
 		
 		assertEquals(1, aplicacionWeb.muestrasRegistradas().size());
 	}
@@ -56,18 +68,16 @@ class AplicacionWebTest {
 	
 	@Test
 	void test_AplicacionWebTieneUnaZonaDeCoberturaRegistradaYSuCantidadDeZonasDeCoberturaEsUna() {
-		ZonaDeCobertura zonaDeCobertura = mock(ZonaDeCobertura.class);
 		
-		aplicacionWeb.agregarZonaDeCobertura(zonaDeCobertura);
+		
+		aplicacionWeb.agregarZonaDeCobertura(zonaDeCobertura1);
 		
 		assertEquals(1, aplicacionWeb.zonasDeCobertura().size());
 	}
 	
 	@Test
 	void test_AplicacionWebBuscaCualesSonLasMuestrasQueSeRegistraronCercaDe1KilometroDeUnaMuestraDadaYLeDelegaLaResponsabilidadALaMuestra() {
-		Muestra muestra1 = mock(Muestra.class);
-		Muestra muestra2 = mock(Muestra.class);
-		Muestra muestra3 = mock(Muestra.class);
+		
 		Set<Muestra> listaDeMuestras = new HashSet<Muestra>();
 		
 		listaDeMuestras.add(muestra2);
@@ -82,10 +92,7 @@ class AplicacionWebTest {
 	}
 	
 	@Test
-	void test_AplicacionWebBuscaCualesSonLasMuestrasQueSeRegistraronCercaDe1KilometroDeUnaMuestraDadaYLaCantidadDeMuestrasCercasEsCero() {
-		Muestra muestra1 = mock(Muestra.class);
-		Muestra muestra2 = mock(Muestra.class);
-		Muestra muestra3 = mock(Muestra.class);
+	void test_AplicacionWebBuscaCualesSonLasMuestrasQueSeRegistraronCercaDe1KilometroDeUnaMuestraDadaYLaCantidadDeMuestrasCercaEsCero() {
 		Set<Muestra> listaDeMuestras = new HashSet<Muestra>();
 		Set<Muestra> listaVacia = new HashSet<Muestra>();
 		
@@ -102,17 +109,76 @@ class AplicacionWebTest {
 	
 	@Test
 	void test_AplicacionWebRegistraUnaNuevaMuestraYLeAvisaALasZonasDeCoberturaRegistradas() {
-		ZonaDeCobertura zonaDeCobertura1 = mock(ZonaDeCobertura.class);
-		ZonaDeCobertura zonaDeCobertura2 = mock(ZonaDeCobertura.class);
-		Muestra muestra = mock(Muestra.class);
 		
 		aplicacionWeb.agregarZonaDeCobertura(zonaDeCobertura1);
 		aplicacionWeb.agregarZonaDeCobertura(zonaDeCobertura2);
-		aplicacionWeb.registrarMuestra(muestra);
+		aplicacionWeb.registrarMuestra(muestra1);
 		
-		verify(zonaDeCobertura1).agregarNuevaMuestra(muestra);
-		verify(zonaDeCobertura2).agregarNuevaMuestra(muestra);
+		verify(zonaDeCobertura1).agregarNuevaMuestra(muestra1);
+		verify(zonaDeCobertura2).agregarNuevaMuestra(muestra1);
 	}
 	
+	@Test
+	void test_AplicacionWebFiltraSuListraDeMuestraYLeDelegaLaResponsabilidadAlFiltro() {
+		Set<Muestra> listaDeMuestras = new HashSet<Muestra>();
+		IFiltro filtro = mock(IFiltro.class);
+		
+		listaDeMuestras.add(muestra1);
+		listaDeMuestras.add(muestra2);
+		listaDeMuestras.add(muestra3);
+		aplicacionWeb.registrarMuestra(muestra1);
+		aplicacionWeb.registrarMuestra(muestra2);
+		aplicacionWeb.registrarMuestra(muestra3);
+		aplicacionWeb.filtrarMuestras(filtro);
+		
+		
+		verify(filtro).filtrar(listaDeMuestras);
+	}
+	
+	@Test
+	void test_AplicacionWebFiltraSuListraDeMuestraYElFiltroLeDevuelveLaMismaListaDeMuestras() {
+		Set<Muestra> listaDeMuestras = new HashSet<Muestra>();
+		IFiltro filtro = mock(IFiltro.class);
+		
+		listaDeMuestras.add(muestra1);
+		listaDeMuestras.add(muestra2);
+		listaDeMuestras.add(muestra3);
+		aplicacionWeb.registrarMuestra(muestra1);
+		aplicacionWeb.registrarMuestra(muestra2);
+		aplicacionWeb.registrarMuestra(muestra3);
+		when(filtro.filtrar(listaDeMuestras)).thenReturn(listaDeMuestras);
+		
+		assertEquals(listaDeMuestras, aplicacionWeb.filtrarMuestras(filtro));
+	}
+	
+	@Test
+	void test_AplicacionWebQuiereSaberCualesSonLasZonasQueSeSolapanConUnaZonaDeCoberturaYLeDelegaLaResponsabilidadALaZonaDecobertura() {
+		
+		Set<ZonaDeCobertura> zonasDeCobertura = new HashSet<ZonaDeCobertura>();
+		
+		zonasDeCobertura.add(zonaDeCobertura2);
+		zonasDeCobertura.add(zonaDeCobertura3);
+		aplicacionWeb.agregarZonaDeCobertura(zonaDeCobertura1);
+		aplicacionWeb.agregarZonaDeCobertura(zonaDeCobertura2);
+		aplicacionWeb.agregarZonaDeCobertura(zonaDeCobertura3);
+		aplicacionWeb.zonasQueSeSolapanCon(zonaDeCobertura1);
+		
+		verify(zonaDeCobertura1).zonasQueSolapan(zonasDeCobertura);
+	}
+	
+	@Test
+	void test_AplicacionWebQuiereSaberCualesSonLasZonasQueSeSolapanConUnaZonaDeCoberturaYLaZonaDeCoberturaLeRetornaUnaLista() {
+		
+		Set<ZonaDeCobertura> zonasDeCobertura = new HashSet<ZonaDeCobertura>();
+		
+		zonasDeCobertura.add(zonaDeCobertura2);
+		zonasDeCobertura.add(zonaDeCobertura3);
+		aplicacionWeb.agregarZonaDeCobertura(zonaDeCobertura1);
+		aplicacionWeb.agregarZonaDeCobertura(zonaDeCobertura2);
+		aplicacionWeb.agregarZonaDeCobertura(zonaDeCobertura3);
+		when(zonaDeCobertura1.zonasQueSolapan(zonasDeCobertura)).thenReturn(zonasDeCobertura);
+		
+		assertEquals(zonasDeCobertura,aplicacionWeb.zonasQueSeSolapanCon(zonaDeCobertura1));
+	}
 
 }

@@ -3,8 +3,9 @@ package ar.edu.unq.TPIntegrador;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
-import java.util.ArrayList;
-import java.util.List;
+
+import java.util.HashSet;
+import java.util.Set;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -61,7 +62,7 @@ class ZonaDeCoberturaTest {
 	
 	@Test
 	void test_ZonaDeCobertura1NoSeSolapaConNingunaZonaDeCobertura() {
-		List<ZonaDeCobertura> listaDeZonas = new ArrayList<ZonaDeCobertura>();
+		Set<ZonaDeCobertura> listaDeZonas = new HashSet<ZonaDeCobertura>();
 		listaDeZonas.add(zonaDeCobertura2);
 		listaDeZonas.add(zonaDeCobertura3);
 		
@@ -73,7 +74,7 @@ class ZonaDeCoberturaTest {
 	
 	@Test
 	void test_ZonaDeCobertura1SeSolapaConUnaZonaDeCobertura() {
-		List<ZonaDeCobertura> listaDeZonas = new ArrayList<ZonaDeCobertura>();
+		Set<ZonaDeCobertura> listaDeZonas = new HashSet<ZonaDeCobertura>();
 		listaDeZonas.add(zonaDeCobertura2);
 		listaDeZonas.add(zonaDeCobertura3);
 		

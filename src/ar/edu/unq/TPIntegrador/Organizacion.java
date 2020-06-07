@@ -18,17 +18,17 @@ public class Organizacion implements IObserver{
 	}
 
 	public Integer getCantidadDePersonasTrabajando() {
-		// TODO Auto-generated method stub
+		
 		return this.cantidadDePersonasTrabajando;
 	}
 
 	public Ubicacion getUbicacion() {
-		// TODO Auto-generated method stub
+		
 		return ubicacion;
 	}
 
 	public TipoDeOrganizacion getTipoDeOrganizacion() {
-		// TODO Auto-generated method stub
+		
 		return tipoDeOrganizacion;
 	}
 
