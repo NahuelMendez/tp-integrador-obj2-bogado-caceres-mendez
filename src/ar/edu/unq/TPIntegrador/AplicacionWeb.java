@@ -51,7 +51,7 @@ public class AplicacionWeb {
 		
 	}
 
-	public Set<Muestra> muestrasCercanas(Muestra muestra1, Integer kilometros) {
+	public Set<Muestra> muestrasCercanas(Muestra muestra1, Double kilometros) {
 
 		return muestra1.muestrasCercanas(this.listaDeMuestrasSin(muestra1), kilometros);
 	}

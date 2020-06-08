@@ -85,7 +85,7 @@ class AplicacionWebTest {
 		aplicacionWeb.registrarMuestra(muestra1);
 		aplicacionWeb.registrarMuestra(muestra2);
 		aplicacionWeb.registrarMuestra(muestra3);
-		aplicacionWeb.muestrasCercanas(muestra1, 1);
+		aplicacionWeb.muestrasCercanas(muestra1, 1d);
 		
 		
 		verify(muestra1).muestrasCercanas(listaDeMuestras,1);
@@ -101,10 +101,10 @@ class AplicacionWebTest {
 		aplicacionWeb.registrarMuestra(muestra1);
 		aplicacionWeb.registrarMuestra(muestra2);
 		aplicacionWeb.registrarMuestra(muestra3);
-		aplicacionWeb.muestrasCercanas(muestra1,1);
+		aplicacionWeb.muestrasCercanas(muestra1,1d);
 		when(muestra1.muestrasCercanas(listaDeMuestras,1)).thenReturn(listaVacia);
 		
-		assertEquals(0, aplicacionWeb.muestrasCercanas(muestra1, 1).size());
+		assertEquals(0, aplicacionWeb.muestrasCercanas(muestra1, 1d).size());
 	}
 	
 	@Test

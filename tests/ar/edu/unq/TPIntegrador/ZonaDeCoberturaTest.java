@@ -25,9 +25,9 @@ class ZonaDeCoberturaTest {
 		epicentro2 = mock(Ubicacion.class);
 		epicentro3 = mock(Ubicacion.class);
 		
-		zonaDeCobertura1 = new ZonaDeCobertura("Zona uno", 5, epicentro1);
-		zonaDeCobertura2 = new ZonaDeCobertura("Zona dos", 8, epicentro2);
-		zonaDeCobertura3 = new ZonaDeCobertura("Zona tres", 12, epicentro3);
+		zonaDeCobertura1 = new ZonaDeCobertura("Zona uno", 5d, epicentro1);
+		zonaDeCobertura2 = new ZonaDeCobertura("Zona dos", 8d, epicentro2);
+		zonaDeCobertura3 = new ZonaDeCobertura("Zona tres", 12d, epicentro3);
 	}
 
 	@Test
@@ -66,8 +66,8 @@ class ZonaDeCoberturaTest {
 		listaDeZonas.add(zonaDeCobertura2);
 		listaDeZonas.add(zonaDeCobertura3);
 		
-		when(epicentro1.medirDistancias(epicentro2)).thenReturn(15);
-		when(epicentro1.medirDistancias(epicentro3)).thenReturn(21);
+		when(epicentro1.medirDistancias(epicentro2)).thenReturn(15d);
+		when(epicentro1.medirDistancias(epicentro3)).thenReturn(21d);
 		
 		assertEquals(0 , zonaDeCobertura1.zonasQueSolapan(listaDeZonas).size());
 	}
@@ -78,8 +78,8 @@ class ZonaDeCoberturaTest {
 		listaDeZonas.add(zonaDeCobertura2);
 		listaDeZonas.add(zonaDeCobertura3);
 		
-		when(epicentro1.medirDistancias(epicentro2)).thenReturn(6);
-		when(epicentro1.medirDistancias(epicentro3)).thenReturn(21);
+		when(epicentro1.medirDistancias(epicentro2)).thenReturn(6d);
+		when(epicentro1.medirDistancias(epicentro3)).thenReturn(21d);
 		
 		assertEquals(1 , zonaDeCobertura1.zonasQueSolapan(listaDeZonas).size());
 	}
@@ -126,7 +126,7 @@ class ZonaDeCoberturaTest {
 		zonaDeCobertura1.agregarObserver(organizacion1);
 		zonaDeCobertura1.agregarObserver(organizacion2);
 		when(muestra.getUbicacion()).thenReturn(ubicacionMuestra);
-		when(epicentro1.medirDistancias(ubicacionMuestra)).thenReturn(3);
+		when(epicentro1.medirDistancias(ubicacionMuestra)).thenReturn(3d);
 		zonaDeCobertura1.agregarNuevaMuestra(muestra);
 		
 		verify(organizacion1).actualizar(zonaDeCobertura1, muestra, "Nueva muestra");
@@ -140,7 +140,7 @@ class ZonaDeCoberturaTest {
 		Ubicacion ubicacionMuestra = mock(Ubicacion.class);
 		
 		when(muestra.getUbicacion()).thenReturn(ubicacionMuestra);
-		when(epicentro1.medirDistancias(ubicacionMuestra)).thenReturn(6);
+		when(epicentro1.medirDistancias(ubicacionMuestra)).thenReturn(6d);
 		zonaDeCobertura1.agregarNuevaMuestra(muestra);
 		
 		assertEquals(0, zonaDeCobertura1.muestrasRegistradas().size());

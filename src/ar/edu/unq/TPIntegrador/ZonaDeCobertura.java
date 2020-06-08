@@ -7,12 +7,12 @@ import java.util.Set;
 public class ZonaDeCobertura {
 
 	private String nombre;
-	private Integer radio;
+	private Double radio;
 	private Ubicacion epicentro;
 	private Set<IObserver> observers;
 	private Set<Muestra> muestrasRegistradas;
 
-	public ZonaDeCobertura(String nombre, Integer radio, Ubicacion epicentro) {
+	public ZonaDeCobertura(String nombre, Double radio, Ubicacion epicentro) {
 		this.nombre = nombre;
 		this.radio = radio;
 		this.epicentro = epicentro;
@@ -33,7 +33,7 @@ public class ZonaDeCobertura {
 		return nombre;
 	}
 
-	public Integer getRadio() {
+	public Double getRadio() {
 		return radio;
 	}
 
