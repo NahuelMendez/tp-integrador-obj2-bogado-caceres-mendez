@@ -10,28 +10,23 @@ class OpinionTest {
 
 	@Test
 	void test_SeCreaUnaOpinionConLaFechaDeHoyYTieneLaFechaDeHoy() {
-		Descripcion descripcion = Descripcion.VINCHUCA_INFESTANS;
-		Opinion opinion = new Opinion(descripcion);
+		Opinion opinion = Opinion.CHINCHE_FOLIADA;
 		
 		assertEquals(LocalDate.now() , opinion.getFechaDeEmision());
 	}
 	
 	@Test
 	void test_SeCreaUnaOpinionConLaDescripcionDeVinchucaInfestansYSuDescipcrionEsVinchucaInfestans() {
-		Descripcion descripcion = Descripcion.VINCHUCA_INFESTANS;
+		Opinion opinion = Opinion.CHINCHE_FOLIADA;
 		
-		Opinion opinion = new Opinion(descripcion);
-		
-		assertEquals(descripcion, opinion.getDescripcion());
+		assertEquals("CHINCHE_FOLIADA", opinion.getDescripcion());
 	}
 	
 	@Test
 	void test_SeCreaUnaOpinionConLaDescripcionDeVinchucaSordidaYSuDescipcrionEsVinchucaSordida() {
-		Descripcion descripcion = Descripcion.VINCHUCA_SORDIDA;
+		Opinion opinion = Opinion.PHTIA_CHINCHE;
 		
-		Opinion opinion = new Opinion(descripcion);
-		
-		assertEquals(descripcion, opinion.getDescripcion());
+		assertEquals("PHTIA_CHINCHE", opinion.getDescripcion());
 	}
 
 }

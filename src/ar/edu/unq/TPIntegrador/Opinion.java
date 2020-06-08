@@ -2,22 +2,22 @@ package ar.edu.unq.TPIntegrador;
 
 import java.time.LocalDate;
 
-public class Opinion {
+public enum Opinion {
+	
+	VINCHUCA_INFESTANS, VINCHUCA_SORDIDA, VINCHUCA_GUASAYANA, CHINCHE_FOLIADA, PHTIA_CHINCHE, NINGUNA, IMAGEN_POCO_CLARA;
 
 	private LocalDate fechaDeEmision;
-	private Descripcion descripcion;
 
-	public Opinion(Descripcion descripcion) {
-		this.fechaDeEmision = LocalDate.now();
-		this.descripcion = descripcion;
+	Opinion() {
+		fechaDeEmision = LocalDate.now();
 	}
 
 	public LocalDate getFechaDeEmision() {
 		return fechaDeEmision;
 	}
 
-	public Descripcion getDescripcion() {
-		return descripcion;
+	public String getDescripcion() {
+		return this.toString();
 	}
 
 }
