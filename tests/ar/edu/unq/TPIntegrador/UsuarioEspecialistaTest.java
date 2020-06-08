@@ -58,14 +58,14 @@ class UsuarioEspecialistaTest {
 	
 	@Test
 	void test_CuandoUnUsuarioEspecialistaEmiteUnaOpinionSobreUnaMuestraLaMuestraRecibeElMensajeAgregarOpinion() throws Exception {
-		when(muestra.usuarioEsAptoParaVotar(usuarioE)).thenReturn(true);
+		when(muestra.usuarioAptoParaVotar(usuarioE)).thenReturn(true);
 		usuarioE.opinarSobreMuestra(muestra, opinion);
 		verify(muestra).agregarOpinion(opinion, usuarioE);
 	}
 	
 	@Test
 	void test_UnUsuarioQuiereOpinarSobreUnaMuestraYaVerificadaPorLoTantoNoEmiteOpinion() throws Exception {
-		when(muestra.usuarioEsAptoParaVotar(usuarioE)).thenReturn(false);
+		when(muestra.usuarioAptoParaVotar(usuarioE)).thenReturn(false);
 		usuarioE.opinarSobreMuestra(muestra, opinion);
 		Integer result = usuarioE.getRevisiones();
 		assertEquals(0, result);

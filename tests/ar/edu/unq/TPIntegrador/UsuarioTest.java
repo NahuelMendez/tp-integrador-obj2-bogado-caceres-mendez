@@ -41,7 +41,7 @@ class UsuarioTest {
 	
 	@Test
 	void test_UnUsuarioEmiteUnaOpinionYTiene1CantidadDeOpiniones() throws Exception {
-		when(muestra.usuarioEsAptoParaVotar(usuario)).thenReturn(true);
+		when(muestra.usuarioAptoParaVotar(usuario)).thenReturn(true);
 		usuario.opinarSobreMuestra(muestra, opinion);
 		Integer result = usuario.getRevisiones();
 		assertEquals(1, result);
@@ -74,7 +74,7 @@ class UsuarioTest {
 	
 	@Test
 	void test_UnUsuarioEmiteUnaOpinionYLeEnviaElMensajeDeAgregarOpinionALaMuestra() throws Exception {
-		when(muestra.usuarioEsAptoParaVotar(usuario)).thenReturn(true);
+		when(muestra.usuarioAptoParaVotar(usuario)).thenReturn(true);
 		usuario.opinarSobreMuestra(muestra, opinion);
 		verify(muestra).agregarOpinion(opinion, usuario);
 	}

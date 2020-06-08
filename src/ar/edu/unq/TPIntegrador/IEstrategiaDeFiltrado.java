@@ -1,9 +1,9 @@
 package ar.edu.unq.TPIntegrador;
 
-import java.util.ArrayList;
+import java.util.Set;
 
 public interface IEstrategiaDeFiltrado {
 	
-	public void agregarMuestraSiPasaElFiltro(FiltroPorFecha filtro, ArrayList<Muestra> listaFiltrada, Muestra muestra);
+	public void agregarMuestraSiPasaElFiltro(FiltroPorFecha filtro, Set<Muestra> listaFiltrada, Muestra muestra);
 	
 }

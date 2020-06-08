@@ -161,6 +161,16 @@ public class Muestra {
 			zona.muestraVerificada(this);
 		}
 	}
+
+	public Set<Muestra> muestrasCercanas(Set<Muestra> listaDeMuestras, int i) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public String nivelDeVerificacion() {
+		// TODO Auto-generated method stub
+		return null;
+	}
 	
 	//public Set<Muestra> muestrasCercanas(Set<Muestra> muestras, Integer distancia)){
 		

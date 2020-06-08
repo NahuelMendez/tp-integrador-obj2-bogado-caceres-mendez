@@ -31,7 +31,7 @@ class UsuarioNovatoTest {
 		when(opinion2.getFechaDeEmision()).thenReturn(fechaActual);
 		muestra1 = mock(Muestra.class);
 		when(muestra1.getFechaDeCreacion()).thenReturn(fechaActual);
-		when(muestra1.usuarioEsAptoParaVotar(usuarioN)).thenReturn(true);
+		when(muestra1.usuarioAptoParaVotar(usuarioN)).thenReturn(true);
 		fixture = new FixtureUsuarioNovatoTest();
 		fixture2 = new FixtureUsuarioNovatoParaBajarDeCategoriaTest("23444555", sistema);
 	}

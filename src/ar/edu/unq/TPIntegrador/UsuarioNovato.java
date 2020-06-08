@@ -59,7 +59,5 @@ public class UsuarioNovato extends Usuario {
 			enviosDelUltimoMes.add(muestra);
 		}
 	}
-	
-	
 
 }

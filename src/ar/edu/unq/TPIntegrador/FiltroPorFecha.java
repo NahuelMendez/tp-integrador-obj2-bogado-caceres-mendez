@@ -2,7 +2,9 @@ package ar.edu.unq.TPIntegrador;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 public abstract class FiltroPorFecha {
 	
@@ -16,8 +18,8 @@ public abstract class FiltroPorFecha {
     	this.estrategia = estrategia;
     }
 	
-	public List<Muestra> filtrar(List<Muestra> muestras){
-		ArrayList<Muestra> listaFiltrada = new ArrayList<Muestra>();
+	public Set<Muestra> filtrar(Set<Muestra> muestras){
+		Set<Muestra> listaFiltrada = new HashSet<Muestra>();
 		for (Muestra muestra : muestras) {
 			this.estrategia.agregarMuestraSiPasaElFiltro(this,listaFiltrada, muestra);
 		}
