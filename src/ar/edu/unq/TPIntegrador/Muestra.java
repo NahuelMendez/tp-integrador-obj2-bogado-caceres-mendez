@@ -171,7 +171,7 @@ public class Muestra {
 		}
 	}
 	
-	public Set<Muestra> muestrasCercanas(Set<Muestra> muestras, Integer distancia){
+	public Set<Muestra> muestrasCercanas(Set<Muestra> muestras, double distancia){
 		return this.ubicacion.muestrasCercanas(muestras, distancia);
 	}
 }
