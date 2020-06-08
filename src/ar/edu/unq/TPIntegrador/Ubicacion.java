@@ -24,18 +24,18 @@ public class Ubicacion {
 	public Set<Ubicacion> ubicacionesCercanas(Set<Ubicacion> ubicaciones, double distancia){
 		Set<Ubicacion> retorno = new HashSet<Ubicacion>();
 		for(Ubicacion ubicacion : ubicaciones) {
-			if(this.medirDistanciasConUbicacion(ubicacion) <= distancia) {
+			if(this.medirDistancias(ubicacion) <= distancia) {
 				retorno.add(ubicacion);
 			}
 		}
 		return retorno;
 	}
 	
-	public Double medirDistanciasConUbicacion(Ubicacion ubicacion2) {
-		 return medirDistancias(this.getLatitud(), this.getLongitud(), ubicacion2.getLatitud(), ubicacion2.getLongitud());
+	public Double medirDistancias(Ubicacion ubicacion2) {
+		 return medirDistanciasEntreUbicaciones(this.getLatitud(), this.getLongitud(), ubicacion2.getLatitud(), ubicacion2.getLongitud());
 	}
 
-	private Double medirDistancias(double lat1, double lng1, double lat2, double lng2) {  
+	private Double medirDistanciasEntreUbicaciones(double lat1, double lng1, double lat2, double lng2) {  
 	        //double radioTierra = 3958.75;//en millas  
 	        double radioTierra = 6371;//en kilómetros  
 	        double dLat = Math.toRadians(lat2 - lat1);  
@@ -50,9 +50,14 @@ public class Ubicacion {
 	        return Math.abs(distancia);  
 	    }
 
-	public Set<Muestra> muestrasCercanas(Set<Muestra> muestras, Integer distancia) {
-		// TODO Auto-generated method stub
-		return null;
+	public Set<Muestra> muestrasCercanas(Set<Muestra> muestrasAMedir, double distancia) {
+		Set<Muestra> retorno = new HashSet<Muestra>();
+		for(Muestra muestra : muestrasAMedir) {
+			if(this.medirDistancias(muestra.getUbicacion()) <= distancia) {
+				retorno.add(muestra);
+			}
+		}
+		return retorno;
 	}  
 }
 

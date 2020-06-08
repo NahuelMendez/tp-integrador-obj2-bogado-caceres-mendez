@@ -52,31 +52,31 @@ class UbicacionTest {
 	}
 	
 	@Test
-	void testUnaUbicacionSeEncuentraA_232_07573107485268_DeLaUbicacion2() {
+	void test_UnaUbicacionSeEncuentraA_232_07573107485268_DeLaUbicacion2() {
 		ubicacion2 = new Ubicacion(2.1, 1.0);
-		assertEquals(232.07573107485268, ubicacion1.medirDistanciasConUbicacion(ubicacion2));
+		assertEquals(232.07573107485268, ubicacion1.medirDistancias(ubicacion2));
 	}
 
 	@Test
-	void testUnaUbicacionSeEncuentraDeLaUbicacion3() {
+	void test_UnaUbicacionSeEncuentraDeLaUbicacion3() {
 		ubicacion3 = new Ubicacion(6.0, 6.7);
-		assertEquals(647.1728246890287, ubicacion1.medirDistanciasConUbicacion(ubicacion3));
+		assertEquals(647.1728246890287, ubicacion1.medirDistancias(ubicacion3));
 	}
 
 	@Test
 	void test_DistanciaConUbicacion4() {
 		ubicacion4 = new Ubicacion(23.0, 12.0);
-		assertEquals(2580.4795481852875, ubicacion1.medirDistanciasConUbicacion(ubicacion4));
+		assertEquals(2580.4795481852875, ubicacion1.medirDistancias(ubicacion4));
 	
 	}
 	
 	@Test
 	void test_DistanciaConUbicacionDeMuestra() {
-		assertEquals(232.07573107485268, ubicacion1.medirDistanciasConUbicacion(muestra2.getUbicacion()));
+		assertEquals(232.07573107485268, ubicacion1.medirDistancias(muestra2.getUbicacion()));
 	}
 
 	@Test
-	void testUnaUbicacionRetornaLasUbicacionesCercanas() {
+	void test_UnaUbicacionRetornaLasUbicacionesCercanas() {
 		Set<Ubicacion> ubicacionesAMedir = new HashSet<Ubicacion>();
 		Set<Ubicacion> ubCercanas = new HashSet<Ubicacion>();
 		
@@ -90,7 +90,7 @@ class UbicacionTest {
 	}
 
 	@Test
-	void testUnaUbicacionRetornaLasMuestrasCercanas() {
+	void test_UnaUbicacionRetornaLasMuestrasCercanas() {
 		Set<Muestra> muestras_AMedir = new HashSet<Muestra>();
 		Set<Muestra> muestras_Cercanas = new HashSet<Muestra>();
 	

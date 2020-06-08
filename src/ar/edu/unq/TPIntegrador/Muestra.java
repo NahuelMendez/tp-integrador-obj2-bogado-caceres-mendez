@@ -174,18 +174,7 @@ public class Muestra {
 	public Set<Muestra> muestrasCercanas(Set<Muestra> muestras, Integer distancia){
 		return this.ubicacion.muestrasCercanas(muestras, distancia);
 	}
-	
-	
 }
 	
 
-	
-
-
-
-//Consejo del profe Mati:
-//hace falta un mensaje en la app web que diga "dame todas las muestras que se capturaron cerca de esta otra que te mando como parametro". 
-//La app habla con la muestra y le dice 'dame todas las que estan cercanas a vos'. 
-//La muestra lo delega en la ubicacion, y le dice 'dame todas las que estan cercanas a mi ubicacion' y le manda la lista de todas las muestras
-	
 

@@ -139,7 +139,7 @@ class MuestraTest {
 	}
 	
 	@Test
-	void test_CuandoSeIntentaVerificarUnaMuestraVotadaSeArrojaUnaExcepcion() throws Exception {
+	void test_cuandoSeIntentaVerificarUnaMuestraVotadaSeArrojaUnaExcepcion() throws Exception {
 		try {
 			muestra.verificarMuestra();
 		 }
@@ -207,15 +207,6 @@ class MuestraTest {
 		muestra.agregarOpinion(opinion, nahueExperto);
 		muestra.agregarOpinion(opinion, ximeExperto);
 		assertEquals("VINCHUCA_SORDIDA", muestra.getResultadoActual());
-	}
-	
-	@Test
-	void test_cuandoUnaMuestraSeVerificaSeLeAvisaASusZonasDeCobertura() throws Exception {
-		muestra.agregarZonaDeCobertura(zona);
-		muestra.agregarOpinion(opinion, nahueExperto);
-		muestra.agregarOpinion(opinion, ximeExperto);
-		
-		verify(zona, atLeastOnce()).muestraVerificada(muestra);
 	}
 	
 	@Test
