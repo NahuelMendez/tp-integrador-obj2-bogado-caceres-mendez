@@ -9,8 +9,6 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 
-import ar.edu.unq.TPIntegrador.UsuarioEspecialista;
-
 class UsuarioEspecialistaTest {
 	
 	private UsuarioEspecialista usuarioE;

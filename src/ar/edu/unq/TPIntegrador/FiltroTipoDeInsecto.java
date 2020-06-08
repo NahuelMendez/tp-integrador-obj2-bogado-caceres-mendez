@@ -1,7 +1,5 @@
 package ar.edu.unq.TPIntegrador;
 
-import java.util.Set;
-
 public class FiltroTipoDeInsecto extends FiltroPorString{
 	
 	public FiltroTipoDeInsecto(String condicion) {
