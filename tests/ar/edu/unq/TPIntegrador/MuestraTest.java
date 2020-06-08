@@ -53,7 +53,7 @@ class MuestraTest {
 		//Muestra con dummy objects.
 		muestra1 = new Muestra(userPropietario, opinion2, fotoVinchuca, ubicacionVinchuca , LocalDate.of(2020,05,05));
 	}
-	
+
 	@Test
 	void test_UnaMuestraTieneUnaEspecieDeVinchucaVINCHUCA_SORDIDA() {
 		assertEquals("VINCHUCA_SORDIDA", muestra.getEspecieDeVinchuca());
@@ -68,7 +68,6 @@ class MuestraTest {
 	void test_UnaMuestraTieneUnaUbicacion() {
 		assertEquals(ubicacionVinchuca, muestra.getUbicacion());
 	}
-	
 	
 	@Test
 	void test_UnaMuestraTieneUnPropietarioDeNombreJuan() {
@@ -212,11 +211,35 @@ class MuestraTest {
 	
 	@Test
 	void test_cuandoUnaMuestraSeVerificaSeLeAvisaASusZonasDeCobertura() throws Exception {
+		muestra.agregarZonaDeCobertura(zona);
 		muestra.agregarOpinion(opinion, nahueExperto);
 		muestra.agregarOpinion(opinion, ximeExperto);
-		assertEquals("VINCHUCA_SORDIDA", muestra.getResultadoActual());
+		
+		verify(zona, atLeastOnce()).muestraVerificada(muestra);
 	}
 	
+	@Test
+	void test_unaMuestraSeVerificaSeLeAvisaASusZonasDeCobertura() throws Exception {
+		muestra.agregarZonaDeCobertura(zona);
+		muestra.agregarOpinion(opinion, nahueExperto);
+		muestra.agregarOpinion(opinion, ximeExperto);
+		
+		verify(zona, atLeastOnce()).muestraVerificada(muestra);
+	}
+	
+	@Test
+	void test_cuandoUnaMuestraSeVerificaCambiaSuNivelDeVerificacion() throws Exception {
+		muestra.agregarZonaDeCobertura(zona);
+		muestra.agregarOpinion(opinion, nahueExperto);
+		muestra.agregarOpinion(opinion, ximeExperto);
+		
+		assertEquals("verificada", muestra.nivelDeVerificacion());
+	}
+	
+	@Test
+	void test_UnaMuestraSinVerificarTieneNivelDeVerificacionVotada() throws Exception {
+		assertEquals("votada", muestra.nivelDeVerificacion());
+	}
 	
 }
 	
