@@ -16,7 +16,6 @@ public class Muestra {
 	private BufferedImage fotoDeLaVinchuca;
 	private Ubicacion ubicacion;
 	private LocalDate fechaDeCreacion;
-	private LocalDate fechaDeUltimaVotacion;
 	private LinkedHashMap<Usuario, Opinion> historialDeOpiniones;
 	private EstadoDeMuestra estadoActual;
 	private ArrayList<ZonaDeCobertura> zonasDeCobertura;
@@ -30,7 +29,7 @@ public class Muestra {
 		this.fechaDeCreacion = fechaDeCreacion;
 		this.historialDeOpiniones = new LinkedHashMap<Usuario, Opinion>();
 			this.historialDeOpiniones.put(usuario, opinion);
-		this.fechaDeUltimaVotacion =  getFechaUltimaVotacion();	
+		getFechaUltimaVotacion();	
 		this.estadoActual = getEstadoSegunEstadoDeUsuario(usuario);
 		this.zonasDeCobertura = new ArrayList<ZonaDeCobertura>();
 	}
@@ -56,7 +55,7 @@ public class Muestra {
 	}
 
 	private void actualizarFechaUltimaVotacion() {
-		this.fechaDeUltimaVotacion = getFechaUltimaVotacion();
+		getFechaUltimaVotacion();
 	}
 	
 	public LocalDate getFechaUltimaVotacion() {
@@ -75,7 +74,7 @@ public class Muestra {
 		this.estadoActual = estado;
 	}
 	
-	public EstadoDeMuestra getEstadoDeMuestra(){
+	protected EstadoDeMuestra getEstadoDeMuestra(){
 		return this.estadoActual;
 	}
 	

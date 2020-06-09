@@ -9,11 +9,6 @@ public class EstadoDeMuestraVerificada extends EstadoDeMuestra {
 	public void comprobarSiSePuedeOpinar(Muestra muestra, Usuario usuario) throws Exception{
 		throw new Exception("Nadie puede opinar sobre muestras verificadas");
 	}
-	
-	@Override
-	public void comprobarSiSePuedeVerificarMuestra (Muestra muestra) throws Exception{
-		throw new Exception("La muestra ya se encuentra verificada");
-	}
 
 	@Override
 	protected boolean usuarioAptoParaVotar(Usuario usuario, Muestra muestra) {
@@ -21,7 +16,7 @@ public class EstadoDeMuestraVerificada extends EstadoDeMuestra {
 	}
 
 	@Override
-	protected boolean sePuedeVerificarMuestra(Muestra muestra) throws Exception{
-		throw new Exception("La muestra ya se encuentra verificada");
+	protected boolean sePuedeVerificarMuestra(Muestra muestra){
+		return false;
 	}
 }

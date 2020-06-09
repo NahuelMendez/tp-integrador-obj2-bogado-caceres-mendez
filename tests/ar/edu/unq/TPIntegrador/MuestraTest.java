@@ -8,6 +8,8 @@ import static org.mockito.Mockito.*;
 import java.awt.image.BufferedImage;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Set;
 
 import org.junit.jupiter.api.BeforeEach;
 
@@ -18,6 +20,7 @@ class MuestraTest {
 	private Usuario usuarioBasico;
 	private Usuario nahueExperto;
 	private Usuario ximeExperto;
+	private Usuario userExperto;
 	private Opinion opinion;
 	
 	private Muestra muestra1;
@@ -28,11 +31,12 @@ class MuestraTest {
 	private ZonaDeCobertura zona;
 	private AplicacionWeb app;
 
+
 	@BeforeEach
 	void setUp() throws Exception {
 		userPropietario = mock(Usuario.class);
 		fotoVinchuca = mock(BufferedImage.class);
-		ubicacionVinchuca = mock(Ubicacion.class);
+		
 		opinion2 = mock(Opinion.class);
 		zona = mock(ZonaDeCobertura.class);
 		app = mock(AplicacionWeb.class);
@@ -43,9 +47,13 @@ class MuestraTest {
 		nahueExperto.setEstadoDeUsuario(new EstadoDeUsuarioExperto());
 		ximeExperto = new Usuario("Xime", app);
 		ximeExperto.setEstadoDeUsuario(new EstadoDeUsuarioExperto());
+		userExperto = new Usuario("User", app);
+		userExperto.setEstadoDeUsuario(new EstadoDeUsuarioExperto());
 		usuarioBasico = new Usuario("Pepite", app);
 		usuarioBasico.setEstadoDeUsuario(new EstadoDeUsuarioBasico());
 		opinion = new Opinion(Descripcion.VINCHUCA_SORDIDA);
+		
+		ubicacionVinchuca = new Ubicacion(1.5, 3.0);
 	
 		//Muestra con instancias de clases concretas
 		muestra = new Muestra(gonzaBasico_propietario, opinion, fotoVinchuca, ubicacionVinchuca , LocalDate.of(2020,12,01));
@@ -139,17 +147,6 @@ class MuestraTest {
 	}
 	
 	@Test
-	void test_cuandoSeIntentaVerificarUnaMuestraVotadaSeArrojaUnaExcepcion() throws Exception {
-		try {
-			muestra.verificarMuestra();
-		 }
-	    catch (Exception exception){
-	               assertEquals(exception.getMessage(), "La Muestra no puede verificarse aun");
-	    }
-		assertEquals(new EstadoDeMuestraVotada().getClass(), muestra.getEstadoDeMuestra().getClass());
-	}
-	
-	@Test
 	void test_UnaMuestraEstaEnEstadoVotadaPorExperto() throws Exception {
 		muestra.cerrarOpinionesParaUsuariosBasicos();
 		assertEquals(new EstadoMuestraVotadaPorExperto().getClass(), muestra.getEstadoDeMuestra().getClass());
@@ -179,16 +176,28 @@ class MuestraTest {
 	}
 	
 	@Test
-	void test_CuandoUnUsuarioExpertoTrataDeVotarUnaMuestraVerificadaSeArrojaUnaExcepcion() throws Exception {
+	void test_CuandoUnUsuarioExpertoTrataDeVotarUnaMuestraVerificadaLaOpinionNoSeAgrega() throws Exception {
 		try {
 			muestra.agregarOpinion(opinion, nahueExperto);
-			muestra.agregarOpinion(opinion, ximeExperto);			
-		 }
-	    catch (Exception exception){
-	               assertEquals(exception.getMessage(), "La Muestra no puede verificarse aun");
-	    }
+			muestra.agregarOpinion(opinion, ximeExperto);
+			muestra.agregarOpinion(opinion2, userExperto);
+		}
+		catch (Exception exception){
+            assertEquals(exception.getMessage(), "Nadie puede opinar sobre muestras verificadas");
+			
+		}
 		assertEquals(new EstadoDeMuestraVerificada().getClass(), muestra.getEstadoDeMuestra().getClass());
+		assertFalse(muestra.getHistorialDeOpiniones().containsKey(userExperto));
+		assertFalse(muestra.getHistorialDeOpiniones().containsValue(opinion2));
 	}
+
+	@Test
+	void test_unUsuarioExpertoPuedeVotarUnaMuestraVotadaPorExperto() throws Exception {
+		muestra.agregarOpinion(opinion, nahueExperto);
+		
+		assertTrue(muestra.usuarioAptoParaVotar(ximeExperto));
+	}
+	
 	
 	@Test
 	void test_cuandoSeLePideAUnaMuestraSuResultadoActualRetornaSusOpiniones() throws Exception {
@@ -230,6 +239,33 @@ class MuestraTest {
 	@Test
 	void test_UnaMuestraSinVerificarTieneNivelDeVerificacionVotada() throws Exception {
 		assertEquals("votada", muestra.nivelDeVerificacion());
+	}
+
+	@Test
+	void test_unaMuestraRetornaSuListaDeMuestrasCercanas(){
+		Ubicacion ubicacionCercana1 = new Ubicacion(1.5, 3.0);
+		Ubicacion ubicacionCercana2 = new Ubicacion(2.1, 1.0);   
+		Ubicacion ubicacionLejana1 = new Ubicacion(120.0, 343.7);    
+		Ubicacion ubicacionLejana2 = new Ubicacion(243.0, 123.0);
+		
+		Muestra muestraCercana1 = new Muestra(userPropietario, opinion2, fotoVinchuca, ubicacionCercana1 , LocalDate.of(2020,05,05));
+		Muestra muestraCercana2 = new Muestra(userPropietario, opinion2, fotoVinchuca, ubicacionCercana2 , LocalDate.of(2020,05,05));
+		Muestra muestraLejana1 = new Muestra(userPropietario, opinion2, fotoVinchuca, ubicacionLejana1 , LocalDate.of(2020,05,05));
+		Muestra muestraLejana2 = new Muestra(userPropietario, opinion2, fotoVinchuca, ubicacionLejana2 , LocalDate.of(2020,05,05));
+		
+		Set<Muestra> muestrasAComparar = new HashSet<Muestra>();
+		Set<Muestra> muestrasCercanas = new HashSet<Muestra>();
+		
+		muestrasAComparar.add(muestraCercana1);
+		muestrasAComparar.add(muestraCercana2);
+		muestrasAComparar.add(muestraLejana1);
+		muestrasAComparar.add(muestraLejana2);
+		
+		muestrasCercanas.add(muestraCercana1);
+		muestrasCercanas.add(muestraCercana2);
+		
+		assertEquals(muestrasCercanas, muestra.muestrasCercanas(muestrasAComparar, 342.0));
+		
 	}
 	
 }
