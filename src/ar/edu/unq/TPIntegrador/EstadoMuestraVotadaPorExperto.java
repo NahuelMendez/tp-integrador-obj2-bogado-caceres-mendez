@@ -1,12 +1,12 @@
 package ar.edu.unq.TPIntegrador;
 
-public class EstadoMuestraVotadaPorExperto extends EstadoDeMuestra {
+public class EstadoMuestraVotadaPorExperto implements EstadoDeMuestra {
 
 	public EstadoMuestraVotadaPorExperto() {
 	}
 
 	@Override
-	protected boolean usuarioAptoParaVotar(Usuario usuario, Muestra muestra) {
+	public boolean usuarioAptoParaVotar(Usuario usuario, Muestra muestra) {
 		if(usuario.esUsuarioExperto() &&
 			muestra.noContieneLaOpinionDelUsuario(usuario)){
 				return true;
@@ -17,12 +17,12 @@ public class EstadoMuestraVotadaPorExperto extends EstadoDeMuestra {
 		}
 
 	@Override
-	protected boolean sePuedeVerificarMuestra(Muestra muestra) {
+	public boolean sePuedeVerificarMuestra(Muestra muestra) {
 		return muestra.coincidenDosExpertosEnSuOpinion();
 	}
 
 	@Override
-	protected void agregarOpinion(Muestra muestra, Opinion opinionAAgregar, Usuario usuario) throws Exception {
+	public void agregarOpinion(Muestra muestra, Opinion opinionAAgregar, Usuario usuario) throws Exception {
 		if(usuarioAptoParaVotar(usuario, muestra)) {
 			muestra.add(opinionAAgregar, usuario);
 			muestra.verificarMuestra();
@@ -30,6 +30,4 @@ public class EstadoMuestraVotadaPorExperto extends EstadoDeMuestra {
 			throw new Exception("El usuario no puede opinar sobre la muestra.");
 		}
 	}
-
-
 }
