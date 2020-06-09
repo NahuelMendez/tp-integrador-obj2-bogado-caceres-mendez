@@ -104,10 +104,12 @@ public class Muestra {
 	}
 	
 	public void agregarOpinion(Opinion opinionAAgregar, Usuario usuario) throws Exception {
-		this.estadoActual.comprobarSiSePuedeOpinar(this, usuario);
+		this.estadoActual.agregarOpinion(this, opinionAAgregar, usuario);
+	}
+	
+	protected void add(Opinion opinionAAgregar, Usuario usuario) {
 		this.historialDeOpiniones.put(usuario, opinionAAgregar);
-		this.actualizarFechaUltimaVotacion();
-		this.verificarMuestra();
+		actualizarFechaUltimaVotacion();
 	}
 	
 	protected void verificarMuestra() throws Exception{
