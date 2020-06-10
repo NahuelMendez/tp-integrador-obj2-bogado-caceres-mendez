@@ -110,14 +110,14 @@ class MuestraTest {
 	
 	@Test
 	void test_UnaMuestraCreadaPorUnUsuarioConEstadoBasicoTieneUnEstadoVotada() {
-		assertEquals(new EstadoDeMuestraVotada().getClass(), muestra.getEstadoDeMuestra().getClass());
+		assertEquals("votada", muestra.getEstadoActual());
 	}
 
 	@Test
 	void test_UnaMuestraCreadaPorUnUsuarioConEstadoExpertoTieneUnEstadoVotadaPorExperto() throws Exception {
 		muestra = new Muestra(ximeExperto, opinionVinchucaSordida, fotoVinchuca, ubicacionDeLaMuestra , LocalDate.of(2020,12,01));
 		
-		assertEquals(new EstadoMuestraVotadaPorExperto().getClass(), muestra.getEstadoDeMuestra().getClass());
+		assertEquals("votadaPorExperto", muestra.getEstadoActual());
 	}
 
 	@Test
@@ -173,12 +173,7 @@ class MuestraTest {
 	
 	@Test
 	void test_CuandoUnaMuestraEstaEnEstadoVotadaPorExpertoNoPuedeVotarUnUsuarioBasico() throws Exception {
-		try {
-			muestra.agregarOpinion(opinionVinchucaSordida, nahueExperto);
-		}
-		catch (Exception exception){
-            assertEquals(exception.getMessage(), "El usuario no puede opinar sobre la muestra.");
-		} 
+		muestra.agregarOpinion(opinionVinchucaSordida, nahueExperto);
 		assertFalse(muestra.usuarioAptoParaVotar(usuarioBasico));
 	}
 	
@@ -186,7 +181,7 @@ class MuestraTest {
 	void test_cuandoUnUsuarioExpertoOpinaSobreUnaMuestraEstaQuedaVotadaPorExperto() throws Exception {
 		muestra.agregarOpinion(opinionVinchucaSordida, ximeExperto);
 		
-		assertEquals(new EstadoMuestraVotadaPorExperto().getClass(), muestra.getEstadoDeMuestra().getClass());
+		assertEquals("votadaPorExperto", muestra.getEstadoActual());
 	}
 
 	@Test
@@ -194,7 +189,17 @@ class MuestraTest {
 		muestra.agregarOpinion(opinionVinchucaSordida, nahueExperto);
 		muestra.agregarOpinion(opinionVinchucaSordida2, ximeExperto);
 		
-		assertEquals(new EstadoDeMuestraVerificada().getClass(), muestra.getEstadoDeMuestra().getClass()); 
+		assertEquals("verificada", muestra.getEstadoActual());
+		assertTrue(muestra.coincidenDosExpertosEnSuOpinion());
+	}
+
+	@Test
+	void test_cuandoDosUsuariosExpertosNOCoincidenEnLaOpinionSobreUnaMuestraEstaNOQuedaVerificada() throws Exception {
+		muestra.agregarOpinion(opinionVinchucaSordida, nahueExperto);
+		muestra.agregarOpinion(opinionChincheFoliada, ximeExperto);
+		
+		assertEquals("votadaPorExperto", muestra.getEstadoActual());
+		assertFalse(muestra.coincidenDosExpertosEnSuOpinion());
 	}
 
 	@Test
@@ -227,6 +232,7 @@ class MuestraTest {
 	@Test
 	void test_unaMuestraTieneUnNivelDeVerificacionVotadaSiOpinoAlMenosUnExperto() throws Exception {
 		muestra.agregarOpinion(opinionVinchucaSordida, nahueExperto);
+		
 		assertEquals("votada", muestra.nivelDeVerificacion());
 	}
 	

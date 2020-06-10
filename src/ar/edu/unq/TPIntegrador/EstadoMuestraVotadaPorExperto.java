@@ -27,7 +27,7 @@ public class EstadoMuestraVotadaPorExperto implements EstadoDeMuestra {
 			}
 		return retorno;
 		}
-	
+
 	@Override
 	public void verificarMuestra(Muestra muestra){
 		if(sePuedeVerificarMuestra(muestra)) {
@@ -39,6 +39,11 @@ public class EstadoMuestraVotadaPorExperto implements EstadoDeMuestra {
 	@Override
 	public boolean sePuedeVerificarMuestra(Muestra muestra) {
 		return muestra.coincidenDosExpertosEnSuOpinion();
+	}
+
+	@Override
+	public String getEstadoDeMuestra(Muestra muestra) {
+		return "votadaPorExperto";
 	}
 	
 }

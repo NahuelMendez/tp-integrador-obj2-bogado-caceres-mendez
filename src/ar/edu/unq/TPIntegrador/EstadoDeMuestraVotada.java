@@ -18,12 +18,14 @@ public class EstadoDeMuestraVotada implements EstadoDeMuestra {
 
 	@Override
 	public void agregarOpinion(Muestra muestra, Opinion opinionAAgregar, Usuario usuario) throws Exception {
-		if((usuarioAptoParaVotar(usuario, muestra)) && (!usuario.esUsuarioExperto())) {
+		if(!usuarioAptoParaVotar(usuario, muestra)) {
+			throw new Exception("El usuario no puede opinar sobre la muestra.");
+		}
+		else if(!usuario.esUsuarioExperto()) {
 			muestra.agregarOpinionDeUsuario(opinionAAgregar, usuario);
 		}else{
 			muestra.cerrarOpinionesParaUsuariosBasicos();
-			muestra.agregarOpinionDeUsuario(opinionAAgregar, usuario);
-			
+			muestra.agregarOpinionDeUsuario(opinionAAgregar, usuario);	
 		}
 	}
 
@@ -34,4 +36,9 @@ public class EstadoDeMuestraVotada implements EstadoDeMuestra {
 
 	@Override
 	public void verificarMuestra(Muestra muestra) {}
+
+	@Override
+	public String getEstadoDeMuestra(Muestra muestra) {
+		return this.getNivelDeVerificacion(muestra);
+	}
 }

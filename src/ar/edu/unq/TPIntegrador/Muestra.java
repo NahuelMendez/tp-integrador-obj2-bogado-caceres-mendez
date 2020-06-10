@@ -75,6 +75,10 @@ public class Muestra {
 		return this.estadoActual;
 	}
 	
+	public String getEstadoActual(){
+		return this.estadoActual.getEstadoDeMuestra(this);
+	}
+	
 	public String nivelDeVerificacion() {
 		return this.estadoActual.getNivelDeVerificacion(this);
 	}
@@ -122,13 +126,13 @@ public class Muestra {
 	}
 	
 	protected boolean coincidenDosExpertosEnSuOpinion() {
-		final Set<String> opiniones = new HashSet<String>();
-		boolean retorno = false;
-		for (String opinion: filtrarOpinionesDeUsuariosExpertos()) {
-		     retorno |= opiniones.add(opinion); 
-		}
-		return retorno;
-	}
+        final Set<String> opiniones = new HashSet<String>();
+        boolean retorno = false;
+        for (String opinion: filtrarOpinionesDeUsuariosExpertos()) {
+             retorno |= !opiniones.add(opinion); 
+        }
+        return retorno;
+    }
 	
 	private ArrayList<String> filtrarOpinionesDeUsuariosExpertos(){
 		ArrayList<String> retorno = new ArrayList<String>();
@@ -164,7 +168,7 @@ public class Muestra {
 	public Set<Muestra> muestrasCercanas(Set<Muestra> muestras, double distancia){
 		return this.ubicacion.muestrasCercanas(muestras, distancia);
 	}
+
 }
-	
 
 

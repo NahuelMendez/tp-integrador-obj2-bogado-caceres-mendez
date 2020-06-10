@@ -28,4 +28,9 @@ public class EstadoDeMuestraVerificada implements EstadoDeMuestra {
 		return false;
 	}
 
+	@Override
+	public String getEstadoDeMuestra(Muestra muestra) {
+		return this.getNivelDeVerificacion(muestra);
+	}
+
 }
