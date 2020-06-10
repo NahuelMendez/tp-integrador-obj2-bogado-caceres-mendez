@@ -13,31 +13,27 @@ import java.util.Set;
 
 import org.junit.jupiter.api.BeforeEach;
 
-
 class MuestraTest {
 	private Muestra muestra;
+	private Muestra muestra1;
+	private Usuario userPropietario;
 	private Usuario gonzaBasico_propietario;
 	private Usuario usuarioBasico;
 	private Usuario nahueExperto;
 	private Usuario ximeExperto;
 	private Usuario usuarioExperto;
 	private Opinion opinionVinchucaSordida;
-	
-	private Muestra muestra1;
-	private Usuario userPropietario;
+	private Opinion opinionVinchucaSordida2;
+	private Opinion opinionChincheFoliada;
 	private BufferedImage fotoVinchuca;
 	private Ubicacion ubicacionDeLaMuestra;
-	public Opinion opinionChincheFoliada;
 	private ZonaDeCobertura zona;
 	private AplicacionWeb app;
-	private Opinion opinionVinchucaSordida2;
-
 
 	@BeforeEach
 	void setUp() throws Exception {
 		userPropietario = mock(Usuario.class);
 		fotoVinchuca = mock(BufferedImage.class);
-		
 		opinionChincheFoliada = mock(Opinion.class);
 		zona = mock(ZonaDeCobertura.class);
 		app = mock(AplicacionWeb.class);
@@ -58,10 +54,7 @@ class MuestraTest {
 		
 		ubicacionDeLaMuestra = new Ubicacion(1.5, 3.0);
 	
-		//Muestra con instancias de clases concretas
 		muestra = new Muestra(gonzaBasico_propietario, opinionVinchucaSordida, fotoVinchuca, ubicacionDeLaMuestra , LocalDate.of(2020,12,01));
-		
-		//Muestra con dummy objects.
 		muestra1 = new Muestra(userPropietario, opinionChincheFoliada, fotoVinchuca, ubicacionDeLaMuestra , LocalDate.of(2020,05,05));
 	}
 
@@ -82,15 +75,10 @@ class MuestraTest {
 	
 	@Test
 	void test_UnaMuestraTieneUnPropietarioDeNombreUsuario() {
-		when(muestra1.getIdentificacionPropietarioDeLaMuestra()).thenReturn("Nombre Usuario");
-		assertEquals("Nombre Usuario", muestra1.getIdentificacionPropietarioDeLaMuestra());
+		when(muestra1.getIdentificacionPropietarioDeLaMuestra()).thenReturn("NombreUsuario");
+		assertEquals("NombreUsuario", muestra1.getIdentificacionPropietarioDeLaMuestra());
 	}
 
-	@Test
-	void test_UnaMuestraTieneUnPropietarioDeNombreGonza() {
-		assertEquals("Gonza", muestra.getIdentificacionPropietarioDeLaMuestra());
-	}
-	
 	@Test
 	void test_UnaMuestraTieneUnaFechaDeCreacion2020_12_01() {
 		assertEquals(LocalDate.of(2020,12,01), muestra.getFechaDeCreacion());
@@ -174,7 +162,7 @@ class MuestraTest {
 	}
 	
 	@Test
-	void test_unaVezQueEntranLosExpertos_LoQueValeEsDeLosExpertos() throws Exception {
+	void test_unaVezQueEntranLosExpertos_LasOpinionesQueValeSonLasDeLosExpertos() throws Exception {
 		assertTrue(muestra.contieneLaOpinion(opinionVinchucaSordida));
 		
 		muestra.agregarOpinion(opinionChincheFoliada, nahueExperto);
@@ -263,7 +251,7 @@ class MuestraTest {
 	}
 	
 	@Test
-	void test_cuandoSeLePideAUnaMuestraSuResultadoActualRetornaLaOpinionMasOpinada() throws Exception {
+	void test_cuandoSeLePideAUnaMuestraSuResultadoActualRetornaLaOpinionMasVotada() throws Exception {
 		muestra.agregarOpinion(opinionChincheFoliada, usuarioBasico);
 		muestra.agregarOpinion(opinionVinchucaSordida, nahueExperto);
 		muestra.agregarOpinion(opinionVinchucaSordida2, ximeExperto);

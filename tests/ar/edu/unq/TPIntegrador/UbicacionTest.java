@@ -2,22 +2,15 @@ package ar.edu.unq.TPIntegrador;
 
 import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mockito;
-
 import static org.mockito.Mockito.*;
 
 import java.awt.image.BufferedImage;
-import java.time.LocalDate;
 import java.util.HashSet;
 import java.util.Set;
 
 import org.junit.jupiter.api.BeforeEach;
 
 class UbicacionTest {
-	private Usuario usuario;
-	private Opinion opinion;
-	private BufferedImage fotoVinchuca;
-	private Muestra muestra;
 	private Muestra muestra1;
 	private Muestra muestra2;
 	private Muestra muestra3;
@@ -29,9 +22,9 @@ class UbicacionTest {
 
 	@BeforeEach
 	void setUp() throws Exception {		
-		usuario = mock(Usuario.class);
-		opinion = mock(Opinion.class);
-		fotoVinchuca = mock(BufferedImage.class);
+		mock(Usuario.class);
+		mock(Opinion.class);
+		mock(BufferedImage.class);
 		
 		ubicacion1 = new Ubicacion(1.5, 3.0);
 		ubicacion2 = new Ubicacion(2.1, 1.0);    //232.07573107485268 de distancia de ubicacion 1
@@ -58,7 +51,7 @@ class UbicacionTest {
 		ubicacion2 = new Ubicacion(2.1, 1.0);
 		assertEquals(232.07573107485268, ubicacion1.medirDistancias(ubicacion2));
 	}
-
+	
 	@Test
 	void test_UnaUbicacionSeEncuentraDeLaUbicacion3() {
 		ubicacion3 = new Ubicacion(6.0, 6.7);
@@ -72,8 +65,7 @@ class UbicacionTest {
 	}
 	
 	@Test
-	void test_DistanciaConUbicacionDeMuestra() {
-		
+	void test_laDistanciaEntreUbicacion1TUbicacionDeMuestra1EsDe6471728246890287() {
 		when(muestra1.getUbicacion()).thenReturn(ubicacion3);
 		assertEquals(647.1728246890287, ubicacion1.medirDistancias(muestra1.getUbicacion()));
 	}
@@ -91,20 +83,28 @@ class UbicacionTest {
 		Set<Ubicacion> resultado = ubicacion1.ubicacionesCercanas(ubicacionesAMedir, 234.0);
 		assertEquals(ubCercanas, resultado); 
 	}
-/*
+
 	@Test
 	void test_UnaUbicacionRetornaLasMuestrasCercanas() {
 		Set<Muestra> muestras_AMedir = new HashSet<Muestra>();
 		Set<Muestra> muestras_Cercanas = new HashSet<Muestra>();
-	
+		
+		when(muestra2.getUbicacion()).thenReturn(ubicacion2);
+		when(muestra3.getUbicacion()).thenReturn(ubicacion3);
+		when(muestra4.getUbicacion()).thenReturn(ubicacion4);
+		
 		muestras_AMedir.add(muestra2);
 		muestras_AMedir.add(muestra3);
 		muestras_AMedir.add(muestra4);
 		
 		muestras_Cercanas.add(muestra2);
 		
-		//Falta el assert para mañana. No me da mas la cabeza
-	
-	}
-	*/
+		Set<Muestra> resultado = ubicacion1.muestrasCercanas(muestras_AMedir, 300.0);
+		assertEquals(resultado, muestras_Cercanas);
+		 
+		verify(muestra2, atLeastOnce()).getUbicacion();
+		verify(muestra3, atLeastOnce()).getUbicacion();
+		verify(muestra4, atLeastOnce()).getUbicacion();
+
+	}	
 }

@@ -33,7 +33,5 @@ public class EstadoDeMuestraVotada implements EstadoDeMuestra {
 	}
 
 	@Override
-	public void verificarMuestra(Muestra muestra) {
-		
-	}
+	public void verificarMuestra(Muestra muestra) {}
 }

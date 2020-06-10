@@ -21,8 +21,7 @@ public class EstadoDeMuestraVerificada implements EstadoDeMuestra {
 	}
 	
 	@Override
-	public void verificarMuestra(Muestra muestra){ 
-	}  
+	public void verificarMuestra(Muestra muestra){}  
 
 	@Override
 	public boolean sePuedeVerificarMuestra(Muestra muestra){
