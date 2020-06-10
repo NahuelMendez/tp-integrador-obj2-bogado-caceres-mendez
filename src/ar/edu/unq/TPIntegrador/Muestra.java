@@ -16,22 +16,23 @@ public class Muestra {
 	private BufferedImage fotoDeLaVinchuca;
 	private Ubicacion ubicacion;
 	private LocalDate fechaDeCreacion;
+	private LocalDate fechaDeUltimaVotacion;
 	private LinkedHashMap<Usuario, Opinion> historialDeOpiniones;
 	private EstadoDeMuestra estadoActual;
 	private ArrayList<ZonaDeCobertura> zonasDeCobertura;
 
 	public Muestra(Usuario usuario, Opinion opinion, BufferedImage fotoDeLaVinchuca, 
-				Ubicacion ubicacion, LocalDate fechaDeCreacion) {
+				Ubicacion ubicacion, LocalDate fechaDeCreacion) throws Exception {
 		this.usuario = usuario;
 		this.opinion = opinion;
 		this.fotoDeLaVinchuca = fotoDeLaVinchuca;
 		this.ubicacion = ubicacion;
 		this.fechaDeCreacion = fechaDeCreacion;
 		this.historialDeOpiniones = new LinkedHashMap<Usuario, Opinion>();
-			this.historialDeOpiniones.put(usuario, opinion);
-		getFechaUltimaVotacion();	
-		this.estadoActual = getEstadoSegunEstadoDeUsuario(usuario);
+		this.estadoActual = new EstadoDeMuestraVotada();
 		this.zonasDeCobertura = new ArrayList<ZonaDeCobertura>();
+		this.agregarOpinion(opinion, usuario);
+		this.fechaDeUltimaVotacion = fechaDeCreacion;
 	}
 
 	public String getEspecieDeVinchuca() {
@@ -54,23 +55,19 @@ public class Muestra {
 		return this.fechaDeCreacion;
 	}
 
-	private void actualizarFechaUltimaVotacion() {
-		getFechaUltimaVotacion();
+	private void actualizarFechaUltimaVotacion(Opinion opinion) {
+		this.fechaDeUltimaVotacion = opinion.getFechaDeEmision();
 	}
 	
 	public LocalDate getFechaUltimaVotacion() {
-		return getUltimaOpinion().getFechaDeEmision();
+		return this.fechaDeUltimaVotacion;
 	}
-	
-	private Opinion getUltimaOpinion(){
-		return (Opinion) historialDeOpiniones.values().toArray()[0];
-	}
-	
+
 	public LinkedHashMap<Usuario, Opinion> getHistorialDeOpiniones(){
 		return this.historialDeOpiniones;
 	}
 
-	private void setEstadoDeMuestra(EstadoDeMuestra estado){
+	private void setEstadoDeMuestra(EstadoDeMuestra estado){  
 		this.estadoActual = estado;
 	}
 	
@@ -79,82 +76,74 @@ public class Muestra {
 	}
 	
 	public String nivelDeVerificacion() {
-		if((this.estadoActual.getClass().equals(new EstadoDeMuestraVotada().getClass()) | 
-				(this.estadoActual.getClass().equals(new EstadoMuestraVotadaPorExperto().getClass())))) {
-			return "votada";
-		} else {
-		return "verificada"; 
-		}
+		return this.estadoActual.getNivelDeVerificacion(this);
 	}
 
-	protected EstadoDeMuestra getEstadoSegunEstadoDeUsuario(Usuario usuario) {
-		EstadoDeMuestra retorno = new EstadoDeMuestraVotada();
-		if(usuario.esUsuarioExperto()){
-			retorno = new EstadoMuestraVotadaPorExperto();
-		}
-		return retorno;
-	}
-	
 	public void agregarZonaDeCobertura(ZonaDeCobertura zona) {
 		this.zonasDeCobertura.add(zona);
 	}
 
-	public ArrayList<ZonaDeCobertura> getZonasDeCobertura() {
+	public ArrayList<ZonaDeCobertura> getZonasDeCobertura() {  
 		return this.zonasDeCobertura;
 	}
 	
-	public void agregarOpinion(Opinion opinionAAgregar, Usuario usuario) throws Exception {
+	public void agregarOpinion(Opinion opinionAAgregar, Usuario usuario) throws Exception { 
 		this.estadoActual.agregarOpinion(this, opinionAAgregar, usuario);
 	}
 	
-	protected void add(Opinion opinionAAgregar, Usuario usuario) {
+	protected void agregarOpinionDeUsuario(Opinion opinionAAgregar, Usuario usuario) {
 		this.historialDeOpiniones.put(usuario, opinionAAgregar);
-		actualizarFechaUltimaVotacion();
+		this.actualizarFechaUltimaVotacion(opinionAAgregar);
 	}
-	
+
 	protected void verificarMuestra() throws Exception{
-		if(this.estadoActual.sePuedeVerificarMuestra(this)) {
-			this.setEstadoDeMuestra(new EstadoDeMuestraVerificada());
-			this.avisarVerificacionAZonasDeCobertura();
-		}
+		this.estadoActual.verificarMuestra(this);
 	}
-	
+
 	protected void cerrarOpinionesParaUsuariosBasicos() {
+		this.historialDeOpiniones.clear(); 
 		this.setEstadoDeMuestra(new EstadoMuestraVotadaPorExperto());
 	}
 	
-	public boolean noContieneLaOpinionDelUsuario(Usuario usuario) {
+	protected void cerrarOpinionesParaTodosLosUsuarios() {
+		this.setEstadoDeMuestra(new EstadoDeMuestraVerificada());
+	}
+	
+	public boolean noContieneAlUsuario(Usuario usuario) {
 		return !this.historialDeOpiniones.containsKey(usuario);
+	}
+
+	public boolean contieneLaOpinion(Opinion opinion) {
+		return this.historialDeOpiniones.containsValue(opinion);
 	}
 
 	protected boolean usuarioAptoParaVotar(Usuario usuario) {
 		return this.estadoActual.usuarioAptoParaVotar(usuario, this);
 	}
-
+	
 	protected boolean coincidenDosExpertosEnSuOpinion() {
-		final Set<Opinion> opiniones = new HashSet<Opinion>();
-		for (Opinion opinion : filtrarOpinionesDeUsuariosExpertos()) {
-			if (!opiniones.add(opinion)){
-				return true;
-	        }
-	    }
-		return false;
+		final Set<String> opiniones = new HashSet<String>();
+		boolean retorno = false;
+		for (String opinion: filtrarOpinionesDeUsuariosExpertos()) {
+		     retorno |= opiniones.add(opinion); 
+		}
+		return retorno;
 	}
-			
-	private ArrayList<Opinion> filtrarOpinionesDeUsuariosExpertos(){
-		ArrayList<Opinion> retorno = new ArrayList<Opinion>();
+	
+	private ArrayList<String> filtrarOpinionesDeUsuariosExpertos(){
+		ArrayList<String> retorno = new ArrayList<String>();
 		for(HashMap.Entry<Usuario, Opinion> opinionDeUsuario : historialDeOpiniones.entrySet()) {
 			if (opinionDeUsuario.getKey().esUsuarioExperto()){
-				retorno.add(opinionDeUsuario.getValue());
+				retorno.add((opinionDeUsuario).getValue().getDescripcion());
 			}
 		}
 		return retorno;	
 	}
-	
+
 	public ArrayList<String> getOpiniones() {
 		ArrayList<String> opiniones = new ArrayList<String>();
 		for(HashMap.Entry<Usuario, Opinion> opinionDeUsuario : historialDeOpiniones.entrySet()) {
-			opiniones.add((opinionDeUsuario.getValue()).getDescripcion().toString());	
+			opiniones.add((opinionDeUsuario.getValue()).getDescripcion());	
 		}
 		return opiniones;	
 	}	
