@@ -212,4 +212,58 @@ public class FixtureUsuarioNovatoTest {
 		return usuarioNuevo;
 	}
 	
+	public UsuarioNovato nuevoUsuarioNovatoQueCumpleRevisionesPeroNoEnvios() throws Exception {
+		UsuarioNovato usuarioNuevo = this.usuarioN;
+		usuarioNuevo.opinarSobreMuestra(muestra1, opinion1);
+		usuarioNuevo.opinarSobreMuestra(muestra2, opinion2);
+		usuarioNuevo.opinarSobreMuestra(muestra3, opinion3);
+		usuarioNuevo.opinarSobreMuestra(muestra4, opinion4);
+		usuarioNuevo.opinarSobreMuestra(muestra5, opinion5);
+		usuarioNuevo.opinarSobreMuestra(muestra6, opinion6);
+		usuarioNuevo.opinarSobreMuestra(muestra7, opinion7);
+		usuarioNuevo.opinarSobreMuestra(muestra8, opinion8);
+		usuarioNuevo.opinarSobreMuestra(muestra9, opinion9);
+		usuarioNuevo.opinarSobreMuestra(muestra10, opinion10);
+		usuarioNuevo.opinarSobreMuestra(muestra11, opinion11);
+		usuarioNuevo.opinarSobreMuestra(muestra12, opinion12);
+		usuarioNuevo.opinarSobreMuestra(muestra13, opinion13);
+		usuarioNuevo.opinarSobreMuestra(muestra14, opinion14);
+		usuarioNuevo.opinarSobreMuestra(muestra15, opinion15);
+		usuarioNuevo.opinarSobreMuestra(muestra16, opinion16);
+		usuarioNuevo.opinarSobreMuestra(muestra17, opinion17);
+		usuarioNuevo.opinarSobreMuestra(muestra18, opinion18);
+		usuarioNuevo.opinarSobreMuestra(muestra19, opinion19);
+		usuarioNuevo.opinarSobreMuestra(muestra20, opinion20);
+		usuarioNuevo.enviarMuestra(muestra21);
+		usuarioNuevo.enviarMuestra(muestra22);
+		usuarioNuevo.enviarMuestra(muestra23);
+		usuarioNuevo.enviarMuestra(muestra24);
+		usuarioNuevo.enviarMuestra(muestra25);
+		return usuarioNuevo;
+	}
+	
+	public UsuarioNovato nuevoUsuarioNovatoQueCumpleConEnviosPeroNoConRevisiones() throws Exception {
+		UsuarioNovato usuarioNuevo = this.usuarioN;
+		usuarioNuevo.opinarSobreMuestra(muestra1, opinion1);
+		usuarioNuevo.opinarSobreMuestra(muestra2, opinion2);
+		usuarioNuevo.opinarSobreMuestra(muestra3, opinion3);
+		usuarioNuevo.opinarSobreMuestra(muestra4, opinion4);
+		usuarioNuevo.opinarSobreMuestra(muestra5, opinion5);
+		usuarioNuevo.opinarSobreMuestra(muestra6, opinion6);
+		usuarioNuevo.opinarSobreMuestra(muestra7, opinion7);
+		usuarioNuevo.opinarSobreMuestra(muestra8, opinion8);
+		usuarioNuevo.opinarSobreMuestra(muestra9, opinion9);
+		usuarioNuevo.enviarMuestra(muestra21);
+		usuarioNuevo.enviarMuestra(muestra22);
+		usuarioNuevo.enviarMuestra(muestra23);
+		usuarioNuevo.enviarMuestra(muestra24);
+		usuarioNuevo.enviarMuestra(muestra25);
+		usuarioNuevo.enviarMuestra(muestra26);
+		usuarioNuevo.enviarMuestra(muestra27);
+		usuarioNuevo.enviarMuestra(muestra28);
+		usuarioNuevo.enviarMuestra(muestra29);
+		usuarioNuevo.enviarMuestra(muestra30);
+		return usuarioNuevo;
+	}
+	
 }

@@ -79,6 +79,12 @@ class UsuarioNovatoTest {
 	}
 	
 	@Test
+	void test_UnUsuarioNovatoSinCondicionesParaSerExpertoTieneEstadoDeUsuarioBasicoLuegoDeActualizarLaCategoria() throws Exception {
+		usuarioN.actualizarCategoria();
+		assertTrue(usuarioN.esUsuarioBasico());
+	}
+	
+	@Test
 	void test_UnUsuarioNovatoConCondicionesParaSerExpertoTieneEstadoDeUsuarioBasico() throws Exception {
 		UsuarioNovato usuarioBasico = this.fixture.nuevoUsuarioListoParaActualizarCategoria();
 		assertTrue(usuarioBasico.esUsuarioBasico());
@@ -89,6 +95,18 @@ class UsuarioNovatoTest {
 		UsuarioNovato usuarioNuevoExperto = this.fixture.nuevoUsuarioListoParaActualizarCategoria();
 		usuarioNuevoExperto.actualizarCategoria();
 		assertTrue(usuarioNuevoExperto.esUsuarioExperto());
+	}
+	
+	@Test
+	void test_UnUsuarioNovatoBasicoTieneRevisionesNecesariasPeroEnviosInsuficientesYNoCambiaDeCategoria() throws Exception {
+		UsuarioNovato usuarioBasico = this.fixture.nuevoUsuarioNovatoQueCumpleRevisionesPeroNoEnvios();
+		assertTrue(usuarioBasico.esUsuarioBasico());
+	}
+	
+	@Test
+	void test_UnUsuarioNovatoBasicoTieneEnviosNecesariosPeroRevisionesInsuficientesYNoCambiaDeCategoria() throws Exception {
+		UsuarioNovato usuarioBasico = this.fixture.nuevoUsuarioNovatoQueCumpleConEnviosPeroNoConRevisiones();
+		assertTrue(usuarioBasico.esUsuarioBasico());
 	}
 	
 	@Test

@@ -6,13 +6,13 @@ import java.util.Set;
 
 public abstract class FiltroPorFecha {
 	
-	private LocalDate condicion;
+	private LocalDate fechaDeFiltro;
     private IEstrategiaDeFiltrado estrategia;
     
     public abstract LocalDate datoRequeridoDeLaMuestra(Muestra muestra);
     
     public FiltroPorFecha(LocalDate condicion, IEstrategiaDeFiltrado estrategia){
-    	this.condicion = condicion;
+    	this.fechaDeFiltro = condicion;
     	this.estrategia = estrategia;
     }
 	
@@ -25,7 +25,7 @@ public abstract class FiltroPorFecha {
 	}
 
 	public LocalDate getCondicion() {
-		return condicion;
+		return fechaDeFiltro;
 	}
 
 }

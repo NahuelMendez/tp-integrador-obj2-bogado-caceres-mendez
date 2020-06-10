@@ -4,6 +4,13 @@ import java.time.LocalDate;
 
 public class FixtureFiltrosPorFechaConEstrategias {
 	
+	/* 
+	 * La creacion de esta clase fue unicamente con motivo de test
+	 * provee distintos tipos de FiltroPorFecha con distintas estrategias
+	 * con el fin de testear el comportamiento de los mismos frente a distintos escenarios
+	*/
+	
+	
 	private IEstrategiaDeFiltrado estrategiaMayor;
 	private IEstrategiaDeFiltrado estrategiaIgual;
 	private IEstrategiaDeFiltrado estrategiaMenor;

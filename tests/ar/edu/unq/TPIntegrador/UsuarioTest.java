@@ -44,6 +44,14 @@ class UsuarioTest {
 	}
 	
 	@Test
+	void test_UnUsuarioNoEstaAptoParaEmitirUnaOpinionYTiene0CantidadDeOpinionesLuegoDeOpinar() throws Exception {
+		when(muestra.usuarioAptoParaVotar(usuario)).thenReturn(false);
+		usuario.opinarSobreMuestra(muestra, opinion);
+		Integer result = usuario.getRevisiones();
+		assertEquals(0, result);
+	}
+	
+	@Test
 	void test_UnUsuarioQueNoEmitioOpinionesTieneUnaListaVaciaDeOpinionesEnviadas() {
 		Integer result = usuario.getOpinionesEnviadas().size();
 		assertEquals(0, result);
@@ -82,7 +90,7 @@ class UsuarioTest {
 	}
 	
 	@Test
-	void test_UnUsuarioSiempreComienzaSiendoBasico() {
+	void test_UnUsuarioNovatoSiempreComienzaSiendoBasico() {
 		assertTrue(usuario.esUsuarioBasico());
 	}
 	
