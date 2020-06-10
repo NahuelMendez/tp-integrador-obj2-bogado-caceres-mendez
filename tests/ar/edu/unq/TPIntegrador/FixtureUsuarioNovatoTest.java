@@ -7,6 +7,11 @@ import java.time.LocalDate;
 import org.mockito.Mock;
 
 public class FixtureUsuarioNovatoTest {
+	
+	/* 
+	 * La creacion de esta clase fue unicamente con motivo de test
+	 * crea distintos casos de usuarios
+	*/
 
 	private UsuarioNovato usuarioN;
 	
@@ -67,7 +72,7 @@ public class FixtureUsuarioNovatoTest {
 	
 	private AplicacionWeb sistema;
 	
-	public FixtureUsuarioNovatoTest() {
+	FixtureUsuarioNovatoTest() {
 		sistema = mock(AplicacionWeb.class);
 		usuarioN = new UsuarioNovato("12123123", sistema);
 		now = LocalDate.now();

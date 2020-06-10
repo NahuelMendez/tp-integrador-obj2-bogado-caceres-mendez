@@ -18,7 +18,7 @@ public class FixtureFiltrosPorFechaConEstrategias {
 	private FechaCreacion filtroFechaCreacion;
 	private FechaVotacion filtroFechaVotacion;
 	
-	public FixtureFiltrosPorFechaConEstrategias() {
+	FixtureFiltrosPorFechaConEstrategias() {
 		this.estrategiaMayor = new EstrategiaMayorAFecha();
 		this.estrategiaIgual = new EstrategiaIgualAFecha();
 		this.estrategiaMenor = new EstrategiaMenorAFecha();

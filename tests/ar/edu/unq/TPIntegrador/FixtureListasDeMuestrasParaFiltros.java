@@ -9,6 +9,12 @@ import java.util.Set;
 
 public class FixtureListasDeMuestrasParaFiltros {
 	
+	/* 
+	 * La creacion de esta clase fue unicamente con motivo de test
+	 * provee distintos tipos de listas pre armadas con mocks con distintas fechas de creacion
+	 * y opinion con el fin de testear el comportamiento de los filtros frente a distintos escenarios
+	*/
+	
 	@Mock private Muestra muestra1;
 	@Mock private Muestra muestra2;
 	@Mock private Muestra muestra3;
@@ -17,7 +23,7 @@ public class FixtureListasDeMuestrasParaFiltros {
 	@Mock private Muestra muestra6;
 	@Mock private Muestra muestra7;
 	
-	public FixtureListasDeMuestrasParaFiltros() {
+	FixtureListasDeMuestrasParaFiltros() {
 		muestra1 = mock(Muestra.class);
 		when(muestra1.getFechaDeCreacion()).thenReturn(LocalDate.now());
 		when(muestra1.getFechaUltimaVotacion()).thenReturn(LocalDate.of(2022, 05, 22));
