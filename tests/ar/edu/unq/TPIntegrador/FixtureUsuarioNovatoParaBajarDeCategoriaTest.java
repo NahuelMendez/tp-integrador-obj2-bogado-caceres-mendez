@@ -18,6 +18,4 @@ public class FixtureUsuarioNovatoParaBajarDeCategoriaTest extends UsuarioNovato{
 		this.setEstadoDeUsuario(estadoDeUsuario);
 	}
 	
-	
-
 }
