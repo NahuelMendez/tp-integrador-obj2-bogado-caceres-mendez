@@ -6,6 +6,12 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 
+import ar.edu.unq.TPIntegrador.MuestraYEstados.Muestra;
+import ar.edu.unq.TPIntegrador.usuarioYEstadosDeUsuario.EstadoDeUsuario;
+import ar.edu.unq.TPIntegrador.usuarioYEstadosDeUsuario.EstadoDeUsuarioBasico;
+import ar.edu.unq.TPIntegrador.usuarioYEstadosDeUsuario.Usuario;
+import ar.edu.unq.TPIntegrador.usuarioYEstadosDeUsuario.UsuarioNovato;
+
 import static org.mockito.Mockito.*;
 
 class UsuarioTest {

@@ -3,6 +3,8 @@ package ar.edu.unq.TPIntegrador;
 import java.util.HashSet;
 import java.util.Set;
 
+import ar.edu.unq.TPIntegrador.MuestraYEstados.Muestra;
+
 public class Ubicacion {
 	
 	private double latitud;

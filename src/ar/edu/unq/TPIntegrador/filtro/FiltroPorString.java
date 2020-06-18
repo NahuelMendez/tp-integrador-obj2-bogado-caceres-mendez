@@ -1,7 +1,9 @@
-package ar.edu.unq.TPIntegrador;
+package ar.edu.unq.TPIntegrador.filtro;
 
 import java.util.HashSet;
 import java.util.Set;
+
+import ar.edu.unq.TPIntegrador.MuestraYEstados.Muestra;
 
 public abstract class FiltroPorString implements IFiltro {
 	

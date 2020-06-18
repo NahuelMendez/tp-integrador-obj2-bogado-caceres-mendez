@@ -1,4 +1,6 @@
-package ar.edu.unq.TPIntegrador;
+package ar.edu.unq.TPIntegrador.filtro;
+
+import ar.edu.unq.TPIntegrador.MuestraYEstados.Muestra;
 
 public class FiltroPorNivelDeVerificacion extends FiltroPorString{
 

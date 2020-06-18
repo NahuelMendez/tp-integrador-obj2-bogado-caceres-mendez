@@ -6,6 +6,9 @@ import java.time.LocalDate;
 
 import org.mockito.Mock;
 
+import ar.edu.unq.TPIntegrador.MuestraYEstados.Muestra;
+import ar.edu.unq.TPIntegrador.usuarioYEstadosDeUsuario.UsuarioNovato;
+
 public class FixtureUsuarioNovatoTest {
 	
 	/* 

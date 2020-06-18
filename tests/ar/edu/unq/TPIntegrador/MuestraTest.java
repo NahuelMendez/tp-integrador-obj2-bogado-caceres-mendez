@@ -2,6 +2,10 @@ package ar.edu.unq.TPIntegrador;
 
 import static org.junit.Assert.assertTrue;
 import org.junit.jupiter.api.Test;
+
+import ar.edu.unq.TPIntegrador.MuestraYEstados.Muestra;
+import ar.edu.unq.TPIntegrador.usuarioYEstadosDeUsuario.Usuario;
+
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 

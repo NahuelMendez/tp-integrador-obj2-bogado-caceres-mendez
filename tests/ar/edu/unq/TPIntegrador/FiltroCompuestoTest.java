@@ -9,6 +9,12 @@ import java.util.Set;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import ar.edu.unq.TPIntegrador.MuestraYEstados.Muestra;
+import ar.edu.unq.TPIntegrador.filtro.FiltroCompuesto;
+import ar.edu.unq.TPIntegrador.filtro.FiltroCompuestoAnd;
+import ar.edu.unq.TPIntegrador.filtro.FiltroCompuestoOr;
+import ar.edu.unq.TPIntegrador.filtro.IFiltro;
+
 class FiltroCompuestoTest {
 
 	private FiltroCompuesto filtroCompuestoAnd;

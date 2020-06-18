@@ -5,6 +5,10 @@ import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import ar.edu.unq.TPIntegrador.MuestraYEstados.Muestra;
+import ar.edu.unq.TPIntegrador.filtro.FiltroFechaCreacion;
+import ar.edu.unq.TPIntegrador.filtro.FiltroFechaVotacion;
+
 import java.util.HashSet;
 import java.util.Set;
 
@@ -12,12 +16,12 @@ class FiltroPorFechaTest {
 	
 	private FixtureListasDeMuestrasParaFiltros lista;
 	private FixtureFiltrosPorFechaConEstrategias filtros;
-	private FechaCreacion filtroFechaCreacionIgual;
-	private FechaCreacion filtroFechaCreacionMayor;
-	private FechaCreacion filtroFechaCreacionMenor;
-	private FechaVotacion filtroFechaVotacionIgual;
-	private FechaVotacion filtroFechaVotacionMayor;
-	private FechaVotacion filtroFechaVotacionMenor;
+	private FiltroFechaCreacion filtroFechaCreacionIgual;
+	private FiltroFechaCreacion filtroFechaCreacionMayor;
+	private FiltroFechaCreacion filtroFechaCreacionMenor;
+	private FiltroFechaVotacion filtroFechaVotacionIgual;
+	private FiltroFechaVotacion filtroFechaVotacionMayor;
+	private FiltroFechaVotacion filtroFechaVotacionMenor;
 	
 	
 	@BeforeEach

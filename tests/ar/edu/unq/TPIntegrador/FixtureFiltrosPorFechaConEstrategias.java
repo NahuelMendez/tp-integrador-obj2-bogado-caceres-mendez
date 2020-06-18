@@ -2,6 +2,13 @@ package ar.edu.unq.TPIntegrador;
 
 import java.time.LocalDate;
 
+import ar.edu.unq.TPIntegrador.filtro.EstrategiaIgualAFecha;
+import ar.edu.unq.TPIntegrador.filtro.EstrategiaMayorAFecha;
+import ar.edu.unq.TPIntegrador.filtro.EstrategiaMenorAFecha;
+import ar.edu.unq.TPIntegrador.filtro.FiltroFechaCreacion;
+import ar.edu.unq.TPIntegrador.filtro.FiltroFechaVotacion;
+import ar.edu.unq.TPIntegrador.filtro.IEstrategiaDeFiltrado;
+
 public class FixtureFiltrosPorFechaConEstrategias {
 	
 	/* 
@@ -15,8 +22,8 @@ public class FixtureFiltrosPorFechaConEstrategias {
 	private IEstrategiaDeFiltrado estrategiaIgual;
 	private IEstrategiaDeFiltrado estrategiaMenor;
 	
-	private FechaCreacion filtroFechaCreacion;
-	private FechaVotacion filtroFechaVotacion;
+	private FiltroFechaCreacion filtroFechaCreacion;
+	private FiltroFechaVotacion filtroFechaVotacion;
 	
 	FixtureFiltrosPorFechaConEstrategias() {
 		this.estrategiaMayor = new EstrategiaMayorAFecha();
@@ -24,33 +31,33 @@ public class FixtureFiltrosPorFechaConEstrategias {
 		this.estrategiaMenor = new EstrategiaMenorAFecha();
 	}
 	
-	public FechaCreacion nuevoFiltroFechaCreacionConEstrategiaMayor() {
-		this.filtroFechaCreacion = new FechaCreacion(LocalDate.now(), estrategiaMayor);
+	public FiltroFechaCreacion nuevoFiltroFechaCreacionConEstrategiaMayor() {
+		this.filtroFechaCreacion = new FiltroFechaCreacion(LocalDate.now(), estrategiaMayor);
 		return filtroFechaCreacion;
 	}
 	
-	public FechaCreacion nuevoFiltroFechaCreacionConEstrategiaIgual() {
-		this.filtroFechaCreacion = new FechaCreacion(LocalDate.now(), estrategiaIgual);
+	public FiltroFechaCreacion nuevoFiltroFechaCreacionConEstrategiaIgual() {
+		this.filtroFechaCreacion = new FiltroFechaCreacion(LocalDate.now(), estrategiaIgual);
 		return filtroFechaCreacion;
 	}
 	
-	public FechaCreacion nuevoFiltroFechaCreacionConEstrategiaMenor() {
-		this.filtroFechaCreacion = new FechaCreacion(LocalDate.now(), estrategiaMenor);
+	public FiltroFechaCreacion nuevoFiltroFechaCreacionConEstrategiaMenor() {
+		this.filtroFechaCreacion = new FiltroFechaCreacion(LocalDate.now(), estrategiaMenor);
 		return filtroFechaCreacion;
 	}
 	
-	public FechaVotacion nuevoFiltroFechaVotacionConEstrategiaMayor() {
-		this.filtroFechaVotacion = new FechaVotacion(LocalDate.now(), estrategiaMayor);
+	public FiltroFechaVotacion nuevoFiltroFechaVotacionConEstrategiaMayor() {
+		this.filtroFechaVotacion = new FiltroFechaVotacion(LocalDate.now(), estrategiaMayor);
 		return this.filtroFechaVotacion;
 	}
 	
-	public FechaVotacion nuevoFiltroFechaVotacionConEstrategiaIgual() {
-		this.filtroFechaVotacion = new FechaVotacion(LocalDate.now(), estrategiaIgual);
+	public FiltroFechaVotacion nuevoFiltroFechaVotacionConEstrategiaIgual() {
+		this.filtroFechaVotacion = new FiltroFechaVotacion(LocalDate.now(), estrategiaIgual);
 		return this.filtroFechaVotacion;
 	}
 	
-	public FechaVotacion nuevoFiltroFechaVotacionConEstrategiaMenor() {
-		this.filtroFechaVotacion = new FechaVotacion(LocalDate.now(), estrategiaMenor);
+	public FiltroFechaVotacion nuevoFiltroFechaVotacionConEstrategiaMenor() {
+		this.filtroFechaVotacion = new FiltroFechaVotacion(LocalDate.now(), estrategiaMenor);
 		return this.filtroFechaVotacion;
 	}
 

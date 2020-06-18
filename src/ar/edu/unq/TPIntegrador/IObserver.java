@@ -1,5 +1,7 @@
 package ar.edu.unq.TPIntegrador;
 
+import ar.edu.unq.TPIntegrador.MuestraYEstados.Muestra;
+
 public interface IObserver {
 	
 	//public void actualizar(ZonaDeCobertura zonaDeCobertura, Muestra muestra, String aviso);

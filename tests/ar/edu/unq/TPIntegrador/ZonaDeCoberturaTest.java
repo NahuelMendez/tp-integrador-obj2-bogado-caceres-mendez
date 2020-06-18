@@ -10,6 +10,8 @@ import java.util.Set;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import ar.edu.unq.TPIntegrador.MuestraYEstados.Muestra;
+
 class ZonaDeCoberturaTest {
 	
 	private ZonaDeCobertura zonaDeCobertura1;

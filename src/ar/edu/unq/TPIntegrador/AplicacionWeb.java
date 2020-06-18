@@ -3,6 +3,10 @@ package ar.edu.unq.TPIntegrador;
 import java.util.HashSet;
 import java.util.Set;
 
+import ar.edu.unq.TPIntegrador.MuestraYEstados.Muestra;
+import ar.edu.unq.TPIntegrador.filtro.IFiltro;
+import ar.edu.unq.TPIntegrador.usuarioYEstadosDeUsuario.Usuario;
+
 public class AplicacionWeb {
 
 	private Set<Muestra> muestrasRegistradas;

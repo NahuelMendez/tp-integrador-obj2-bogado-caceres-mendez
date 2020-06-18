@@ -1,5 +1,7 @@
 package ar.edu.unq.TPIntegrador;
 
+import ar.edu.unq.TPIntegrador.MuestraYEstados.Muestra;
+
 public class Organizacion implements IObserver{
 
 	private Integer cantidadDePersonasTrabajando;

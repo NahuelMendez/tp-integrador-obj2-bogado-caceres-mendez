@@ -1,4 +1,6 @@
-package ar.edu.unq.TPIntegrador;
+package ar.edu.unq.TPIntegrador.usuarioYEstadosDeUsuario;
+
+import ar.edu.unq.TPIntegrador.AplicacionWeb;
 
 public class UsuarioNovato extends Usuario {
 	

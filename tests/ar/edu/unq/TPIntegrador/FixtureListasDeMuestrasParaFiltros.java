@@ -1,6 +1,9 @@
 package ar.edu.unq.TPIntegrador;
 
 import org.mockito.Mock;
+
+import ar.edu.unq.TPIntegrador.MuestraYEstados.Muestra;
+
 import static org.mockito.Mockito.*;
 
 import java.time.LocalDate;

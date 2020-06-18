@@ -9,6 +9,10 @@ import java.util.Set;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import ar.edu.unq.TPIntegrador.MuestraYEstados.Muestra;
+import ar.edu.unq.TPIntegrador.filtro.IFiltro;
+import ar.edu.unq.TPIntegrador.usuarioYEstadosDeUsuario.Usuario;
+
 class AplicacionWebTest {
 
 	private AplicacionWeb aplicacionWeb;

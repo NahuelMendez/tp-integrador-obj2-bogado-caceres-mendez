@@ -1,4 +1,7 @@
-package ar.edu.unq.TPIntegrador;
+package ar.edu.unq.TPIntegrador.usuarioYEstadosDeUsuario;
+
+import ar.edu.unq.TPIntegrador.Opinion;
+import ar.edu.unq.TPIntegrador.MuestraYEstados.Muestra;
 
 public class EstadoDeUsuarioExperto implements EstadoDeUsuario{
 

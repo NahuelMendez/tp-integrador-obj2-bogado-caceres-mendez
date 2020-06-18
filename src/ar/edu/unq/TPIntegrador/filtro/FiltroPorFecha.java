@@ -1,8 +1,10 @@
-package ar.edu.unq.TPIntegrador;
+package ar.edu.unq.TPIntegrador.filtro;
 
 import java.time.LocalDate;
 import java.util.HashSet;
 import java.util.Set;
+
+import ar.edu.unq.TPIntegrador.MuestraYEstados.Muestra;
 
 public abstract class FiltroPorFecha implements IFiltro {
 	

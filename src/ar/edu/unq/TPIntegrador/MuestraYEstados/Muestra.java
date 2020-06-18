@@ -1,4 +1,4 @@
-package ar.edu.unq.TPIntegrador;
+package ar.edu.unq.TPIntegrador.MuestraYEstados;
 
 import java.awt.image.BufferedImage;
 import java.time.LocalDate;
@@ -9,6 +9,11 @@ import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.Set;
 import java.util.function.BinaryOperator;
+
+import ar.edu.unq.TPIntegrador.Opinion;
+import ar.edu.unq.TPIntegrador.Ubicacion;
+import ar.edu.unq.TPIntegrador.ZonaDeCobertura;
+import ar.edu.unq.TPIntegrador.usuarioYEstadosDeUsuario.Usuario;
 
 public class Muestra {
 	private Usuario usuario;	
@@ -71,7 +76,7 @@ public class Muestra {
 		this.estadoActual = estado;
 	}
 	
-	protected EstadoDeMuestra getEstadoDeMuestra(){
+	public EstadoDeMuestra getEstadoDeMuestra(){
 		return this.estadoActual;
 	}
 	
@@ -121,11 +126,11 @@ public class Muestra {
 		return this.historialDeOpiniones.containsValue(opinion);
 	}
 
-	protected boolean usuarioAptoParaVotar(Usuario usuario) {
+	public boolean usuarioAptoParaVotar(Usuario usuario) {
 		return this.estadoActual.usuarioAptoParaVotar(usuario, this);
 	}
 	
-	protected boolean coincidenDosExpertosEnSuOpinion() {
+	public boolean coincidenDosExpertosEnSuOpinion() {
         final Set<String> opiniones = new HashSet<String>();
         boolean retorno = false;
         for (String opinion: filtrarOpinionesDeUsuariosExpertos()) {

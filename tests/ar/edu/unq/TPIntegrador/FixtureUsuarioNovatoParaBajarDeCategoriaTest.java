@@ -1,5 +1,9 @@
 package ar.edu.unq.TPIntegrador;
 
+import ar.edu.unq.TPIntegrador.usuarioYEstadosDeUsuario.EstadoDeUsuario;
+import ar.edu.unq.TPIntegrador.usuarioYEstadosDeUsuario.EstadoDeUsuarioExperto;
+import ar.edu.unq.TPIntegrador.usuarioYEstadosDeUsuario.UsuarioNovato;
+
 public class FixtureUsuarioNovatoParaBajarDeCategoriaTest extends UsuarioNovato{
 	
 	/* 

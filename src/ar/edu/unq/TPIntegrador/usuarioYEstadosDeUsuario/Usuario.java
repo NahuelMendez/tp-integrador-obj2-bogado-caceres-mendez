@@ -1,10 +1,14 @@
-package ar.edu.unq.TPIntegrador;
+package ar.edu.unq.TPIntegrador.usuarioYEstadosDeUsuario;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+
+import ar.edu.unq.TPIntegrador.AplicacionWeb;
+import ar.edu.unq.TPIntegrador.Opinion;
+import ar.edu.unq.TPIntegrador.MuestraYEstados.Muestra;
 
 public class Usuario {
 	
@@ -46,7 +50,7 @@ public class Usuario {
 		this.estadoDeUsuario = estadoDeUsuario;
 	}
 	
-	protected EstadoDeUsuario getEstadoDeUsuario() {
+	public EstadoDeUsuario getEstadoDeUsuario() {
 		return this.estadoDeUsuario;
 	}
 	
@@ -54,7 +58,7 @@ public class Usuario {
 		this.opinionesEnviadas.add(opinion);
 	}
 
-	protected List<Opinion> getOpinionesEnviadas() {
+	public List<Opinion> getOpinionesEnviadas() {
 		return this.opinionesEnviadas;
 	}
 
