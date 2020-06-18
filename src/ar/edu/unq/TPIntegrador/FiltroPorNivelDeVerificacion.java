@@ -8,7 +8,7 @@ public class FiltroPorNivelDeVerificacion extends FiltroPorString{
 
 	@Override
 	protected boolean datoRequeridoDeLaMuestra(Muestra muestra) {
-		return muestra.nivelDeVerificacion().equals(super.getCondicion());
+		return muestra.nivelDeVerificacion().equals(this.getCondicion());
 	}
 
 }

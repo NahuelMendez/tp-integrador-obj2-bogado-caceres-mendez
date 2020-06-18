@@ -4,7 +4,7 @@ import java.time.LocalDate;
 import java.util.HashSet;
 import java.util.Set;
 
-public abstract class FiltroPorFecha {
+public abstract class FiltroPorFecha implements IFiltro {
 	
 	private LocalDate fechaDeFiltro;
     private IEstrategiaDeFiltrado estrategia;
@@ -19,7 +19,7 @@ public abstract class FiltroPorFecha {
 	public Set<Muestra> filtrar(Set<Muestra> muestras){
 		Set<Muestra> listaFiltrada = new HashSet<Muestra>();
 		for (Muestra muestra : muestras) {
-			this.estrategia.agregarMuestraSiPasaElFiltro(this,listaFiltrada, muestra);
+			this.estrategia.agregarMuestraSiPasaElFiltro(this, listaFiltrada, muestra);
 		}
 		return listaFiltrada;
 	}
