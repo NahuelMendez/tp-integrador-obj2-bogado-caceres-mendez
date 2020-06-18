@@ -65,7 +65,25 @@ public class ZonaDeCobertura {
 	public void agregarNuevaMuestra(Muestra muestra) {
 		if (this.perteneceAZonaDeCobertura(muestra)) {
 			muestrasRegistradas.add(muestra);
-			this.avisarAZonasDeCobertura(muestra, "Nueva muestra");
+			this.avisarNuevaMuestra(muestra);
+		}
+		
+	}
+	
+	public void muestraVerificada(Muestra muestra) {
+		this.avisarNuevaVerificacion(muestra);
+	}
+
+	private void avisarNuevaMuestra(Muestra muestra) {
+		for (IObserver observer: observers) {
+			observer.actualizarNuevaMuestra(this, muestra);
+		}
+		
+	}
+	
+	private void avisarNuevaVerificacion(Muestra muestra) {
+		for (IObserver observer: observers) {
+			observer.actualizarNuevaVerificacion(this, muestra);
 		}
 		
 	}
@@ -75,19 +93,16 @@ public class ZonaDeCobertura {
 		return epicentro.medirDistancias(muestra.getUbicacion()) < radio;
 	}
 
-	private void avisarAZonasDeCobertura(Muestra muestra, String mensaje) {
-		for (IObserver observer: observers) {
-			observer.actualizar(this, muestra, mensaje);
-		}
-	}
+	//private void avisarAZonasDeCobertura(Muestra muestra, String mensaje) {
+		//for (IObserver observer: observers) {
+			//observer.actualizar(this, muestra, mensaje);
+		//}
+	//}
 
 
 	public Set<Muestra> muestrasRegistradas() {
 		return muestrasRegistradas;
 	}
 
-	public void muestraVerificada(Muestra muestra) {
-		this.avisarAZonasDeCobertura(muestra, "Nueva verificacion");
-	}
 
 }

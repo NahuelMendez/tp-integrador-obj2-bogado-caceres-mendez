@@ -30,33 +30,14 @@ class ZonaDeCoberturaTest {
 		zonaDeCobertura3 = new ZonaDeCobertura("Zona tres", 12d, epicentro3);
 	}
 
+	
 	@Test
-	void test_ZonaDeCobertura1TieneDeNombreZonaUno() {
+	void test_Constructor() {
 		
 		assertEquals("Zona uno", zonaDeCobertura1.getNombre());
-	}
-	
-	@Test
-	void test_ZonaDeCobertura2TieneDeNombreZonaDos() {
-		
 		assertEquals("Zona dos", zonaDeCobertura2.getNombre());
-	}
-	
-	@Test
-	void test_ZonaDeCobertura1TieneRadioCinco() {
-		
 		assertEquals(5 , zonaDeCobertura1.getRadio());
-	}
-	
-	@Test
-	void test_ZonaDeCobertura2TieneRadioOcho() {
-		
 		assertEquals(8 , zonaDeCobertura2.getRadio());
-	}
-	
-	@Test
-	void test_ZonaDeCobertura1TieneEpicentro() {
-		
 		assertEquals(epicentro1 , zonaDeCobertura1.getEpicentro());
 	}
 	
@@ -129,8 +110,8 @@ class ZonaDeCoberturaTest {
 		when(epicentro1.medirDistancias(ubicacionMuestra)).thenReturn(3d);
 		zonaDeCobertura1.agregarNuevaMuestra(muestra);
 		
-		verify(organizacion1).actualizar(zonaDeCobertura1, muestra, "Nueva muestra");
-		verify(organizacion2).actualizar(zonaDeCobertura1, muestra, "Nueva muestra");
+		verify(organizacion1).actualizarNuevaMuestra(zonaDeCobertura1, muestra);
+		verify(organizacion2).actualizarNuevaMuestra(zonaDeCobertura1, muestra);
 		assertEquals(1, zonaDeCobertura1.muestrasRegistradas().size());
 	}
 	
@@ -156,8 +137,8 @@ class ZonaDeCoberturaTest {
 		zonaDeCobertura1.agregarObserver(organizacion2);
 		zonaDeCobertura1.muestraVerificada(muestra);
 		
-		verify(organizacion1).actualizar(zonaDeCobertura1, muestra, "Nueva verificacion");
-		verify(organizacion2).actualizar(zonaDeCobertura1, muestra, "Nueva verificacion");
+		verify(organizacion1).actualizarNuevaVerificacion(zonaDeCobertura1, muestra);
+		verify(organizacion2).actualizarNuevaVerificacion(zonaDeCobertura1, muestra);
 	}
 
 }

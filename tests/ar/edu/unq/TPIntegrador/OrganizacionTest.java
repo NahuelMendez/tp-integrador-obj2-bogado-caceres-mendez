@@ -23,40 +23,19 @@ class OrganizacionTest {
 		organizacionSalud = new Organizacion(0, ubicacion, TipoDeOrganizacion.SALUD, funcionalidadMuestra, funcionalidadVerificacion);
 		organizacionEducativa = new Organizacion(1, ubicacion, TipoDeOrganizacion.EDUCATIVA, funcionalidadMuestra, funcionalidadVerificacion);
 	}
-
-	@Test
-	void test_UnaOrganizacionNoTieneNingunaPersonaTrabajandoYSuCantidadDePersonasTrabajandoEsCero() {
-		
-	     assertEquals(0,organizacionSalud.getCantidadDePersonasTrabajando());
-	}
 	
 	@Test
-	void test_UnaOrganizacionTieneUnaPersonaTrabajandoYSuCantidadDePersonasTrabajandoEsUno() {
-		
-	     assertEquals(1,organizacionEducativa.getCantidadDePersonasTrabajando());
-	}
-	
-	@Test
-	void test_UnaOrganizacionTieneUnaUbicacion() {
-		
-	     assertEquals(ubicacion,organizacionEducativa.getUbicacion());
-	}
-	
-	@Test
-	void test_UnaOrganizacionEsDeTipoSalud() {
+	void test_Constructor() {
 		TipoDeOrganizacion salud = TipoDeOrganizacion.SALUD ;
-		 
-		
-	     assertEquals(salud,organizacionSalud.getTipoDeOrganizacion());
-	}
-	
-	@Test
-	void test_UnaOrganizacionEsDeTipoEducativa() {
 		TipoDeOrganizacion educativa = TipoDeOrganizacion.EDUCATIVA ;
-		 
 		
-	     assertEquals(educativa,organizacionEducativa.getTipoDeOrganizacion());
+		assertEquals(0,organizacionSalud.getCantidadDePersonasTrabajando());
+		assertEquals(1,organizacionEducativa.getCantidadDePersonasTrabajando());
+		assertEquals(ubicacion,organizacionEducativa.getUbicacion());
+	    assertEquals(salud,organizacionSalud.getTipoDeOrganizacion());
+	    assertEquals(educativa,organizacionEducativa.getTipoDeOrganizacion());
 	}
+
 	
 	@Test
 	void test_UnaOrganizacionSeRegistraEnUnaZonaDeCobertura() {
@@ -117,7 +96,7 @@ class OrganizacionTest {
 		ZonaDeCobertura zonaDeCobertura = mock(ZonaDeCobertura.class);
 		Muestra muestra = mock(Muestra.class);
 		
-		organizacionSalud.actualizar(zonaDeCobertura, muestra, "Nueva muestra");
+		organizacionSalud.actualizarNuevaMuestra(zonaDeCobertura, muestra);
 		
 		verify(funcionalidadMuestra).nuevoEvento(organizacionSalud, zonaDeCobertura, muestra);
 	
@@ -128,7 +107,7 @@ class OrganizacionTest {
 		ZonaDeCobertura zonaDeCobertura = mock(ZonaDeCobertura.class);
 		Muestra muestra = mock(Muestra.class);
 		
-		organizacionSalud.actualizar(zonaDeCobertura, muestra, "Nueva verificacion");
+		organizacionSalud.actualizarNuevaVerificacion(zonaDeCobertura, muestra);
 		
 		verify(funcionalidadVerificacion).nuevoEvento(organizacionSalud, zonaDeCobertura, muestra);
 	
