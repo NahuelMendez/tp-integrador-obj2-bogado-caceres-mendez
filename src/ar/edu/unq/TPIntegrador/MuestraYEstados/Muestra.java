@@ -39,7 +39,7 @@ public class Muestra {
 		this.agregarOpinion(opinion, usuario);
 		this.fechaDeUltimaVotacion = fechaDeCreacion;
 	}
-
+	
 	public String getEspecieDeVinchuca() {
 		return this.opinion.getDescripcion();
 	}
@@ -118,18 +118,18 @@ public class Muestra {
 		this.setEstadoDeMuestra(new EstadoDeMuestraVerificada());
 	}
 	
-	public boolean noContieneAlUsuario(Usuario usuario) {
-		return !this.historialDeOpiniones.containsKey(usuario);
+	public boolean noContieneLaOpinionDelUsuario(Usuario usuario) {
+		return !this.historialDeOpiniones.containsKey(usuario); 
 	}
 
 	public boolean contieneLaOpinion(Opinion opinion) {
 		return this.historialDeOpiniones.containsValue(opinion);
 	}
-
+/*
 	public boolean usuarioAptoParaVotar(Usuario usuario) {
 		return this.estadoActual.usuarioAptoParaVotar(usuario, this);
 	}
-	
+	*/
 	public boolean coincidenDosExpertosEnSuOpinion() {
         final Set<String> opiniones = new HashSet<String>();
         boolean retorno = false;

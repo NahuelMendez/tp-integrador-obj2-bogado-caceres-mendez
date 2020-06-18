@@ -112,4 +112,14 @@ public class Usuario {
 		}
 	}
 
+	public void agregarOpinionAMuestraVotada(Muestra muestra, Opinion opinionAAgregar) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public void agregarOpinionAMuestraVotadaPorExperto(Muestra muestra, Opinion opinionAAgregar) {
+		// TODO Auto-generated method stub
+		
+	}
+
 }

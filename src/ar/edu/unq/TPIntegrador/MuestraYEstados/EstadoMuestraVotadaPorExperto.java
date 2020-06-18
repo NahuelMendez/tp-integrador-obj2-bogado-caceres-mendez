@@ -5,9 +5,6 @@ import ar.edu.unq.TPIntegrador.usuarioYEstadosDeUsuario.Usuario;
 
 public class EstadoMuestraVotadaPorExperto implements EstadoDeMuestra {
 
-	public EstadoMuestraVotadaPorExperto() {
-	}
-
 	@Override
 	public String getNivelDeVerificacion(Muestra muestra) {
 		return "votada";
@@ -15,22 +12,24 @@ public class EstadoMuestraVotadaPorExperto implements EstadoDeMuestra {
 	
 	@Override
 	public void agregarOpinion(Muestra muestra, Opinion opinionAAgregar, Usuario usuario) throws Exception {
-		if(usuarioAptoParaVotar(usuario, muestra)) {
-			muestra.agregarOpinionDeUsuario(opinionAAgregar, usuario);
-			muestra.verificarMuestra();
+		if(muestra.noContieneLaOpinionDelUsuario(usuario)) { 
+			usuario.agregarOpinionAMuestraVotadaPorExperto(muestra, opinionAAgregar); 
+		} 
+		else {
+			throw new Exception("El usuario ya ha opinado sobre la muestra");
 		}
 	}
 
+/*
 	@Override
 	public boolean usuarioAptoParaVotar(Usuario usuario, Muestra muestra) {
-		boolean retorno = false;
-		if(usuario.esUsuarioExperto() &&
-			muestra.noContieneAlUsuario(usuario)){
+		boolean retorno = false; 
+		if(muestra.noContieneLaOpinionDelUsuario(usuario)){
 			retorno = true;
 			}
 		return retorno;
 		}
-
+*/
 	@Override
 	public void verificarMuestra(Muestra muestra){
 		if(sePuedeVerificarMuestra(muestra)) {
