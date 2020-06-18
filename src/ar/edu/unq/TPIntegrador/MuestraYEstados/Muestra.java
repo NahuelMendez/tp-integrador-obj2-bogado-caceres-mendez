@@ -100,16 +100,16 @@ public class Muestra {
 		this.estadoActual.agregarOpinion(this, opinionAAgregar, usuario);
 	}
 	
-	protected void agregarOpinionDeUsuario(Opinion opinionAAgregar, Usuario usuario) {
+	public void agregarOpinionDeUsuario(Opinion opinionAAgregar, Usuario usuario) {
 		this.historialDeOpiniones.put(usuario, opinionAAgregar);
 		this.actualizarFechaUltimaVotacion(opinionAAgregar);
 	}
 
-	protected void verificarMuestra() throws Exception{
+	public void verificarMuestra() throws Exception{
 		this.estadoActual.verificarMuestra(this);
 	}
 
-	protected void cerrarOpinionesParaUsuariosBasicos() {
+	public void cerrarOpinionesParaUsuariosBasicos() {
 		this.historialDeOpiniones.clear(); 
 		this.setEstadoDeMuestra(new EstadoMuestraVotadaPorExperto());
 	}
@@ -174,6 +174,10 @@ public class Muestra {
 		return this.ubicacion.muestrasCercanas(muestras, distancia);
 	}
 
+	public void siguienteEstadoDeMuestra() {
+		// TODO HACELO PIBE
+	}
+	
 }
 
 

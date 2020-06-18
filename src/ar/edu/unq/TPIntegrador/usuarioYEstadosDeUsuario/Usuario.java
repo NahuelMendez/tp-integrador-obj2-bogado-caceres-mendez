@@ -113,13 +113,12 @@ public class Usuario {
 	}
 
 	public void agregarOpinionAMuestraVotada(Muestra muestra, Opinion opinionAAgregar) {
-		// TODO Auto-generated method stub
+		this.estadoDeUsuario.agregarOpinionAMuestraVotada(this, muestra, opinionAAgregar);
 		
 	}
 
-	public void agregarOpinionAMuestraVotadaPorExperto(Muestra muestra, Opinion opinionAAgregar) {
-		// TODO Auto-generated method stub
-		
+	public void agregarOpinionAMuestraVotadaPorExperto(Muestra muestra, Opinion opinionAAgregar) throws Exception {
+		this.estadoDeUsuario.agregarOpinionAMuestraVotadaPorExperto(this, muestra, opinionAAgregar);
 	}
 
 }

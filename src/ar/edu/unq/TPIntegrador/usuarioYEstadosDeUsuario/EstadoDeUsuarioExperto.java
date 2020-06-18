@@ -7,10 +7,8 @@ public class EstadoDeUsuarioExperto implements EstadoDeUsuario{
 
 	@Override
 	public void opinarSobreMuestra(Muestra muestra, Opinion opinion, Usuario usuario) throws Exception {
-		if (muestra.usuarioAptoParaVotar(usuario)) {
 			muestra.agregarOpinion(opinion, usuario);
 			usuario.agregarOpinionEnviada(opinion);
-		}
 	}
 
 	@Override
@@ -29,5 +27,17 @@ public class EstadoDeUsuarioExperto implements EstadoDeUsuario{
 				&& !usuarioNovato.cumpleConEnviosNecesarios()) {
 			usuarioNovato.setEstadoDeUsuario(new EstadoDeUsuarioBasico());
 		}
+	}
+
+	@Override
+	public void agregarOpinionAMuestraVotada(Usuario usuario, Muestra muestra, Opinion opinionAAgregar) {
+		muestra.cerrarOpinionesParaUsuariosBasicos();
+		muestra.agregarOpinionDeUsuario(opinionAAgregar, usuario);
+	}
+
+	@Override
+	public void agregarOpinionAMuestraVotadaPorExperto(Usuario usuario, Muestra muestra, Opinion opinionAAgregar) throws Exception {
+		muestra.agregarOpinionDeUsuario(opinionAAgregar, usuario);
+		muestra.verificarMuestra();
 	}
 }

@@ -13,8 +13,10 @@ public interface EstadoDeMuestra {
 
 	abstract String getNivelDeVerificacion(Muestra muestra);
 
-	abstract void verificarMuestra(Muestra muestra) throws Exception;
+	abstract void verificarMuestra(Muestra muestra);
 
 	abstract String getEstadoDeMuestra(Muestra muestra);
+	
+	abstract void pasarASiguienteEstado();
 	
 }

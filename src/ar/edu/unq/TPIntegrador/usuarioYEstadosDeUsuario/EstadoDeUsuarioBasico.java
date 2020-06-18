@@ -7,10 +7,8 @@ public class EstadoDeUsuarioBasico implements EstadoDeUsuario{
 
 	@Override
 	public void opinarSobreMuestra(Muestra muestra, Opinion opinion, Usuario usuario) throws Exception {
-			if(muestra.usuarioAptoParaVotar(usuario)) {
-				muestra.agregarOpinion(opinion, usuario);
-				usuario.agregarOpinionEnviada(opinion);
-			}
+			muestra.agregarOpinion(opinion, usuario);
+			usuario.agregarOpinionEnviada(opinion);
 	}
 
 	@Override
@@ -29,6 +27,16 @@ public class EstadoDeUsuarioBasico implements EstadoDeUsuario{
 				&& usuarioNovato.cumpleConEnviosNecesarios()) {
 			usuarioNovato.setEstadoDeUsuario(new EstadoDeUsuarioExperto());
 		}
+	}
+
+	@Override
+	public void agregarOpinionAMuestraVotada(Usuario usuario, Muestra muestra, Opinion opinionAAgregar) {
+		muestra.agregarOpinionDeUsuario(opinionAAgregar, usuario);
+	}
+
+	@Override
+	public void agregarOpinionAMuestraVotadaPorExperto(Usuario usuario, Muestra muestra, Opinion opinionAAgregar) throws Exception {
+		throw new Exception("Esta muestra solo puede ser votada por usuarios expertos");
 	}
 
 }
