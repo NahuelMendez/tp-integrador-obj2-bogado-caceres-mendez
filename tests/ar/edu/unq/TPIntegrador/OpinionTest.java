@@ -8,25 +8,15 @@ import org.junit.jupiter.api.Test;
 
 class OpinionTest {
 
-	@Test
-	void test_SeCreaUnaOpinionConLaFechaDeHoyYTieneLaFechaDeHoy() {
-		Opinion opinion = new Opinion(Descripcion.CHINCHE_FOLIADA);
-		
-		assertEquals(LocalDate.now() , opinion.getFechaDeEmision());
-	}
 	
 	@Test
-	void test_SeCreaUnaOpinionConLaDescripcionDeVinchucaInfestansYSuDescipcrionEsVinchucaInfestans() {
-		Opinion opinion = new Opinion(Descripcion.CHINCHE_FOLIADA);
+	void test_Constructor() {
+        Opinion opinion1 = new Opinion(Descripcion.CHINCHE_FOLIADA);
+        Opinion opinion2 = new Opinion(Descripcion.PHTIA_CHINCHE);
 		
-		assertEquals("CHINCHE_FOLIADA", opinion.getDescripcion());
-	}
-	
-	@Test
-	void test_SeCreaUnaOpinionConLaDescripcionDeVinchucaSordidaYSuDescipcrionEsVinchucaSordida() {
-		Opinion opinion = new Opinion(Descripcion.PHTIA_CHINCHE);
-		
-		assertEquals("PHTIA_CHINCHE", opinion.getDescripcion());
+		assertEquals(LocalDate.now() , opinion1.getFechaDeEmision());
+		assertEquals("CHINCHE_FOLIADA", opinion1.getDescripcion());
+		assertEquals("PHTIA_CHINCHE", opinion2.getDescripcion());
 	}
 
 }

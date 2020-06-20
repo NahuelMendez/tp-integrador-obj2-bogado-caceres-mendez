@@ -39,14 +39,10 @@ class UbicacionTest {
 		muestra3 = mock(Muestra.class);
 		muestra4 = mock(Muestra.class);
 	}
-
-	@Test
-	void test_unaUbicacionTieneUnaLatitud1_5() {
-		assertEquals(1.5 , ubicacion1.getLatitud());
-	}
 	
 	@Test
-	void test_unaUbicacionTieneUnaLongitud3_0() {
+	void test_Constructor() {
+		assertEquals(1.5 , ubicacion1.getLatitud());
 		assertEquals(3.0 , ubicacion1.getLongitud());
 	}
 	
