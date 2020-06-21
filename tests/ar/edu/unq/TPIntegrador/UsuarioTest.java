@@ -14,6 +14,7 @@ import ar.edu.unq.TPIntegrador.usuarioYEstadosDeUsuario.Usuario;
 import static org.mockito.Mockito.*;
 
 import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
 
 class UsuarioTest {
 	
@@ -187,7 +188,7 @@ class UsuarioTest {
 		LocalDate fechaAnterior = LocalDate.now().minusMonths(2);
 		Opinion opinion2MesesAtras = mock(Opinion.class);
 		when(opinion2MesesAtras.getFechaDeEmision()).thenReturn(fechaAnterior);
-		usuario.opinarSobreMuestra(muestra1, opinion2MesesAtras);
+		usuario.agregarOpinionEnviada(opinion2MesesAtras);
 		Integer result = usuario.cantidadDeOpinionesEnLosUltimos30Dias();
 		assertEquals(0, result);
 	}
@@ -220,12 +221,14 @@ class UsuarioTest {
 	@Test
 	void test_UnUsuarioBasicoTieneRevisionesNecesariasPeroEnviosInsuficientesYNoCambiaDeCategoria() throws Exception {
 		Usuario usuarioBasico = this.fixture.nuevoUsuarioBasicoQueCumpleRevisionesPeroNoEnvios();
+		usuarioBasico.actualizarCategoria();
 		assertTrue(usuarioBasico.esUsuarioBasico());
 	}
 	
 	@Test
 	void test_UnUsuarioNovatoTieneEnviosNecesariosPeroRevisionesInsuficientesYNoCambiaDeCategoria() throws Exception {
 		Usuario usuarioBasico = this.fixture.nuevoUsuarioBasicoQueCumpleConEnviosPeroNoConRevisiones();
+		usuarioBasico.actualizarCategoria();
 		assertTrue(usuarioBasico.esUsuarioBasico());
 	}
 	
@@ -257,5 +260,41 @@ class UsuarioTest {
 		usuarioConCondicionesDeEstadoExperto.agregarOpinionAMuestraVotada(muestra1, opinion);
 		verify(muestra1).cerrarOpinionesParaUsuariosBasicos();
 		verify(muestra1).agregarOpinionDeUsuario(opinion, usuarioConCondicionesDeEstadoExperto);
+	}
+	
+	@Test
+	void test_UnUsuarioConEstadoDeUsuarioBasicoLanzaUnErrorAlAgregarUnaOpinionSobreUnaMuestraVotadaPorExperto() {
+		assertThrows(Exception.class, () -> usuario.agregarOpinionAMuestraVotadaPorExperto(muestra, opinion));
+	}
+	
+	@Test
+	void test_UnUsuarioConEstadoDeUsuarioExpertoAlAgregarUnaOpinionAUnaMuestraVotadaPorExpertoLeEnviaElMensajeVerificarMuestra() throws Exception {
+		usuarioConCondicionesDeEstadoExperto.actualizarCategoria();
+		usuarioConCondicionesDeEstadoExperto.agregarOpinionAMuestraVotadaPorExperto(muestra1, opinion);
+		verify(muestra1).verificarMuestra();
+	}
+	
+	@Test
+	void test_UnUsuarioConEstadoExpertoAlOpinarSobreMuestraLeEnviaElMensajeAgregarOpinionAMuestra() throws Exception {
+		usuarioConCondicionesDeEstadoExperto.actualizarCategoria();
+		usuarioConCondicionesDeEstadoExperto.opinarSobreMuestra(muestra, opinion);
+		verify(muestra).agregarOpinion(opinion, usuarioConCondicionesDeEstadoExperto);
+	}
+	
+	@Test
+	void test_UnUsuarioQueTieneEstadoExpertoAlActualizarCategoriaBajoLasMismasCondicionesSigueSiendoExperto() {
+		usuarioConCondicionesDeEstadoExperto.actualizarCategoria();
+		usuarioConCondicionesDeEstadoExperto.actualizarCategoria();
+		assertTrue(usuarioConCondicionesDeEstadoExperto.esUsuarioExperto());
+	}
+	
+	@Test
+	void test_UnUsuarioEnviaUnaMuestra2MesesAtrasDelaFechaActualYNoEstaEnSusEnviosDeLosUltimos30Dias() {
+		LocalDate fechaAnterior = LocalDate.now().minusMonths(2);
+		Muestra muestra2MesesAtras = mock(Muestra.class);
+		when(muestra2MesesAtras.getFechaDeCreacion()).thenReturn(fechaAnterior);
+		usuario.enviarMuestra(muestra2MesesAtras);
+		Integer result = usuario.cantidadDeEnviosEnLosUltimos30Dias();
+		assertEquals(0, result);
 	}
 }

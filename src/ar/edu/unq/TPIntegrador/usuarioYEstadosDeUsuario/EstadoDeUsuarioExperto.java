@@ -23,7 +23,7 @@ public class EstadoDeUsuarioExperto implements EstadoDeUsuario{
 	@Override
 	public void actualizarCategoria(Usuario usuario) {
 		if (!usuario.cumpleConRevisionesNecesarias()
-				&& !usuario.cumpleConEnviosNecesarios()) {
+				| !usuario.cumpleConEnviosNecesarios()) {
 			usuario.setEstadoDeUsuario(new EstadoDeUsuarioBasico());
 		}
 	}

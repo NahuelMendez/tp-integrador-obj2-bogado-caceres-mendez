@@ -1,6 +1,7 @@
 package ar.edu.unq.TPIntegrador.usuarioYEstadosDeUsuario;
 
 import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -88,10 +89,14 @@ public class Usuario {
 	}
 	
 	private void agregarAListaDeOpinionesDeUltimoMesSi(ArrayList<Opinion> opinionesDelUltimoMes, Opinion opinion) {
-		LocalDate fechaActual = LocalDate.now();
-		if((opinion.getFechaDeEmision().until(fechaActual).getMonths()) <= 1) {
+		if(laOpinionEstaDentroDe30DiasDeLaFecha(opinion)) {
 			opinionesDelUltimoMes.add(opinion);
 		}
+	}
+
+	private Boolean laOpinionEstaDentroDe30DiasDeLaFecha(Opinion opinion) {
+		LocalDate fechaActual = LocalDate.now();
+		return ChronoUnit.DAYS.between(opinion.getFechaDeEmision(), fechaActual) <= 30;
 	}
 	
 	public Integer cantidadDeEnviosEnLosUltimos30Dias() {
@@ -107,10 +112,14 @@ public class Usuario {
 	}
 
 	private void agregarAListaDeMuestrasDelUltimoMesSI(ArrayList<Muestra> enviosDelUltimoMes, Muestra muestra) {
-		LocalDate fechaActual = LocalDate.now();
-		if(muestra.getFechaDeCreacion().until(fechaActual).getMonths() <= 1) {
+		if(laMuestraEstaDentroDe30DiasDeLaFecha(muestra)) {
 			enviosDelUltimoMes.add(muestra);
 		}
+	}
+
+	private Boolean laMuestraEstaDentroDe30DiasDeLaFecha(Muestra muestra) {
+		LocalDate fechaActual = LocalDate.now();
+		return ChronoUnit.DAYS.between(muestra.getFechaDeCreacion(), fechaActual) <= 30;
 	}
 
 	public void agregarOpinionAMuestraVotada(Muestra muestra, Opinion opinionAAgregar) {
