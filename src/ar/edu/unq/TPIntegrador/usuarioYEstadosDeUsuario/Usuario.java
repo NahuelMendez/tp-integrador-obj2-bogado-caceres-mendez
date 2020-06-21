@@ -23,6 +23,7 @@ public class Usuario {
 		this.muestras = new HashSet<Muestra>();
 		this.opinionesEnviadas = new ArrayList<Opinion>();
 		this.aplicacionWeb = aplicacionWeb;
+		this.estadoDeUsuario = new EstadoDeUsuarioBasico();
 	}
 
 	public String getIdentificacion() {
@@ -120,5 +121,24 @@ public class Usuario {
 	public void agregarOpinionAMuestraVotadaPorExperto(Muestra muestra, Opinion opinionAAgregar) throws Exception {
 		this.estadoDeUsuario.agregarOpinionAMuestraVotadaPorExperto(this, muestra, opinionAAgregar);
 	}
+	
+
+	public void actualizarCategoria() {
+		this.getEstadoDeUsuario().actualizarCategoria(this);
+	}
+	
+	protected Boolean cumpleConRevisionesNecesarias() {
+		return this.cantidadDeOpinionesEnLosUltimos30Dias() >= 20;
+	}
+	
+
+	protected Boolean cumpleConEnviosNecesarios() {
+		return this.cantidadDeEnviosEnLosUltimos30Dias() >= 10;
+	}
+
+	public void cambiarAUsuarioEspecialista() {
+		this.estadoDeUsuario = new EstadoDeUsuarioEspecialista();
+	}
+
 
 }

@@ -10,11 +10,12 @@ import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 
 import ar.edu.unq.TPIntegrador.MuestraYEstados.Muestra;
-import ar.edu.unq.TPIntegrador.usuarioYEstadosDeUsuario.UsuarioEspecialista;
+import ar.edu.unq.TPIntegrador.usuarioYEstadosDeUsuario.Usuario;
+
 
 class UsuarioEspecialistaTest {
 	
-	private UsuarioEspecialista usuarioE;
+	private Usuario usuarioE;
 	@Mock private AplicacionWeb sistema;
 	@Mock private Muestra muestra;
 	@Mock private Opinion opinion;
@@ -22,7 +23,8 @@ class UsuarioEspecialistaTest {
 	@BeforeEach
 	public void setUp() {
 		sistema = mock(AplicacionWeb.class);
-		usuarioE = new UsuarioEspecialista("36001002", sistema);
+		usuarioE = new Usuario("36001002", sistema);
+		usuarioE.cambiarAUsuarioEspecialista();
 		muestra = mock(Muestra.class);
 		opinion = mock(Opinion.class);
 	}
@@ -59,14 +61,12 @@ class UsuarioEspecialistaTest {
 	
 	@Test
 	void test_CuandoUnUsuarioEspecialistaEmiteUnaOpinionSobreUnaMuestraLaMuestraRecibeElMensajeAgregarOpinion() throws Exception {
-		when(muestra.usuarioAptoParaVotar(usuarioE)).thenReturn(true);
 		usuarioE.opinarSobreMuestra(muestra, opinion);
 		verify(muestra).agregarOpinion(opinion, usuarioE);
 	}
 	
 	@Test
 	void test_UnUsuarioQuiereOpinarSobreUnaMuestraYaVerificadaPorLoTantoNoEmiteOpinion() throws Exception {
-		when(muestra.usuarioAptoParaVotar(usuarioE)).thenReturn(false);
 		usuarioE.opinarSobreMuestra(muestra, opinion);
 		Integer result = usuarioE.getRevisiones();
 		assertEquals(0, result);

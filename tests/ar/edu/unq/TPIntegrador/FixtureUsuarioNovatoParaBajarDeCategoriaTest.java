@@ -2,9 +2,9 @@ package ar.edu.unq.TPIntegrador;
 
 import ar.edu.unq.TPIntegrador.usuarioYEstadosDeUsuario.EstadoDeUsuario;
 import ar.edu.unq.TPIntegrador.usuarioYEstadosDeUsuario.EstadoDeUsuarioExperto;
-import ar.edu.unq.TPIntegrador.usuarioYEstadosDeUsuario.UsuarioNovato;
+import ar.edu.unq.TPIntegrador.usuarioYEstadosDeUsuario.Usuario;
 
-public class FixtureUsuarioNovatoParaBajarDeCategoriaTest extends UsuarioNovato{
+public class FixtureUsuarioNovatoParaBajarDeCategoriaTest extends Usuario{
 	
 	/* 
 	 * La creacion de esta clase fue unicamente con motivo de test

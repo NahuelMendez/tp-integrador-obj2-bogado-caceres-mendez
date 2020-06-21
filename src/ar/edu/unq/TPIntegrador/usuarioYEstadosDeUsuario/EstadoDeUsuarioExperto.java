@@ -8,7 +8,6 @@ public class EstadoDeUsuarioExperto implements EstadoDeUsuario{
 	@Override
 	public void opinarSobreMuestra(Muestra muestra, Opinion opinion, Usuario usuario) throws Exception {
 			muestra.agregarOpinion(opinion, usuario);
-			usuario.agregarOpinionEnviada(opinion);
 	}
 
 	@Override
@@ -22,10 +21,10 @@ public class EstadoDeUsuarioExperto implements EstadoDeUsuario{
 	}
 
 	@Override
-	public void actualizarCateogiriaDeUsuarioNovato(UsuarioNovato usuarioNovato) {
-		if (!usuarioNovato.cumpleConRevisionesNecesarias()
-				&& !usuarioNovato.cumpleConEnviosNecesarios()) {
-			usuarioNovato.setEstadoDeUsuario(new EstadoDeUsuarioBasico());
+	public void actualizarCategoria(Usuario usuario) {
+		if (!usuario.cumpleConRevisionesNecesarias()
+				&& !usuario.cumpleConEnviosNecesarios()) {
+			usuario.setEstadoDeUsuario(new EstadoDeUsuarioBasico());
 		}
 	}
 

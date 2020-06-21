@@ -7,7 +7,7 @@ import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 
 import ar.edu.unq.TPIntegrador.MuestraYEstados.Muestra;
-import ar.edu.unq.TPIntegrador.usuarioYEstadosDeUsuario.UsuarioNovato;
+import ar.edu.unq.TPIntegrador.usuarioYEstadosDeUsuario.Usuario;
 
 import static org.mockito.Mockito.*;
 
@@ -15,7 +15,7 @@ import java.time.LocalDate;
 
 class UsuarioNovatoTest {
 	
-	private UsuarioNovato usuarioN;
+	private Usuario usuarioN;
 	private LocalDate fechaActual;
 	private FixtureUsuarioNovatoTest fixture;
 	private FixtureUsuarioNovatoParaBajarDeCategoriaTest fixture2;
@@ -26,18 +26,20 @@ class UsuarioNovatoTest {
 	
 	@BeforeEach
 	public void setUp() {
+		
 		sistema = mock(AplicacionWeb.class);
-		usuarioN = new UsuarioNovato("30112113", sistema);
+		
+		usuarioN = new Usuario("30112113", sistema);
 		fechaActual = LocalDate.now();
+		fixture = new FixtureUsuarioNovatoTest();
+		fixture2 = new FixtureUsuarioNovatoParaBajarDeCategoriaTest("23444555", sistema);
+		
 		opinion1 = mock(Opinion.class);
 		when(opinion1.getFechaDeEmision()).thenReturn(fechaActual);
 		opinion2 = mock(Opinion.class);
 		when(opinion2.getFechaDeEmision()).thenReturn(fechaActual);
 		muestra1 = mock(Muestra.class);
 		when(muestra1.getFechaDeCreacion()).thenReturn(fechaActual);
-		when(muestra1.usuarioAptoParaVotar(usuarioN)).thenReturn(true);
-		fixture = new FixtureUsuarioNovatoTest();
-		fixture2 = new FixtureUsuarioNovatoParaBajarDeCategoriaTest("23444555", sistema);
 	}
 
 	@Test
@@ -90,32 +92,32 @@ class UsuarioNovatoTest {
 	
 	@Test
 	void test_UnUsuarioNovatoConCondicionesParaSerExpertoTieneEstadoDeUsuarioBasico() throws Exception {
-		UsuarioNovato usuarioBasico = this.fixture.nuevoUsuarioListoParaActualizarCategoria();
+		Usuario usuarioBasico = this.fixture.nuevoUsuarioListoParaActualizarCategoria();
 		assertTrue(usuarioBasico.esUsuarioBasico());
 	}
 	
 	@Test
 	void test_UnUsuarioNovatoActualizaSuCategoriaDeUsuarioBasicoLuegoDeCumplirLosRequisitosParaSubirAExperto() throws Exception {
-		UsuarioNovato usuarioNuevoExperto = this.fixture.nuevoUsuarioListoParaActualizarCategoria();
+		Usuario usuarioNuevoExperto = this.fixture.nuevoUsuarioListoParaActualizarCategoria();
 		usuarioNuevoExperto.actualizarCategoria();
 		assertTrue(usuarioNuevoExperto.esUsuarioExperto());
 	}
 	
 	@Test
 	void test_UnUsuarioNovatoBasicoTieneRevisionesNecesariasPeroEnviosInsuficientesYNoCambiaDeCategoria() throws Exception {
-		UsuarioNovato usuarioBasico = this.fixture.nuevoUsuarioNovatoQueCumpleRevisionesPeroNoEnvios();
+		Usuario usuarioBasico = this.fixture.nuevoUsuarioBasicoQueCumpleRevisionesPeroNoEnvios();
 		assertTrue(usuarioBasico.esUsuarioBasico());
 	}
 	
 	@Test
 	void test_UnUsuarioNovatoBasicoTieneEnviosNecesariosPeroRevisionesInsuficientesYNoCambiaDeCategoria() throws Exception {
-		UsuarioNovato usuarioBasico = this.fixture.nuevoUsuarioNovatoQueCumpleConEnviosPeroNoConRevisiones();
+		Usuario usuarioBasico = this.fixture.nuevoUsuarioBasicoQueCumpleConEnviosPeroNoConRevisiones();
 		assertTrue(usuarioBasico.esUsuarioBasico());
 	}
 	
 	@Test
 	void test_UnUsuarioNovatoQueTieneCategoriaExpertoBajaACategoriaBasicoPorNoCumplirLosRequisitos() {
-		UsuarioNovato usuarioNuevoBasico = this.fixture2;
+		Usuario usuarioNuevoBasico = this.fixture2;
 		Boolean estadoAnteriorEraExperto = usuarioNuevoBasico.esUsuarioExperto();
 		usuarioNuevoBasico.actualizarCategoria();
 		Boolean estadoNuevoEsBasico = usuarioNuevoBasico.esUsuarioBasico();

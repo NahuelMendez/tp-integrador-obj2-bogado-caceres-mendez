@@ -11,7 +11,7 @@ public interface EstadoDeUsuario {
 	
 	public abstract Boolean esUsuarioExperto();
 
-	public abstract void actualizarCateogiriaDeUsuarioNovato(UsuarioNovato usuarioNovato);
+	public abstract void actualizarCategoria(Usuario usuario);
 
 	public abstract void agregarOpinionAMuestraVotada(Usuario usuario, Muestra muestra, Opinion opinionAAgregar);
 
