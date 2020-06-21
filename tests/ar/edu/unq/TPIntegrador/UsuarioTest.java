@@ -256,6 +256,6 @@ class UsuarioTest {
 		usuarioConCondicionesDeEstadoExperto.actualizarCategoria();
 		usuarioConCondicionesDeEstadoExperto.agregarOpinionAMuestraVotada(muestra1, opinion);
 		verify(muestra1).cerrarOpinionesParaUsuariosBasicos();
-		verify(muestra1).agregarOpinionDeUsuario(opinion, usuario);
+		verify(muestra1).agregarOpinionDeUsuario(opinion, usuarioConCondicionesDeEstadoExperto);
 	}
 }
