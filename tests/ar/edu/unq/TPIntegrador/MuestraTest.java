@@ -44,7 +44,6 @@ class MuestraTest {
 		opinionChincheFoliada = mock(Opinion.class);
 		opinionChincheFoliada2 = mock(Opinion.class);
 		zona = mock(ZonaDeCobertura.class);
-		mock(AplicacionWeb.class);
 		usuarioBasico = mock(Usuario.class);
 		usuarioExperto = mock(Usuario.class);
 		nahueExperto = mock(Usuario.class);
@@ -53,7 +52,7 @@ class MuestraTest {
 		ubicacionDeLaMuestra = mock(Ubicacion.class);
 	
 		muestra = new Muestra(gonzaBasico_propietario, opinionVinchucaGuasayana, fotoVinchuca, ubicacionDeLaMuestra , LocalDate.of(2020,12,01));
-		muestra1 = new Muestra(usuarioBasico, opinionChincheFoliada, fotoVinchuca, ubicacionDeLaMuestra , LocalDate.of(2020,05,05));
+		muestra1 = new Muestra(usuarioBasico, opinionChincheFoliada, fotoVinchuca, ubicacionDeLaMuestra, LocalDate.of(2020,05,05));
 		
 		when(nahueExperto.esUsuarioExperto()).thenReturn(true);
 		when(ximeExperto.esUsuarioExperto()).thenReturn(true);
@@ -61,47 +60,33 @@ class MuestraTest {
 		when(usuarioExperto.esUsuarioExperto()).thenReturn(true);
 		
 		when(opinionVinchucaGuasayana.getDescripcion()).thenReturn("VINCHUCA_GUAYASANA");
-		when(opinionChincheFoliada2.getDescripcion()).thenReturn("CHINCHE_FOLIADA");
-		when(opinionChincheFoliada.getDescripcion()).thenReturn("CHINCHE_FOLIADA");
 		when(opinionVinchucaGuasayana.getFechaDeEmision()).thenReturn(LocalDate.now());
+		when(opinionVinchucaGuasayana2.getDescripcion()).thenReturn("VINCHUCA_GUAYASANA");
+		when(opinionVinchucaGuasayana2.getFechaDeEmision()).thenReturn(LocalDate.now());
+		when(opinionChincheFoliada2.getDescripcion()).thenReturn("CHINCHE_FOLIADA");
+		when(opinionChincheFoliada2.getFechaDeEmision()).thenReturn(LocalDate.now());
+		when(opinionChincheFoliada.getDescripcion()).thenReturn("CHINCHE_FOLIADA");
+		when(opinionChincheFoliada.getFechaDeEmision()).thenReturn(LocalDate.now());
 	}
 
 	@Test
-	void test_UnaMuestraTieneUnaEspecieDeVinchucaVINCHUCA_GUAYASANA() {
+	void test_Constructor() {
 		assertEquals("VINCHUCA_GUAYASANA", muestra.getEspecieDeVinchuca());
-	}
-	
-	@Test
-	void test_UnaMuestraTieneUnaFoto() {
+		assertTrue(muestra.contieneLaOpinion(opinionVinchucaGuasayana));
 		assertEquals(fotoVinchuca, muestra.getFotoDeLaVinchuca());
-	}
-	
-	@Test
-	void test_UnaMuestraTieneUnaUbicacion() {
 		assertEquals(ubicacionDeLaMuestra, muestra.getUbicacion());
-	}
-	
-	@Test
-	void test_UnaMuestraTieneUnPropietarioDeNombreUsuario() {
 		when(muestra1.getIdentificacionPropietarioDeLaMuestra()).thenReturn("NombreUsuario");
 		assertEquals("NombreUsuario", muestra1.getIdentificacionPropietarioDeLaMuestra());
-	}
-	
-	@Test
-	void test_UnaMuestraTieneUnaFechaDeCreacion2020_12_01() {
 		assertEquals(LocalDate.of(2020,12,01), muestra.getFechaDeCreacion());
+		assertTrue(muestra.getZonasDeCobertura().isEmpty());	
+		assertEquals(1, muestra.getHistorialDeOpiniones().size());
 	}
 	
 	@Test
 	void test_cuandoUnaMuestraAgregaUnaOpinionSeActualizaLaUltimaFechaDeVotacion() throws Exception {
+		muestra.agregarOpinionDeUsuario(opinionChincheFoliada2, nahueExperto);
 		
-		muestra.agregarOpinion(opinionVinchucaGuasayana, nahueExperto);
 		assertEquals(LocalDate.now(), muestra.getFechaUltimaVotacion());
-	}
-	
-	@Test
-	void test_unaMuestraQueNoAgregoUnaZonaDeCoberturaTieneSuListaDeZonasVacia() {
-		assertTrue(muestra.getZonasDeCobertura().isEmpty());
 	}
 	
 	@Test
@@ -112,11 +97,6 @@ class MuestraTest {
 	}
 	
 	@Test
-	void test_UnaMuestraCuandoSeCreaTienelaOpinionDelPropietario() {
-		assertTrue(muestra.contieneLaOpinion(opinionVinchucaGuasayana));
-	}
-	
-	@Test
 	void test_UnaMuestraCreadaPorUnUsuarioConEstadoBasicoTieneUnEstadoVotada() throws Exception {
 		muestra = new Muestra(usuarioBasico, opinionChincheFoliada, fotoVinchuca, ubicacionDeLaMuestra , LocalDate.of(2020,12,01));
 		
@@ -124,69 +104,63 @@ class MuestraTest {
 	}
 
 	@Test
-	void test_UnaMuestraCreadaPorUnUsuarioConEstadoExpertoTieneUnEstadoVotadaPorExperto() throws Exception {
-		muestra = new Muestra(nahueExperto, opinionChincheFoliada, fotoVinchuca, ubicacionDeLaMuestra , LocalDate.of(2020,12,01));
-		
-		assertEquals("votadaPorExperto", muestra.getEstadoActual());
-	}
-	
-	@Test
 	void test_UnaMuestraNoPuedeVolverASerOpinadaPorSuPropietario() throws Exception {
-		try {
-			muestra.agregarOpinion(opinionChincheFoliada, usuarioBasico);
-	    }
-	    catch (Exception exception){
-	    	assertEquals(exception.getMessage(), "El usuario no puede opinar sobre la muestra.");
-	     } 
+		assertThrows(Exception.class, () -> muestra.agregarOpinion(opinionChincheFoliada, gonzaBasico_propietario));
 	}
 	
 	@Test
 	void test_UnaMuestraNoContieneLaOpinionDeUnUsuarioQueNoOpino() {
-		assertTrue(muestra.noContieneLaOpinionDelUsuario(ximeExperto));
+		assertFalse(muestra.contieneAlUsuario(ximeExperto));
 	}
 	
 	@Test
 	void test_UnaMuestraCuandoAgregaUnaOpinionSeLeAgregaAsuHistorialDeOpiniones() throws Exception {
-		muestra.agregarOpinion(opinionChincheFoliada, ximeExperto);
-		
+		assertFalse(muestra.contieneLaOpinion(opinionChincheFoliada)); 
+		muestra.agregarOpinionDeUsuario(opinionChincheFoliada, ximeExperto); 
 		assertTrue(muestra.contieneLaOpinion(opinionChincheFoliada)); 
 	}
 	
 	@Test
-	void test_laCantidadDeOpinionesEnElHistorialDeOpinionesEs2() throws Exception {
+	void test_laCantidadDeOpinionesEnElHistorialDeOpinionesEs1() throws Exception {
 		muestra.agregarOpinion(opinionChincheFoliada, nahueExperto);
-		muestra.agregarOpinion(opinionChincheFoliada2, ximeExperto);
 		
-		assertEquals(2, muestra.getHistorialDeOpiniones().size());
+		verify(nahueExperto).agregarOpinionAMuestraVotada(muestra, opinionChincheFoliada);
+		assertEquals(1, muestra.getHistorialDeOpiniones().size());
 	}
+
+	@Test
+	void test_() throws Exception {
+		muestra.cerrarOpinionesParaUsuariosBasicos();
+		muestra.agregarOpinion(opinionChincheFoliada, nahueExperto);
+		
+		verify(nahueExperto).agregarOpinionAMuestraVotadaPorExperto(muestra, opinionChincheFoliada);
+	}
+	
 	
 	@Test
 	void test_unaVezQueEntranLosExpertos_LasOpinionesQueValeSonLasDeLosExpertos() throws Exception {
 		assertTrue(muestra.contieneLaOpinion(opinionVinchucaGuasayana));
 		
-		muestra.agregarOpinion(opinionChincheFoliada, nahueExperto);
+		muestra.cerrarOpinionesParaUsuariosBasicos();
+		muestra.agregarOpinionDeUsuario(opinionChincheFoliada, nahueExperto);
 		
 		assertFalse(muestra.contieneLaOpinion(opinionVinchucaGuasayana));
+		assertTrue(muestra.contieneLaOpinion(opinionChincheFoliada));
 	}
-	/*
-	@Test
-	void test_CuandoUnaMuestraEstaEnEstadoVotadaPorExpertoNoPuedeVotarUnUsuarioBasico() throws Exception {
-		muestra.agregarOpinion(opinionChincheFoliada, nahueExperto);
-		
-		assertFalse(muestra.usuarioAptoParaVotar(usuarioBasico));
-	}
-	*/
+
 	@Test
 	void test_cuandoUnUsuarioExpertoOpinaSobreUnaMuestraEstaQuedaVotadaPorExperto() throws Exception {
-		muestra.agregarOpinion(opinionChincheFoliada, ximeExperto);
+		muestra.agregarOpinionDeUsuario(opinionChincheFoliada, ximeExperto);
+		muestra.cerrarOpinionesParaUsuariosBasicos();
 		
 		assertEquals("votadaPorExperto", muestra.getEstadoActual());
 	}
 	
 	@Test
 	void test_cuandoDosUsuariosExpertosCoincidenEnLaOpinionSobreUnaMuestraEstaQuedaVerificada() throws Exception {
-		muestra.agregarOpinion(opinionChincheFoliada, nahueExperto);
-		muestra.agregarOpinion(opinionChincheFoliada2, ximeExperto);
+		muestra.agregarOpinionDeUsuario(opinionChincheFoliada, nahueExperto);
+		muestra.agregarOpinionDeUsuario(opinionChincheFoliada2, ximeExperto);
+		muestra.verificarMuestra();
 		
 		assertEquals("verificada", muestra.getEstadoActual());
 		assertTrue(muestra.coincidenDosExpertosEnSuOpinion());
@@ -194,8 +168,9 @@ class MuestraTest {
 	
 	@Test
 	void test_cuandoDosUsuariosExpertosNOCoincidenEnLaOpinionSobreUnaMuestraEstaNOQuedaVerificada() throws Exception {
-		muestra.agregarOpinion(opinionChincheFoliada, nahueExperto);
-		muestra.agregarOpinion(opinionVinchucaGuasayana2, ximeExperto);
+		muestra.agregarOpinionDeUsuario(opinionChincheFoliada, nahueExperto);
+		muestra.agregarOpinionDeUsuario(opinionVinchucaGuasayana2, ximeExperto);
+		muestra.cerrarOpinionesParaUsuariosBasicos();
 		
 		assertEquals("votadaPorExperto", muestra.getEstadoActual());
 		assertFalse(muestra.coincidenDosExpertosEnSuOpinion());
@@ -203,18 +178,20 @@ class MuestraTest {
 	
 	@Test
 	void test_cuandoUnUsuarioExpertoTrataDeVotarUnaMuestraVerificadaSuOpinionNoSeAgrega() throws Exception {
-		try {
-			muestra.agregarOpinion(opinionChincheFoliada, nahueExperto);
-			muestra.agregarOpinion(opinionChincheFoliada2, ximeExperto);
-			muestra.agregarOpinion(opinionVinchucaGuasayana, usuarioExperto);
-		}
-		catch (Exception exception){
-            assertEquals(exception.getMessage(), "Nadie puede opinar sobre muestras verificadas");
-		}
-		assertFalse(muestra.contieneLaOpinion(opinionVinchucaGuasayana));
-		assertFalse(muestra.getEstadoDeMuestra().sePuedeVerificarMuestra(muestra));
-		//assertFalse(muestra.getEstadoDeMuestra().usuarioAptoParaVotar(usuarioExperto, muestra));
+		muestra.agregarOpinionDeUsuario(opinionChincheFoliada, nahueExperto);
+		muestra.agregarOpinionDeUsuario(opinionChincheFoliada2, ximeExperto);
+		muestra.verificarMuestra();
+		
+		assertThrows(Exception.class, () -> muestra.agregarOpinion(opinionVinchucaGuasayana2, usuarioExperto));
 	} 
+		
+	@Test
+	void test_cuandoUnUsuarioExpertoTrataDeVotarUnaMuestraVotadaPorExpertoQueYaHaVotadoSuOpinionNoSeAgrega() throws Exception {
+		muestra.cerrarOpinionesParaUsuariosBasicos();
+		muestra.agregarOpinionDeUsuario(opinionChincheFoliada, nahueExperto);
+		
+		assertThrows(Exception.class, () -> muestra.agregarOpinion(opinionChincheFoliada2, nahueExperto));
+	}
 	
 	@Test
 	void test_unaMuestraTieneUnNivelDeVerificacionVotadaSiNoOpinoNingunExperto() {
@@ -223,46 +200,54 @@ class MuestraTest {
 	
 	@Test
 	void test_unaMuestraTieneUnNivelDeVerificacionVotadaPorExpertoSiOpinoAlMenosUnExperto() throws Exception {
-		muestra.agregarOpinion(opinionChincheFoliada, usuarioExperto);
+		muestra.agregarOpinionDeUsuario(opinionChincheFoliada, usuarioExperto);
+		muestra.cerrarOpinionesParaUsuariosBasicos();
 		
 		assertEquals("votada", muestra.nivelDeVerificacion());
 	}
 	
 	@Test
 	void test_unaMuestraTieneUnNivelDeVerificacionVerificadaSiDosExpertosConcidieronEnSuOpinion() throws Exception {
-		muestra.agregarOpinion(opinionChincheFoliada, nahueExperto);
-		muestra.agregarOpinion(opinionChincheFoliada2, ximeExperto);
+		muestra.agregarOpinionDeUsuario(opinionChincheFoliada, nahueExperto);
+		muestra.agregarOpinionDeUsuario(opinionChincheFoliada2, ximeExperto);
+		muestra.verificarMuestra(); 
 		
 		assertEquals("verificada", muestra.nivelDeVerificacion());
+		assertFalse(muestra.getEstadoDeMuestra().sePuedeVerificarMuestra(muestra));
 	}
-	/*
-	@Test
-	void test_unUsuarioExpertoPuedeVotarUnaMuestraVotadaPorExperto() throws Exception {
-		muestra.agregarOpinion(opinionVinchucaGuasayana, nahueExperto);
 	
-		assertTrue(muestra.usuarioAptoParaVotar(ximeExperto));
-	}
-	*/ 
 	@Test
-	void test_unUsuarioExpertoNoPuedeVotarUnaMuestraVerificada() throws Exception {
+	void test_unaMuestraVotadaNoPuedeVerificarseAun() throws Exception {
+		assertFalse(muestra.getEstadoDeMuestra().sePuedeVerificarMuestra(muestra));
+	}
+	
+	@Test
+	void test_unaMuestraVotadaPorExpertoNoPuedeVerificarseAun() throws Exception {
+		muestra.cerrarOpinionesParaUsuariosBasicos();
+		assertFalse(muestra.getEstadoDeMuestra().sePuedeVerificarMuestra(muestra));
+	}
+	
+	@Test
+	void test_unaMuestraVerificadaNoSePuedeVolverAVerificar() throws Exception {
+		muestra.verificarMuestra();
 		assertFalse(muestra.getEstadoDeMuestra().sePuedeVerificarMuestra(muestra));
 	}
 	
 	@Test
 	void test_cuandoSeLePideAUnaMuestraSuResultadoActualRetornaLaOpinionMasVotada() throws Exception {
-		muestra.agregarOpinion(opinionChincheFoliada, usuarioBasico);
-		muestra.agregarOpinion(opinionChincheFoliada2, usuarioExperto);
-		muestra.agregarOpinion(opinionChincheFoliada2, ximeExperto);
+		muestra.agregarOpinionDeUsuario(opinionChincheFoliada, usuarioBasico);
+		muestra.agregarOpinionDeUsuario(opinionChincheFoliada2, usuarioExperto);
+		muestra.agregarOpinionDeUsuario(opinionChincheFoliada2, ximeExperto);
 		
 		assertEquals("CHINCHE_FOLIADA", muestra.getResultadoActual());
 	}
-	
+
 	@Test
 	void test_cuandoUnaMuestraSeVerificaSeLeAvisaASusZonasDeCobertura() throws Exception {
 		muestra.agregarZonaDeCobertura(zona);
-		muestra.agregarOpinion(opinionChincheFoliada, nahueExperto);
-		muestra.agregarOpinion(opinionChincheFoliada2, ximeExperto);
-	
+		muestra.agregarOpinionDeUsuario(opinionChincheFoliada, nahueExperto);
+		muestra.agregarOpinionDeUsuario(opinionChincheFoliada2, ximeExperto);
+		muestra.verificarMuestra();
 		verify(zona, atLeastOnce()).muestraVerificada(muestra);
 		assertEquals("verificada", muestra.nivelDeVerificacion());
 	}
@@ -294,6 +279,7 @@ class MuestraTest {
 		assertEquals(muestrasEnCercania, muestra.muestrasCercanas(muestrasAComparar, 10.0));
 		verify(ubicacionDeLaMuestra).muestrasCercanas(muestrasAComparar, 10.0);
 	}
+	
 }
 
 	

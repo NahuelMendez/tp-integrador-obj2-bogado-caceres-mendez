@@ -36,7 +36,7 @@ public class Muestra {
 		this.historialDeOpiniones = new LinkedHashMap<Usuario, Opinion>();
 		this.estadoActual = new EstadoDeMuestraVotada();
 		this.zonasDeCobertura = new ArrayList<ZonaDeCobertura>();
-		this.agregarOpinion(opinion, usuario);
+		this.agregarOpinionDeUsuario(opinion, usuario);
 		this.fechaDeUltimaVotacion = fechaDeCreacion;
 	}
 	
@@ -106,7 +106,10 @@ public class Muestra {
 	}
 
 	public void verificarMuestra() throws Exception{
-		this.estadoActual.verificarMuestra(this);
+		if(this.coincidenDosExpertosEnSuOpinion()) {  
+			this.cerrarOpinionesParaTodosLosUsuarios(); 
+			this.avisarVerificacionAZonasDeCobertura(); 
+		}
 	}
 
 	public void cerrarOpinionesParaUsuariosBasicos() {
@@ -118,18 +121,14 @@ public class Muestra {
 		this.setEstadoDeMuestra(new EstadoDeMuestraVerificada());
 	}
 	
-	public boolean noContieneLaOpinionDelUsuario(Usuario usuario) {
-		return !this.historialDeOpiniones.containsKey(usuario); 
+	public boolean contieneAlUsuario(Usuario usuario) {
+		return this.historialDeOpiniones.containsKey(usuario); 
 	}
 
 	public boolean contieneLaOpinion(Opinion opinion) {
 		return this.historialDeOpiniones.containsValue(opinion);
 	}
-/*
-	public boolean usuarioAptoParaVotar(Usuario usuario) {
-		return this.estadoActual.usuarioAptoParaVotar(usuario, this);
-	}
-	*/
+
 	public boolean coincidenDosExpertosEnSuOpinion() {
         final Set<String> opiniones = new HashSet<String>();
         boolean retorno = false;
@@ -156,7 +155,7 @@ public class Muestra {
 		}
 		return opiniones;	
 	}	
-			
+		
 	public String getResultadoActual() {
 		String opinionMasVotada = getOpiniones().stream()
 		    .reduce(BinaryOperator.maxBy((o1, o2) -> Collections.frequency(getOpiniones(), o1) -
@@ -173,11 +172,6 @@ public class Muestra {
 	public Set<Muestra> muestrasCercanas(Set<Muestra> muestras, double distancia){
 		return this.ubicacion.muestrasCercanas(muestras, distancia);
 	}
-
-	public void siguienteEstadoDeMuestra() {
-		// TODO HACELO PIBE
-	}
-	
 }
 
 

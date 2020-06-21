@@ -11,8 +11,13 @@ public class EstadoMuestraVotadaPorExperto implements EstadoDeMuestra {
 	}
 	
 	@Override
+	public String getEstadoDeMuestra(Muestra muestra) {
+		return "votadaPorExperto";
+	}
+	
+	@Override
 	public void agregarOpinion(Muestra muestra, Opinion opinionAAgregar, Usuario usuario) throws Exception {
-		if(muestra.noContieneLaOpinionDelUsuario(usuario)) { 
+		if(!muestra.contieneAlUsuario(usuario)) { 
 			usuario.agregarOpinionAMuestraVotadaPorExperto(muestra, opinionAAgregar); 
 		} 
 		else {
@@ -20,32 +25,10 @@ public class EstadoMuestraVotadaPorExperto implements EstadoDeMuestra {
 		}
 	}
 
-/*
-	@Override
-	public boolean usuarioAptoParaVotar(Usuario usuario, Muestra muestra) {
-		boolean retorno = false; 
-		if(muestra.noContieneLaOpinionDelUsuario(usuario)){
-			retorno = true;
-			}
-		return retorno;
-		}
-*/
-	@Override
-	public void verificarMuestra(Muestra muestra){
-		if(sePuedeVerificarMuestra(muestra)) {
-			muestra.cerrarOpinionesParaTodosLosUsuarios(); 
-			muestra.avisarVerificacionAZonasDeCobertura(); 
-		}
-	}
-
 	@Override
 	public boolean sePuedeVerificarMuestra(Muestra muestra) {
 		return muestra.coincidenDosExpertosEnSuOpinion();
 	}
-
-	@Override
-	public String getEstadoDeMuestra(Muestra muestra) {
-		return "votadaPorExperto";
-	}
-	
 }
+
+
