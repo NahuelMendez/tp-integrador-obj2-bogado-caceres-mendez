@@ -14,7 +14,6 @@ import ar.edu.unq.TPIntegrador.usuarioYEstadosDeUsuario.Usuario;
 import static org.mockito.Mockito.*;
 
 import java.time.LocalDate;
-import java.time.temporal.ChronoUnit;
 
 class UsuarioTest {
 	
