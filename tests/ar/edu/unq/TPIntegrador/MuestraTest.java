@@ -2,6 +2,7 @@ package ar.edu.unq.TPIntegrador;
 
 import static org.junit.Assert.assertTrue;
 import org.junit.jupiter.api.Test;
+import org.mockito.Mock;
 
 import ar.edu.unq.TPIntegrador.MuestraYEstados.Muestra;
 import ar.edu.unq.TPIntegrador.usuarioYEstadosDeUsuario.Usuario;
@@ -17,56 +18,56 @@ import java.util.Set;
 import org.junit.jupiter.api.BeforeEach;
 
 class MuestraTest {
-	private Muestra muestra;
-	private Muestra muestra1;
-	private Usuario gonzaBasico_propietario;
-	private Usuario usuarioBasico;
-	private Usuario nahueExperto;
-	private Usuario ximeExperto;
-	private Usuario usuarioExperto;
 	
-	private Opinion opinionChincheFoliada;
-	private BufferedImage fotoVinchuca;
-	private Ubicacion ubicacionDeLaMuestra;
-	private ZonaDeCobertura zona;
-	private Opinion opinionVinchucaGuasayana;
-	private Opinion opinionChincheFoliada2;
-	private Opinion opinionVinchucaGuasayana2;
+	private Muestra muestra;
+	
+	@Mock private BufferedImage fotoVinchuca;
+	@Mock private Ubicacion ubicacionDeLaMuestra;
+	@Mock private ZonaDeCobertura zona;
+	@Mock private Usuario gonzaBasico;
+	@Mock private Usuario usuarioBasico;
+	@Mock private Usuario nahueExperto;
+	@Mock private Usuario ximeExperto;
+	@Mock private Usuario usuarioExperto;
+	@Mock private Opinion opinionChincheFoliada;
+	@Mock private Opinion opinionChincheFoliada2;
+	@Mock private Opinion opinionVinchucaGuasayana;
+	@Mock private Opinion opinionVinchucaGuasayana2;
 	
 	@BeforeEach
 	void setUp() throws Exception {
-		
+
 		fotoVinchuca = mock(BufferedImage.class);
-		opinionChincheFoliada = mock(Opinion.class);
-		opinionChincheFoliada2 = mock(Opinion.class);
-		opinionVinchucaGuasayana = mock(Opinion.class);
-		opinionVinchucaGuasayana2 = mock(Opinion.class);
-		opinionChincheFoliada = mock(Opinion.class);
-		opinionChincheFoliada2 = mock(Opinion.class);
+		ubicacionDeLaMuestra = mock(Ubicacion.class);
+		
 		zona = mock(ZonaDeCobertura.class);
+		
 		usuarioBasico = mock(Usuario.class);
 		usuarioExperto = mock(Usuario.class);
 		nahueExperto = mock(Usuario.class);
 		ximeExperto = mock(Usuario.class);
-		gonzaBasico_propietario = mock(Usuario.class);
-		ubicacionDeLaMuestra = mock(Ubicacion.class);
-	
-		muestra = new Muestra(gonzaBasico_propietario, opinionVinchucaGuasayana, fotoVinchuca, ubicacionDeLaMuestra , LocalDate.of(2020,12,01));
-		muestra1 = new Muestra(usuarioBasico, opinionChincheFoliada, fotoVinchuca, ubicacionDeLaMuestra, LocalDate.of(2020,05,05));
+		gonzaBasico = mock(Usuario.class);
+		opinionChincheFoliada = mock(Opinion.class);
+		opinionChincheFoliada2 = mock(Opinion.class);
+		opinionVinchucaGuasayana = mock(Opinion.class);
+		opinionVinchucaGuasayana2 = mock(Opinion.class);
 		
-		when(nahueExperto.esUsuarioExperto()).thenReturn(true);
-		when(ximeExperto.esUsuarioExperto()).thenReturn(true);
+		muestra = new Muestra(gonzaBasico, opinionVinchucaGuasayana, fotoVinchuca, ubicacionDeLaMuestra , LocalDate.of(2020,12,01));
+
 		when(usuarioBasico.esUsuarioBasico()).thenReturn(true);
 		when(usuarioExperto.esUsuarioExperto()).thenReturn(true);
+		when(nahueExperto.esUsuarioExperto()).thenReturn(true);
+		when(ximeExperto.esUsuarioExperto()).thenReturn(true);
+		when(gonzaBasico.esUsuarioBasico()).thenReturn(true);
 		
 		when(opinionVinchucaGuasayana.getDescripcion()).thenReturn("VINCHUCA_GUAYASANA");
 		when(opinionVinchucaGuasayana.getFechaDeEmision()).thenReturn(LocalDate.now());
 		when(opinionVinchucaGuasayana2.getDescripcion()).thenReturn("VINCHUCA_GUAYASANA");
 		when(opinionVinchucaGuasayana2.getFechaDeEmision()).thenReturn(LocalDate.now());
-		when(opinionChincheFoliada2.getDescripcion()).thenReturn("CHINCHE_FOLIADA");
-		when(opinionChincheFoliada2.getFechaDeEmision()).thenReturn(LocalDate.now());
 		when(opinionChincheFoliada.getDescripcion()).thenReturn("CHINCHE_FOLIADA");
 		when(opinionChincheFoliada.getFechaDeEmision()).thenReturn(LocalDate.now());
+		when(opinionChincheFoliada2.getDescripcion()).thenReturn("CHINCHE_FOLIADA");
+		when(opinionChincheFoliada2.getFechaDeEmision()).thenReturn(LocalDate.now());
 	}
 
 	@Test
@@ -75,8 +76,8 @@ class MuestraTest {
 		assertTrue(muestra.contieneLaOpinion(opinionVinchucaGuasayana));
 		assertEquals(fotoVinchuca, muestra.getFotoDeLaVinchuca());
 		assertEquals(ubicacionDeLaMuestra, muestra.getUbicacion());
-		when(muestra1.getIdentificacionPropietarioDeLaMuestra()).thenReturn("NombreUsuario");
-		assertEquals("NombreUsuario", muestra1.getIdentificacionPropietarioDeLaMuestra());
+		when(muestra.getIdentificacionPropietarioDeLaMuestra()).thenReturn("Gonza");
+		assertEquals("Gonza", muestra.getIdentificacionPropietarioDeLaMuestra());
 		assertEquals(LocalDate.of(2020,12,01), muestra.getFechaDeCreacion());
 		assertTrue(muestra.getZonasDeCobertura().isEmpty());	
 		assertEquals(1, muestra.getHistorialDeOpiniones().size());
@@ -84,6 +85,7 @@ class MuestraTest {
 	
 	@Test
 	void test_cuandoUnaMuestraAgregaUnaOpinionSeActualizaLaUltimaFechaDeVotacion() throws Exception {
+		assertEquals(LocalDate.of(2020,12,01), muestra.getFechaUltimaVotacion());
 		muestra.agregarOpinionDeUsuario(opinionChincheFoliada2, nahueExperto);
 		
 		assertEquals(LocalDate.now(), muestra.getFechaUltimaVotacion());
@@ -105,7 +107,7 @@ class MuestraTest {
 
 	@Test
 	void test_UnaMuestraNoPuedeVolverASerOpinadaPorSuPropietario() throws Exception {
-		assertThrows(Exception.class, () -> muestra.agregarOpinion(opinionChincheFoliada, gonzaBasico_propietario));
+		assertThrows(Exception.class, () -> muestra.agregarOpinion(opinionChincheFoliada, gonzaBasico));
 	}
 	
 	@Test
@@ -129,7 +131,7 @@ class MuestraTest {
 	}
 
 	@Test
-	void test_() throws Exception {
+	void test_unaMuestraEsComentadaPorUnUsuarioExperto() throws Exception {
 		muestra.cerrarOpinionesParaUsuariosBasicos();
 		muestra.agregarOpinion(opinionChincheFoliada, nahueExperto);
 		
@@ -148,14 +150,6 @@ class MuestraTest {
 		assertTrue(muestra.contieneLaOpinion(opinionChincheFoliada));
 	}
 
-	@Test
-	void test_cuandoUnUsuarioExpertoOpinaSobreUnaMuestraEstaQuedaVotadaPorExperto() throws Exception {
-		muestra.agregarOpinionDeUsuario(opinionChincheFoliada, ximeExperto);
-		muestra.cerrarOpinionesParaUsuariosBasicos();
-		
-		assertEquals("votadaPorExperto", muestra.getEstadoActual());
-	}
-	
 	@Test
 	void test_cuandoDosUsuariosExpertosCoincidenEnLaOpinionSobreUnaMuestraEstaQuedaVerificada() throws Exception {
 		muestra.agregarOpinionDeUsuario(opinionChincheFoliada, nahueExperto);
@@ -249,6 +243,7 @@ class MuestraTest {
 		muestra.agregarOpinionDeUsuario(opinionChincheFoliada2, ximeExperto);
 		muestra.verificarMuestra();
 		verify(zona, atLeastOnce()).muestraVerificada(muestra);
+		
 		assertEquals("verificada", muestra.nivelDeVerificacion());
 	}
 	
@@ -262,7 +257,7 @@ class MuestraTest {
 		Muestra muestraCercana1 = new Muestra(usuarioBasico, opinionChincheFoliada, fotoVinchuca, ubicacionCercana1 , LocalDate.of(2020,05,05));
 		Muestra muestraCercana2 = new Muestra(nahueExperto, opinionChincheFoliada, fotoVinchuca, ubicacionCercana2 , LocalDate.of(2020,05,05));
 		Muestra muestraLejana = new Muestra(ximeExperto, opinionChincheFoliada, fotoVinchuca, ubicacionLejana , LocalDate.of(2020,05,05));
-		Muestra muestraLejana1 = new Muestra(gonzaBasico_propietario, opinionChincheFoliada, fotoVinchuca, ubicacionLejana1 , LocalDate.of(2020,05,05));
+		Muestra muestraLejana1 = new Muestra(gonzaBasico, opinionChincheFoliada, fotoVinchuca, ubicacionLejana1 , LocalDate.of(2020,05,05));
 		
 		Set<Muestra> muestrasAComparar = new HashSet<Muestra>();
 		Set<Muestra> muestrasEnCercania = new HashSet<Muestra>();
@@ -279,7 +274,6 @@ class MuestraTest {
 		assertEquals(muestrasEnCercania, muestra.muestrasCercanas(muestrasAComparar, 10.0));
 		verify(ubicacionDeLaMuestra).muestrasCercanas(muestrasAComparar, 10.0);
 	}
-	
 }
 
 	
