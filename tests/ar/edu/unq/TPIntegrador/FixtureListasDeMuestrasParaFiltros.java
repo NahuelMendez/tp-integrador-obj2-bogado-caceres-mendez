@@ -70,16 +70,6 @@ public class FixtureListasDeMuestrasParaFiltros {
 		return listaParaFiltrarPorFecha;
 	}
 	
-	public Set<Muestra> listaCon1MuestrasConFechaMayorDeCreacionY2ConFechaDeVotacionMayores(){
-		//return muestras con fechaDeCreacion [now, now, 2021]
-		//return muestras con fechaDeCreacion [2022, now, 2022]
-		Set<Muestra> listaParaFiltrarPorFecha = new HashSet<Muestra>();
-		listaParaFiltrarPorFecha.add(muestra1);
-		listaParaFiltrarPorFecha.add(muestra3);
-		listaParaFiltrarPorFecha.add(muestra5);	
-		return listaParaFiltrarPorFecha;
-	}
-	
 	public Set<Muestra> listaConNingunaFechaDeCreacionMayorANowY2UltimaOpinionAntesDeNow(){
 		//return muestras con fechaDeCreacion [now, now, 2007]
 		//return muestras con fechaDeCreacion [2022, now, 2009]
