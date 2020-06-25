@@ -52,10 +52,6 @@ public class Usuario {
 		this.estadoDeUsuario = estadoDeUsuario;
 	}
 	
-	public EstadoDeUsuario getEstadoDeUsuario() {
-		return this.estadoDeUsuario;
-	}
-	
 	public void agregarOpinionEnviada(Opinion opinion) {
 		this.opinionesEnviadas.add(opinion);
 	}
@@ -64,19 +60,19 @@ public class Usuario {
 		return this.opinionesEnviadas;
 	}
 
-	protected Set<Muestra> getMuestrasEnviadas() {
+	public Set<Muestra> getMuestrasEnviadas() {
 		return this.muestras;
 	}
 
 	public Boolean esUsuarioExperto() {
-		return this.getEstadoDeUsuario().esUsuarioExperto();
+		return this.estadoDeUsuario.esUsuarioExperto();
 	}
 	
 	public Boolean esUsuarioBasico() {
-		return this.getEstadoDeUsuario().esUsuarioBasico();
+		return this.estadoDeUsuario.esUsuarioBasico();
 	}
 	
-	public Integer cantidadDeOpinionesEnLosUltimos30Dias() {
+	private Integer cantidadDeOpinionesEnLosUltimos30Dias() {
 		return this.opinionesDelUltimoMes().size();
 	}
 	
@@ -99,7 +95,7 @@ public class Usuario {
 		return ChronoUnit.DAYS.between(opinion.getFechaDeEmision(), fechaActual) <= 30;
 	}
 	
-	public Integer cantidadDeEnviosEnLosUltimos30Dias() {
+	private Integer cantidadDeEnviosEnLosUltimos30Dias() {
 		return this.enviosDelUltimoMes().size();
 	}
 
@@ -133,7 +129,7 @@ public class Usuario {
 	
 
 	public void actualizarCategoria() {
-		this.getEstadoDeUsuario().actualizarCategoria(this);
+		this.estadoDeUsuario.actualizarCategoria(this);
 	}
 	
 	protected Boolean cumpleConRevisionesNecesarias() {
