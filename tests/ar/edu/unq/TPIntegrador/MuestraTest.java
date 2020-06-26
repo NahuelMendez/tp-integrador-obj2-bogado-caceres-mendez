@@ -97,13 +97,6 @@ class MuestraTest {
 		
 		assertTrue(muestra.getZonasDeCobertura().contains(zona));
 	}
-	
-	@Test
-	void test_UnaMuestraCreadaPorUnUsuarioConEstadoBasicoTieneUnEstadoVotada() throws Exception {
-		muestra = new Muestra(usuarioBasico, opinionChincheFoliada, fotoVinchuca, ubicacionDeLaMuestra , LocalDate.of(2020,12,01));
-		
-		assertEquals("votada", muestra.getEstadoActual());
-	}
 
 	@Test
 	void test_UnaMuestraNoPuedeVolverASerOpinadaPorSuPropietario() throws Exception {
@@ -156,7 +149,6 @@ class MuestraTest {
 		muestra.agregarOpinionDeUsuario(opinionChincheFoliada2, ximeExperto);
 		muestra.verificarMuestra();
 		
-		assertEquals("verificada", muestra.getEstadoActual());
 		assertTrue(muestra.coincidenDosExpertosEnSuOpinion());
 	}
 	
@@ -166,7 +158,6 @@ class MuestraTest {
 		muestra.agregarOpinionDeUsuario(opinionVinchucaGuasayana2, ximeExperto);
 		muestra.cerrarOpinionesParaUsuariosBasicos();
 		
-		assertEquals("votadaPorExperto", muestra.getEstadoActual());
 		assertFalse(muestra.coincidenDosExpertosEnSuOpinion());
 	}
 	
@@ -207,24 +198,6 @@ class MuestraTest {
 		muestra.verificarMuestra(); 
 		
 		assertEquals("verificada", muestra.nivelDeVerificacion());
-		assertFalse(muestra.getEstadoDeMuestra().sePuedeVerificarMuestra(muestra));
-	}
-	
-	@Test
-	void test_unaMuestraVotadaNoPuedeVerificarseAun() throws Exception {
-		assertFalse(muestra.getEstadoDeMuestra().sePuedeVerificarMuestra(muestra));
-	}
-	
-	@Test
-	void test_unaMuestraVotadaPorExpertoNoPuedeVerificarseAun() throws Exception {
-		muestra.cerrarOpinionesParaUsuariosBasicos();
-		assertFalse(muestra.getEstadoDeMuestra().sePuedeVerificarMuestra(muestra));
-	}
-	
-	@Test
-	void test_unaMuestraVerificadaNoSePuedeVolverAVerificar() throws Exception {
-		muestra.verificarMuestra();
-		assertFalse(muestra.getEstadoDeMuestra().sePuedeVerificarMuestra(muestra));
 	}
 	
 	@Test

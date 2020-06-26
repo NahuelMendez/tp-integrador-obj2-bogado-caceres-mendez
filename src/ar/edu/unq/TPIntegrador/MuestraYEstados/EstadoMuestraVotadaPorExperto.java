@@ -11,11 +11,6 @@ public class EstadoMuestraVotadaPorExperto implements EstadoDeMuestra {
 	}
 	
 	@Override
-	public String getEstadoDeMuestra(Muestra muestra) {
-		return "votadaPorExperto";
-	}
-	
-	@Override
 	public void agregarOpinion(Muestra muestra, Opinion opinionAAgregar, Usuario usuario) throws Exception {
 		if(!muestra.contieneAlUsuario(usuario)) { 
 			usuario.agregarOpinionAMuestraVotadaPorExperto(muestra, opinionAAgregar); 
@@ -25,10 +20,6 @@ public class EstadoMuestraVotadaPorExperto implements EstadoDeMuestra {
 		}
 	}
 
-	@Override
-	public boolean sePuedeVerificarMuestra(Muestra muestra) {
-		return muestra.coincidenDosExpertosEnSuOpinion();
-	}
 }
 
 

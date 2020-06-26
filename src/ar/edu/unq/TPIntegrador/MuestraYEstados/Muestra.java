@@ -75,15 +75,7 @@ public class Muestra {
 	private void setEstadoDeMuestra(EstadoDeMuestra estado){  
 		this.estadoActual = estado;
 	}
-	
-	public EstadoDeMuestra getEstadoDeMuestra(){
-		return this.estadoActual;
-	}
-	
-	public String getEstadoActual(){
-		return this.estadoActual.getEstadoDeMuestra(this);
-	}
-	
+
 	public String nivelDeVerificacion() {
 		return this.estadoActual.getNivelDeVerificacion(this);
 	}
@@ -117,7 +109,7 @@ public class Muestra {
 		this.setEstadoDeMuestra(new EstadoMuestraVotadaPorExperto());
 	}
 	
-	protected void cerrarOpinionesParaTodosLosUsuarios() {
+	private void cerrarOpinionesParaTodosLosUsuarios() {
 		this.setEstadoDeMuestra(new EstadoDeMuestraVerificada());
 	}
 	
@@ -163,7 +155,7 @@ public class Muestra {
 		return (opinionMasVotada);
 	}	
 	
-	protected void avisarVerificacionAZonasDeCobertura() {
+	private void avisarVerificacionAZonasDeCobertura() {
 		for(ZonaDeCobertura zona : this.zonasDeCobertura) {
 			zona.muestraVerificada(this);
 		}

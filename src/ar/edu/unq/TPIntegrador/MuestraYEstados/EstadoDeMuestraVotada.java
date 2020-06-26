@@ -11,11 +11,6 @@ public class EstadoDeMuestraVotada implements EstadoDeMuestra {
 	}
 
 	@Override
-	public String getEstadoDeMuestra(Muestra muestra) {
-		return this.getNivelDeVerificacion(muestra);
-	}
-	
-	@Override
 	public void agregarOpinion(Muestra muestra, Opinion opinionAAgregar, Usuario usuario) throws Exception {
 		if(!muestra.contieneAlUsuario(usuario)) {
 			usuario.agregarOpinionAMuestraVotada(muestra, opinionAAgregar);
@@ -25,8 +20,4 @@ public class EstadoDeMuestraVotada implements EstadoDeMuestra {
 		}
 	}
 
-	@Override
-	public boolean sePuedeVerificarMuestra(Muestra muestra) {
-		return false;
-	}
 }
