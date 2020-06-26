@@ -20,6 +20,13 @@ public class EstadoMuestraVotadaPorExperto implements EstadoDeMuestra {
 		}
 	}
 
+	@Override
+	public void actualizarEstado(Muestra muestra) {
+		if(muestra.coincidenDosExpertosEnSuOpinion()) {  
+			muestra.setEstadoDeMuestra(new EstadoDeMuestraVerificada());
+			muestra.avisarVerificacionAZonasDeCobertura(); 
+		}
+	}
 }
 
 

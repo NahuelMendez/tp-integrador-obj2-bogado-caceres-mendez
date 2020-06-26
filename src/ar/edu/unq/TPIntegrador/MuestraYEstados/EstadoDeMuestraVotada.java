@@ -20,4 +20,10 @@ public class EstadoDeMuestraVotada implements EstadoDeMuestra {
 		}
 	}
 
+	@Override
+	public void actualizarEstado(Muestra muestra) {
+		muestra.historialDeOpiniones.clear(); 
+		muestra.setEstadoDeMuestra(new EstadoMuestraVotadaPorExperto());
+		
+	}
 }

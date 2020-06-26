@@ -22,7 +22,7 @@ public class Muestra {
 	private Ubicacion ubicacion;
 	private LocalDate fechaDeCreacion;
 	private LocalDate fechaDeUltimaVotacion;
-	private LinkedHashMap<Usuario, Opinion> historialDeOpiniones;
+	LinkedHashMap<Usuario, Opinion> historialDeOpiniones;
 	private EstadoDeMuestra estadoActual;
 	private ArrayList<ZonaDeCobertura> zonasDeCobertura;
 
@@ -72,7 +72,7 @@ public class Muestra {
 		return this.historialDeOpiniones;
 	}
 
-	private void setEstadoDeMuestra(EstadoDeMuestra estado){  
+	void setEstadoDeMuestra(EstadoDeMuestra estado){  
 		this.estadoActual = estado;
 	}
 
@@ -96,23 +96,28 @@ public class Muestra {
 		this.historialDeOpiniones.put(usuario, opinionAAgregar);
 		this.actualizarFechaUltimaVotacion(opinionAAgregar);
 	}
-
+/*
 	public void verificarMuestra() throws Exception{
 		if(this.coincidenDosExpertosEnSuOpinion()) {  
 			this.cerrarOpinionesParaTodosLosUsuarios(); 
 			this.avisarVerificacionAZonasDeCobertura(); 
 		}
 	}
-
+*/
+	public void verificarMuestra() throws Exception {
+		this.estadoActual.actualizarEstado(this);
+	}
+	
+	/*
 	public void cerrarOpinionesParaUsuariosBasicos() {
 		this.historialDeOpiniones.clear(); 
 		this.setEstadoDeMuestra(new EstadoMuestraVotadaPorExperto());
 	}
-	
-	private void cerrarOpinionesParaTodosLosUsuarios() {
+	//lo utilizaba estado de usuario experto! 
+	void cerrarOpinionesParaTodosLosUsuarios() {
 		this.setEstadoDeMuestra(new EstadoDeMuestraVerificada());
 	}
-	
+	*/
 	public boolean contieneAlUsuario(Usuario usuario) {
 		return this.historialDeOpiniones.containsKey(usuario); 
 	}
@@ -124,21 +129,11 @@ public class Muestra {
 	public boolean coincidenDosExpertosEnSuOpinion() {
         final Set<String> opiniones = new HashSet<String>();
         boolean retorno = false;
-        for (String opinion: filtrarOpinionesDeUsuariosExpertos()) {
+        for (String opinion: getOpiniones()) {
              retorno |= !opiniones.add(opinion); 
         }
         return retorno;
     }
-	
-	private ArrayList<String> filtrarOpinionesDeUsuariosExpertos(){
-		ArrayList<String> retorno = new ArrayList<String>();
-		for(HashMap.Entry<Usuario, Opinion> opinionDeUsuario : historialDeOpiniones.entrySet()) {
-			if (opinionDeUsuario.getKey().esUsuarioExperto()){
-				retorno.add((opinionDeUsuario).getValue().getDescripcion());
-			}
-		}
-		return retorno;	
-	}
 
 	public ArrayList<String> getOpiniones() {
 		ArrayList<String> opiniones = new ArrayList<String>();
@@ -155,7 +150,7 @@ public class Muestra {
 		return (opinionMasVotada);
 	}	
 	
-	private void avisarVerificacionAZonasDeCobertura() {
+	void avisarVerificacionAZonasDeCobertura() {
 		for(ZonaDeCobertura zona : this.zonasDeCobertura) {
 			zona.muestraVerificada(this);
 		}

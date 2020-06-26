@@ -8,5 +8,7 @@ public interface EstadoDeMuestra {
 	abstract void agregarOpinion(Muestra muestra, Opinion opinionAAgregar, Usuario usuario) throws Exception;
 
 	abstract String getNivelDeVerificacion(Muestra muestra);
+
+	abstract void actualizarEstado(Muestra muestra) throws Exception;
 	
 }

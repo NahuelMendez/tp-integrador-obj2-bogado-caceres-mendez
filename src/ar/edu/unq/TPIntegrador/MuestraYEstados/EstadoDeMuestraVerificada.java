@@ -15,4 +15,9 @@ public class EstadoDeMuestraVerificada implements EstadoDeMuestra {
 		throw new Exception("Nadie puede opinar sobre muestras verificadas"); 
 	}
 
+	@Override
+	public void actualizarEstado(Muestra muestra) throws Exception{
+		throw new Exception("La muestra ya ha sido verificada");
+	}
+
 }
