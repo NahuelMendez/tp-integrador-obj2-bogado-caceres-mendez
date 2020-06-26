@@ -62,14 +62,6 @@ public class Organizacion implements IObserver{
 		
 	}
 
-	//public void actualizar(ZonaDeCobertura zonaDeCobertura, Muestra muestra, String aviso) {
-		//if (aviso == "Nueva muestra") {
-			//funcionalidadParaNuevaMuestra.nuevoEvento(this, zonaDeCobertura, muestra);
-		//}else {
-			//funcionalidadParaNuevaVerificacion.nuevoEvento(this, zonaDeCobertura, muestra);
-		//}
-		
-	//}
 	
 	public void actualizarNuevaMuestra(ZonaDeCobertura zonaDeCobertura, Muestra muestra) {
 		funcionalidadParaNuevaMuestra.nuevoEvento(this, zonaDeCobertura, muestra);

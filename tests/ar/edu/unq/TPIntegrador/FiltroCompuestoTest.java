@@ -10,17 +10,14 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import ar.edu.unq.TPIntegrador.MuestraYEstados.Muestra;
-import ar.edu.unq.TPIntegrador.filtro.FiltroCompuesto;
-import ar.edu.unq.TPIntegrador.filtro.FiltroCompuestoAnd;
-import ar.edu.unq.TPIntegrador.filtro.FiltroCompuestoOr;
-import ar.edu.unq.TPIntegrador.filtro.IFiltro;
+import ar.edu.unq.TPIntegrador.filtro.*;
 
 class FiltroCompuestoTest {
 
 	private FiltroCompuesto filtroCompuestoAnd;
 	private FiltroCompuesto filtroCompuestoOr;
-	private IFiltro filtroSimple1;
-	private IFiltro filtroSimple2;
+	private FiltroPorFecha filtroSimple1;
+	private FiltroPorString filtroSimple2;
 	private Set<Muestra> listaDeMuestras;
 	private Muestra muestra1;
 	private Muestra muestra2;
@@ -31,8 +28,8 @@ class FiltroCompuestoTest {
 	public void setUp() {
 		filtroCompuestoAnd = new FiltroCompuestoAnd();
 		filtroCompuestoOr = new FiltroCompuestoOr();
-		filtroSimple1 = mock(IFiltro.class);
-		filtroSimple2 = mock(IFiltro.class);
+		filtroSimple1 = mock(FiltroPorFecha.class);
+		filtroSimple2 = mock(FiltroPorString.class);
 		muestra1 = mock(Muestra.class);
 		muestra2 = mock(Muestra.class);
 		listaDeMuestras = new HashSet<Muestra>();

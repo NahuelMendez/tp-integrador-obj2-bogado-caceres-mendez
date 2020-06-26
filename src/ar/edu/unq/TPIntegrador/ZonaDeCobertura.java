@@ -95,12 +95,6 @@ public class ZonaDeCobertura {
 		return epicentro.medirDistancias(muestra.getUbicacion()) < radio;
 	}
 
-	//private void avisarAZonasDeCobertura(Muestra muestra, String mensaje) {
-		//for (IObserver observer: observers) {
-			//observer.actualizar(this, muestra, mensaje);
-		//}
-	//}
-
 
 	public Set<Muestra> muestrasRegistradas() {
 		return muestrasRegistradas;
