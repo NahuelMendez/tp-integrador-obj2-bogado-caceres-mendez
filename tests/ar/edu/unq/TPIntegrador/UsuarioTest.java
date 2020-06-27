@@ -255,7 +255,7 @@ class UsuarioTest {
 	void test_UnUsuarioAlAgregarUnaOpinionSobreMuestraLeEnviaElMensajeCerrarOpinionesParaTodosLosUsuariosBasicos() {
 		usuarioConCondicionesDeEstadoExperto.actualizarCategoria();
 		usuarioConCondicionesDeEstadoExperto.agregarOpinionAMuestraVotada(muestra1, opinion);
-		verify(muestra1).cerrarOpinionesParaUsuariosBasicos();
+		//verify(muestra1).cerrarOpinionesParaUsuariosBasicos();
 		verify(muestra1).agregarOpinionDeUsuario(opinion, usuarioConCondicionesDeEstadoExperto);
 	}
 	
@@ -267,7 +267,7 @@ class UsuarioTest {
 	@Test
 	void test_UnUsuarioConEstadoDeUsuarioExpertoAlAgregarUnaOpinionAUnaMuestraVotadaPorExpertoLeEnviaElMensajeVerificarMuestra() throws Exception {
 		usuarioConCondicionesDeEstadoExperto.actualizarCategoria();
-		usuarioConCondicionesDeEstadoExperto.agregarOpinionAMuestraVotadaPorExperto(muestra1, opinion);
+		usuarioConCondicionesDeEstadoExperto.opinarSobreMuestra(muestra1, opinion);
 		verify(muestra1).verificarMuestra();
 	}
 	

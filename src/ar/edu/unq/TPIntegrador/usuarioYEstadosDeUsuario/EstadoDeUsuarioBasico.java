@@ -28,10 +28,12 @@ public class EstadoDeUsuarioBasico implements EstadoDeUsuario{
 		}
 	}
 
+	/*
 	@Override
 	public void agregarOpinionAMuestraVotada(Usuario usuario, Muestra muestra, Opinion opinionAAgregar) {
 		muestra.agregarOpinionDeUsuario(opinionAAgregar, usuario);
 	}
+	*/
 
 	@Override
 	public void agregarOpinionAMuestraVotadaPorExperto(Usuario usuario, Muestra muestra, Opinion opinionAAgregar) throws Exception {
