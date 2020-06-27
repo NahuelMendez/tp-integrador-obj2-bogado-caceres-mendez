@@ -245,12 +245,15 @@ class UsuarioTest {
 		assertFalse(usuario.esUsuarioBasico());
 	}
 	
+	/*
 	@Test
 	void test_UnUsuarioAlAgregarOpinionSobreMuestraLeEnviaElMensajeAgregarOpinionAMuestra() throws Exception {
 		usuario.agregarOpinionAMuestraVotada(muestra1, opinion);
 		verify(muestra1).agregarOpinionDeUsuario(opinion, usuario);
 	}
+	*/
 	
+	/*
 	@Test
 	void test_UnUsuarioAlAgregarUnaOpinionSobreMuestraLeEnviaElMensajeCerrarOpinionesParaTodosLosUsuariosBasicos() {
 		usuarioConCondicionesDeEstadoExperto.actualizarCategoria();
@@ -258,10 +261,18 @@ class UsuarioTest {
 		//verify(muestra1).cerrarOpinionesParaUsuariosBasicos();
 		verify(muestra1).agregarOpinionDeUsuario(opinion, usuarioConCondicionesDeEstadoExperto);
 	}
+	*/
 	
 	@Test
 	void test_UnUsuarioConEstadoDeUsuarioBasicoLanzaUnErrorAlAgregarUnaOpinionSobreUnaMuestraVotadaPorExperto() {
 		assertThrows(Exception.class, () -> usuario.agregarOpinionAMuestraVotadaPorExperto(muestra, opinion));
+	}
+	
+	@Test
+	void test_UnUsuarioConEstadoDeUsuarioExpertoOpinaSobreUnaMuestraEnEstadoVotadaPorExpertoYLeEnviaElMensajeVerificarMuestra() throws Exception {
+		usuarioConCondicionesDeEstadoExperto.actualizarCategoria();
+		usuarioConCondicionesDeEstadoExperto.agregarOpinionAMuestraVotadaPorExperto(muestra, opinion);
+		verify(muestra).agregarOpinionDeUsuario(opinion, usuarioConCondicionesDeEstadoExperto);
 	}
 	
 	@Test
