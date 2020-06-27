@@ -119,7 +119,6 @@ class MuestraTest {
 	void test_laCantidadDeOpinionesEnElHistorialDeOpinionesEs2() throws Exception {
 		muestra.agregarOpinion(opinionChincheFoliada, nahueExperto);
 		
-		//verify(nahueExperto).agregarOpinionAMuestraVotadaPorExperto(muestra, opinionChincheFoliada);
 		assertEquals(2, muestra.getHistorialDeOpiniones().size());
 	}
 
@@ -198,6 +197,16 @@ class MuestraTest {
 		muestra.verificarMuestra(); 
 		
 		assertEquals("verificada", muestra.nivelDeVerificacion());
+	}
+	
+	@Test
+	void test_unaMuestraVerificadaNoSePuedeVolverAVerificar() throws Exception {
+		muestra.verificarMuestra();
+		muestra.agregarOpinionDeUsuario(opinionChincheFoliada, nahueExperto);
+		muestra.agregarOpinionDeUsuario(opinionChincheFoliada2, ximeExperto);
+		muestra.verificarMuestra(); 
+		
+		assertThrows(Exception.class, () -> muestra.verificarMuestra());
 	}
 	
 	@Test
