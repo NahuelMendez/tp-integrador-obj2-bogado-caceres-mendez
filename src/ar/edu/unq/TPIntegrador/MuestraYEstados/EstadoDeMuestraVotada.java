@@ -13,7 +13,8 @@ public class EstadoDeMuestraVotada implements EstadoDeMuestra {
 	@Override
 	public void agregarOpinion(Muestra muestra, Opinion opinionAAgregar, Usuario usuario) throws Exception {
 		if(!muestra.contieneAlUsuario(usuario)) {
-			usuario.agregarOpinionAMuestraVotada(muestra, opinionAAgregar);
+			muestra.agregarOpinionDeUsuario(opinionAAgregar, usuario);
+			//usuario.agregarOpinionAMuestraVotada(muestra, opinionAAgregar);
 		}
 		else {
 			throw new Exception("El usuario ya ha opinado sobre la muestra"); 
@@ -21,7 +22,7 @@ public class EstadoDeMuestraVotada implements EstadoDeMuestra {
 	}
 
 	@Override
-	public void actualizarEstado(Muestra muestra) {
+	public void actualizarEstado(Muestra muestra) throws Exception {
 		muestra.historialDeOpiniones.clear(); 
 		muestra.setEstadoDeMuestra(new EstadoMuestraVotadaPorExperto());
 		

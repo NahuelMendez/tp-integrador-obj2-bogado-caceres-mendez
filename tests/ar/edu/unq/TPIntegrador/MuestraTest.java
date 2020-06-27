@@ -116,16 +116,16 @@ class MuestraTest {
 	}
 	
 	@Test
-	void test_laCantidadDeOpinionesEnElHistorialDeOpinionesEs1() throws Exception {
+	void test_laCantidadDeOpinionesEnElHistorialDeOpinionesEs2() throws Exception {
 		muestra.agregarOpinion(opinionChincheFoliada, nahueExperto);
 		
-		verify(nahueExperto).agregarOpinionAMuestraVotada(muestra, opinionChincheFoliada);
-		assertEquals(1, muestra.getHistorialDeOpiniones().size());
+		//verify(nahueExperto).agregarOpinionAMuestraVotadaPorExperto(muestra, opinionChincheFoliada);
+		assertEquals(2, muestra.getHistorialDeOpiniones().size());
 	}
 
 	@Test
 	void test_unaMuestraEsComentadaPorUnUsuarioExperto() throws Exception {
-		muestra.cerrarOpinionesParaUsuariosBasicos();
+		muestra.verificarMuestra();
 		muestra.agregarOpinion(opinionChincheFoliada, nahueExperto);
 		
 		verify(nahueExperto).agregarOpinionAMuestraVotadaPorExperto(muestra, opinionChincheFoliada);
@@ -136,7 +136,7 @@ class MuestraTest {
 	void test_unaVezQueEntranLosExpertos_LasOpinionesQueValeSonLasDeLosExpertos() throws Exception {
 		assertTrue(muestra.contieneLaOpinion(opinionVinchucaGuasayana));
 		
-		muestra.cerrarOpinionesParaUsuariosBasicos();
+		muestra.verificarMuestra();
 		muestra.agregarOpinionDeUsuario(opinionChincheFoliada, nahueExperto);
 		
 		assertFalse(muestra.contieneLaOpinion(opinionVinchucaGuasayana));
@@ -147,22 +147,21 @@ class MuestraTest {
 	void test_cuandoDosUsuariosExpertosCoincidenEnLaOpinionSobreUnaMuestraEstaQuedaVerificada() throws Exception {
 		muestra.agregarOpinionDeUsuario(opinionChincheFoliada, nahueExperto);
 		muestra.agregarOpinionDeUsuario(opinionChincheFoliada2, ximeExperto);
-		muestra.verificarMuestra();
 		
 		assertTrue(muestra.coincidenDosExpertosEnSuOpinion());
 	}
 	
 	@Test
 	void test_cuandoDosUsuariosExpertosNOCoincidenEnLaOpinionSobreUnaMuestraEstaNOQuedaVerificada() throws Exception {
-		muestra.agregarOpinionDeUsuario(opinionChincheFoliada, nahueExperto);
+		muestra.agregarOpinionDeUsuario(opinionChincheFoliada, gonzaBasico);
 		muestra.agregarOpinionDeUsuario(opinionVinchucaGuasayana2, ximeExperto);
-		muestra.cerrarOpinionesParaUsuariosBasicos();
 		
 		assertFalse(muestra.coincidenDosExpertosEnSuOpinion());
 	}
 	
 	@Test
 	void test_cuandoUnUsuarioExpertoTrataDeVotarUnaMuestraVerificadaSuOpinionNoSeAgrega() throws Exception {
+		muestra.verificarMuestra();
 		muestra.agregarOpinionDeUsuario(opinionChincheFoliada, nahueExperto);
 		muestra.agregarOpinionDeUsuario(opinionChincheFoliada2, ximeExperto);
 		muestra.verificarMuestra();
@@ -172,7 +171,7 @@ class MuestraTest {
 		
 	@Test
 	void test_cuandoUnUsuarioExpertoTrataDeVotarUnaMuestraVotadaPorExpertoQueYaHaVotadoSuOpinionNoSeAgrega() throws Exception {
-		muestra.cerrarOpinionesParaUsuariosBasicos();
+		muestra.verificarMuestra();
 		muestra.agregarOpinionDeUsuario(opinionChincheFoliada, nahueExperto);
 		
 		assertThrows(Exception.class, () -> muestra.agregarOpinion(opinionChincheFoliada2, nahueExperto));
@@ -186,13 +185,14 @@ class MuestraTest {
 	@Test
 	void test_unaMuestraTieneUnNivelDeVerificacionVotadaPorExpertoSiOpinoAlMenosUnExperto() throws Exception {
 		muestra.agregarOpinionDeUsuario(opinionChincheFoliada, usuarioExperto);
-		muestra.cerrarOpinionesParaUsuariosBasicos();
+		muestra.verificarMuestra();
 		
 		assertEquals("votada", muestra.nivelDeVerificacion());
 	}
 	
 	@Test
 	void test_unaMuestraTieneUnNivelDeVerificacionVerificadaSiDosExpertosConcidieronEnSuOpinion() throws Exception {
+		muestra.verificarMuestra();
 		muestra.agregarOpinionDeUsuario(opinionChincheFoliada, nahueExperto);
 		muestra.agregarOpinionDeUsuario(opinionChincheFoliada2, ximeExperto);
 		muestra.verificarMuestra(); 
@@ -212,8 +212,10 @@ class MuestraTest {
 	@Test
 	void test_cuandoUnaMuestraSeVerificaSeLeAvisaASusZonasDeCobertura() throws Exception {
 		muestra.agregarZonaDeCobertura(zona);
+		muestra.verificarMuestra();
 		muestra.agregarOpinionDeUsuario(opinionChincheFoliada, nahueExperto);
 		muestra.agregarOpinionDeUsuario(opinionChincheFoliada2, ximeExperto);
+		
 		muestra.verificarMuestra();
 		verify(zona, atLeastOnce()).muestraVerificada(muestra);
 		

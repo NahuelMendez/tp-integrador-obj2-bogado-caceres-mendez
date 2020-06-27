@@ -146,7 +146,7 @@ public class Muestra {
 	public String getResultadoActual() {
 		String opinionMasVotada = getOpiniones().stream()
 		    .reduce(BinaryOperator.maxBy((o1, o2) -> Collections.frequency(getOpiniones(), o1) -
-		            Collections.frequency(getOpiniones(), o2))).orElse(null);
+		            Collections.frequency(getOpiniones(), o2))).orElse("No Definido");
 		return (opinionMasVotada);
 	}	
 	
