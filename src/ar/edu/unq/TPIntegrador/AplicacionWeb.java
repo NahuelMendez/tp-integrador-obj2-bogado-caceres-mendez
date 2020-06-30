@@ -87,5 +87,11 @@ public class AplicacionWeb {
 		return listaNueva;
 	}
 
+	public void actualizarCategoriaDeUsuariosALaFecha() {
+		for (Usuario usuario: this.usuariosRegistrados) {
+			usuario.actualizarCategoria();
+		}
+	}
+
 
 }

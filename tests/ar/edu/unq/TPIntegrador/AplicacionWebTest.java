@@ -184,5 +184,18 @@ class AplicacionWebTest {
 		
 		assertEquals(zonasDeCobertura,aplicacionWeb.zonasQueSeSolapanCon(zonaDeCobertura1));
 	}
+	
+	@Test
+	void test_AplicacionWebActualizaLaCategoriaDeTodosLosUsuarios() {
+		Usuario usuario1 = mock(Usuario.class);
+		Usuario usuario2 = mock(Usuario.class);
+		
+		aplicacionWeb.registrarUsuario(usuario1);
+		aplicacionWeb.registrarUsuario(usuario2);
+		aplicacionWeb.actualizarCategoriaDeUsuariosALaFecha();
+		
+		verify(usuario1).actualizarCategoria();
+		verify(usuario2).actualizarCategoria();
+	}
 
 }
