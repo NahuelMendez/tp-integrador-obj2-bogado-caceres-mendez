@@ -92,7 +92,7 @@ class MuestraTest {
 	}
 	
 	@Test
-	void test_unaMuestraQueAgregoUnaZonaDeCoberturaLATieneEnSuListaDeZonas() {
+	void test_cuandoUnaMuestraAgregaUnaZonaDeCoberturaSeAgregaASuListaDeZonasDeCobertura() {
 		muestra.agregarZonaDeCobertura(zona);
 		
 		assertTrue(muestra.getZonasDeCobertura().contains(zona));

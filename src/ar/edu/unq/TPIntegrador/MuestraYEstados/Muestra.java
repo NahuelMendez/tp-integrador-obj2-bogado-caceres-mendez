@@ -96,28 +96,11 @@ public class Muestra {
 		this.historialDeOpiniones.put(usuario, opinionAAgregar);
 		this.actualizarFechaUltimaVotacion(opinionAAgregar);
 	}
-/*
-	public void verificarMuestra() throws Exception{
-		if(this.coincidenDosExpertosEnSuOpinion()) {  
-			this.cerrarOpinionesParaTodosLosUsuarios(); 
-			this.avisarVerificacionAZonasDeCobertura(); 
-		}
-	}
-*/
+
 	public void verificarMuestra() throws Exception {
 		this.estadoActual.actualizarEstado(this);
 	}
-	
-	/*
-	public void cerrarOpinionesParaUsuariosBasicos() {
-		this.historialDeOpiniones.clear(); 
-		this.setEstadoDeMuestra(new EstadoMuestraVotadaPorExperto());
-	}
-	//lo utilizaba estado de usuario experto! 
-	void cerrarOpinionesParaTodosLosUsuarios() {
-		this.setEstadoDeMuestra(new EstadoDeMuestraVerificada());
-	}
-	*/
+
 	public boolean contieneAlUsuario(Usuario usuario) {
 		return this.historialDeOpiniones.containsKey(usuario); 
 	}

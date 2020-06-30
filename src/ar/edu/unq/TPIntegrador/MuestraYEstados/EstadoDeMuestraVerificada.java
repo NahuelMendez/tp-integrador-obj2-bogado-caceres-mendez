@@ -19,5 +19,4 @@ public class EstadoDeMuestraVerificada implements EstadoDeMuestra {
 	public void actualizarEstado(Muestra muestra) throws Exception{
 		throw new Exception("La muestra ya ha sido verificada");
 	}
-
 }

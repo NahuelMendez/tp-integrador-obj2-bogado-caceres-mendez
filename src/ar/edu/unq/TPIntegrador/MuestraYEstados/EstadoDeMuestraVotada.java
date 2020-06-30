@@ -14,7 +14,6 @@ public class EstadoDeMuestraVotada implements EstadoDeMuestra {
 	public void agregarOpinion(Muestra muestra, Opinion opinionAAgregar, Usuario usuario) throws Exception {
 		if(!muestra.contieneAlUsuario(usuario)) {
 			muestra.agregarOpinionDeUsuario(opinionAAgregar, usuario);
-			//usuario.agregarOpinionAMuestraVotada(muestra, opinionAAgregar);
 		}
 		else {
 			throw new Exception("El usuario ya ha opinado sobre la muestra"); 
