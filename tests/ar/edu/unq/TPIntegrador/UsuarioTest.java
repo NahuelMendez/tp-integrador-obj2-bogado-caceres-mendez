@@ -54,7 +54,7 @@ class UsuarioTest {
 	}
 
 	@Test
-	void test_UnNuevoUsuarioTieneIdentificacion30120240() {
+	void test_Constructor_() {
 		String result = usuario.getIdentificacion();
 		assertEquals("30120240", result);
 	}
