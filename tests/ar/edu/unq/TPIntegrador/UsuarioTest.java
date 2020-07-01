@@ -109,13 +109,7 @@ class UsuarioTest {
 		usuario.opinarSobreMuestra(muestra, opinion);
 		verify(muestra).agregarOpinion(opinion, usuario);
 	}
-	/*
-	@Test
-	void test_UnUsuarioNuevoTieneUnEstadoDeUsuarioBasico() {
-		Class<? extends EstadoDeUsuario> result = usuario.getEstadoDeUsuario().getClass();
-		assertEquals(EstadoDeUsuarioBasico.class, result);
-	}
-	*/
+	
 	@Test
 	void test_UnUsuarioNovatoSiempreComienzaSiendoBasico() {
 		assertTrue(usuario.esUsuarioBasico());
@@ -153,43 +147,7 @@ class UsuarioTest {
 		usuarioConCondicionesDeEstadoExperto.opinarSobreMuestra(muestra, opinion);
 		verify(muestra).agregarOpinion(opinion, usuarioConCondicionesDeEstadoExperto);
 	}
-	/*
-	@Test
-	void test_UnNuevoUsuarioNovatoNoTieneOpinionesEnLosUltimos30Dias() {
-		Integer result = usuario.cantidadDeEnviosEnLosUltimos30Dias();
-		assertEquals(0, result);
-	}
 	
-	@Test
-	void test_UnUsuarioEmiteUnaOpinionYSuCantidadDeOpinionesEnLosUltimos30DiasEs1() throws Exception {
-		usuario.agregarOpinionEnviada(opinion1);
-		Integer result = usuario.cantidadDeOpinionesEnLosUltimos30Dias();
-		assertEquals(1, result);
-	}
-	
-	@Test
-	void test_UnUsuarioBasicoQueNoEnvioNingunaMuestraTiene0CantidadDeEnviosEnLosUltimos30Dias() {
-		Integer result = usuario.cantidadDeEnviosEnLosUltimos30Dias();
-		assertEquals(0, result);
-	}
-	
-	@Test
-	void test_UnUsuarioBasicoEnviaUnaMuestraYTiene1CantidadDeEnviosEnLosUltimos30Dias() {
-		usuario.enviarMuestra(muestra1);
-		Integer result = usuario.cantidadDeEnviosEnLosUltimos30Dias();
-		assertEquals(1, result);
-	}
-	
-	@Test
-	void test_UnUsuarioBasicoQueEmitioUnaOpinion2MesesAtrasTieneCantidad0DeEnviosEnLosUltimos30Dias() throws Exception {
-		LocalDate fechaAnterior = LocalDate.now().minusMonths(2);
-		Opinion opinion2MesesAtras = mock(Opinion.class);
-		when(opinion2MesesAtras.getFechaDeEmision()).thenReturn(fechaAnterior);
-		usuario.agregarOpinionEnviada(opinion2MesesAtras);
-		Integer result = usuario.cantidadDeOpinionesEnLosUltimos30Dias();
-		assertEquals(0, result);
-	}
-	*/
 	@Test
 	void test_UnUsuarioNoEsExpertoAlSerCreado() {
 		Boolean result = usuario.esUsuarioExperto();
@@ -245,24 +203,6 @@ class UsuarioTest {
 		assertFalse(usuario.esUsuarioBasico());
 	}
 	
-	/*
-	@Test
-	void test_UnUsuarioAlAgregarOpinionSobreMuestraLeEnviaElMensajeAgregarOpinionAMuestra() throws Exception {
-		usuario.agregarOpinionAMuestraVotada(muestra1, opinion);
-		verify(muestra1).agregarOpinionDeUsuario(opinion, usuario);
-	}
-	*/
-	
-	/*
-	@Test
-	void test_UnUsuarioAlAgregarUnaOpinionSobreMuestraLeEnviaElMensajeCerrarOpinionesParaTodosLosUsuariosBasicos() {
-		usuarioConCondicionesDeEstadoExperto.actualizarCategoria();
-		usuarioConCondicionesDeEstadoExperto.agregarOpinionAMuestraVotada(muestra1, opinion);
-		//verify(muestra1).cerrarOpinionesParaUsuariosBasicos();
-		verify(muestra1).agregarOpinionDeUsuario(opinion, usuarioConCondicionesDeEstadoExperto);
-	}
-	*/
-	
 	@Test
 	void test_UnUsuarioConEstadoDeUsuarioBasicoLanzaUnErrorAlAgregarUnaOpinionSobreUnaMuestraVotadaPorExperto() {
 		assertThrows(Exception.class, () -> usuario.agregarOpinionAMuestraVotadaPorExperto(muestra, opinion));
@@ -295,15 +235,4 @@ class UsuarioTest {
 		usuarioConCondicionesDeEstadoExperto.actualizarCategoria();
 		assertTrue(usuarioConCondicionesDeEstadoExperto.esUsuarioExperto());
 	}
-	/*
-	@Test
-	void test_UnUsuarioEnviaUnaMuestra2MesesAtrasDelaFechaActualYNoEstaEnSusEnviosDeLosUltimos30Dias() {
-		LocalDate fechaAnterior = LocalDate.now().minusMonths(2);
-		Muestra muestra2MesesAtras = mock(Muestra.class);
-		when(muestra2MesesAtras.getFechaDeCreacion()).thenReturn(fechaAnterior);
-		usuario.enviarMuestra(muestra2MesesAtras);
-		Integer result = usuario.cantidadDeEnviosEnLosUltimos30Dias();
-		assertEquals(0, result);
-	}
-	*/
 }

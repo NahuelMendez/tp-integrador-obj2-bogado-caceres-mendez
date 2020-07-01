@@ -13,8 +13,6 @@ public interface EstadoDeUsuario {
 
 	public abstract void actualizarCategoria(Usuario usuario);
 
-	//public abstract void agregarOpinionAMuestraVotada(Usuario usuario, Muestra muestra, Opinion opinionAAgregar);
-
 	public abstract void agregarOpinionAMuestraVotadaPorExperto(Usuario usuario, Muestra muestra,
 			Opinion opinionAAgregar) throws Exception;
 

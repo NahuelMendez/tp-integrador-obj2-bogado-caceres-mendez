@@ -118,13 +118,6 @@ public class Usuario {
 		return ChronoUnit.DAYS.between(muestra.getFechaDeCreacion(), fechaActual) <= 30;
 	}
 
-	/*
-	public void agregarOpinionAMuestraVotada(Muestra muestra, Opinion opinionAAgregar) {
-		this.estadoDeUsuario.agregarOpinionAMuestraVotada(this, muestra, opinionAAgregar);
-		
-	}
-	*/
-
 	public void agregarOpinionAMuestraVotadaPorExperto(Muestra muestra, Opinion opinionAAgregar) throws Exception {
 		this.estadoDeUsuario.agregarOpinionAMuestraVotadaPorExperto(this, muestra, opinionAAgregar);
 	}
