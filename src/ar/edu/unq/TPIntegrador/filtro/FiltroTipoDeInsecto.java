@@ -9,7 +9,7 @@ public class FiltroTipoDeInsecto extends FiltroPorString{
 	}
 
 	protected boolean datoRequeridoDeLaMuestra(Muestra muestra) {
-		return muestra.getEspecieDeVinchuca().equals(super.getCondicion());
+		return muestra.getEspecieDeVinchuca().equals(this.getCondicion());
 	}
 
 }

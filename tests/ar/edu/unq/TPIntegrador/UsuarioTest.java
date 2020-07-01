@@ -17,8 +17,8 @@ class UsuarioTest {
 	
 	private Usuario usuario;
 	private LocalDate fechaActual;
-	private FixtureUsuarioNovatoTest fixture;
-	private FixtureUsuarioNovatoParaBajarDeCategoriaTest fixture2;
+	private FixtureUsuariosTest fixtureCreadorDeUsuariosBasicos;
+	private FixtureUsuarioParaBajarDeCategoriaTest fixtureUsuarioQueBajaDeCategoria;
 	private Usuario usuarioConCondicionesDeEstadoExperto;
 	
 	@Mock private AplicacionWeb sistema;
@@ -34,11 +34,11 @@ class UsuarioTest {
 		
 		sistema = mock(AplicacionWeb.class);
 		
-		fixture = new FixtureUsuarioNovatoTest();
-		fixture2 = new FixtureUsuarioNovatoParaBajarDeCategoriaTest("23444555", sistema);
+		fixtureCreadorDeUsuariosBasicos = new FixtureUsuariosTest();
+		fixtureUsuarioQueBajaDeCategoria = new FixtureUsuarioParaBajarDeCategoriaTest("23444555", sistema);
 		
 		usuario = new Usuario("30120240", sistema);
-		usuarioConCondicionesDeEstadoExperto = fixture.nuevoUsuarioListoParaActualizarCategoria();
+		usuarioConCondicionesDeEstadoExperto = fixtureCreadorDeUsuariosBasicos.nuevoUsuarioListoParaActualizarCategoria();
 		
 		fechaActual = LocalDate.now();
 		
@@ -122,16 +122,17 @@ class UsuarioTest {
 
 	@Test
 	void test_UnUsuarioEspecialistaAlQuererActualizarSuCategoriaNoHaceNada() {
-		usuarioConCondicionesDeEstadoExperto.cambiarAUsuarioEspecialista();
-		String categoria = usuarioConCondicionesDeEstadoExperto.getClass().getSimpleName();
-		usuarioConCondicionesDeEstadoExperto.actualizarCategoria();
-		String result = usuarioConCondicionesDeEstadoExperto.getClass().getSimpleName();
-		assertEquals(categoria, result);
+		fixtureUsuarioQueBajaDeCategoria.cambiarAUsuarioEspecialista();
+		Boolean esEspecialistaAntesDeActualizar = fixtureUsuarioQueBajaDeCategoria.esUsuarioExperto();
+		fixtureUsuarioQueBajaDeCategoria.actualizarCategoria();
+		Boolean esEspecialistaDespuesDeActualizar = fixtureUsuarioQueBajaDeCategoria.esUsuarioExperto();
+		assertTrue(esEspecialistaAntesDeActualizar);
+		assertTrue(esEspecialistaDespuesDeActualizar);
 	}
 	
 	@Test
 	void test_ElEstadoDeUsuarioDeUnUsuarioConEstadoExpertoEsEstadoExperto() throws Exception {
-		Usuario usuarioExpertoNuevo = fixture.nuevoUsuarioListoParaActualizarCategoria();
+		Usuario usuarioExpertoNuevo = fixtureCreadorDeUsuariosBasicos.nuevoUsuarioListoParaActualizarCategoria();
 		usuarioExpertoNuevo.actualizarCategoria();
 		assertTrue(usuarioExpertoNuevo.esUsuarioExperto());
 	}
@@ -162,34 +163,34 @@ class UsuarioTest {
 	
 	@Test
 	void test_UnUsuarioBasicoConCondicionesParaSerExpertoTieneEstadoDeUsuarioBasico() throws Exception {
-		Usuario usuarioBasico = this.fixture.nuevoUsuarioListoParaActualizarCategoria();
+		Usuario usuarioBasico = this.fixtureCreadorDeUsuariosBasicos.nuevoUsuarioListoParaActualizarCategoria();
 		assertTrue(usuarioBasico.esUsuarioBasico());
 	}
 	
 	@Test
 	void test_UnUsuarioBasicoActualizaSuCategoriaDeUsuarioBasicoLuegoDeCumplirLosRequisitosParaSubirAExperto() throws Exception {
-		Usuario usuarioNuevoExperto = this.fixture.nuevoUsuarioListoParaActualizarCategoria();
+		Usuario usuarioNuevoExperto = this.fixtureCreadorDeUsuariosBasicos.nuevoUsuarioListoParaActualizarCategoria();
 		usuarioNuevoExperto.actualizarCategoria();
 		assertTrue(usuarioNuevoExperto.esUsuarioExperto());
 	}
 	
 	@Test
 	void test_UnUsuarioBasicoTieneRevisionesNecesariasPeroEnviosInsuficientesYNoCambiaDeCategoria() throws Exception {
-		Usuario usuarioBasico = this.fixture.nuevoUsuarioBasicoQueCumpleRevisionesPeroNoEnvios();
+		Usuario usuarioBasico = this.fixtureCreadorDeUsuariosBasicos.nuevoUsuarioBasicoQueCumpleRevisionesPeroNoEnvios();
 		usuarioBasico.actualizarCategoria();
 		assertTrue(usuarioBasico.esUsuarioBasico());
 	}
 	
 	@Test
 	void test_UnUsuarioNovatoTieneEnviosNecesariosPeroRevisionesInsuficientesYNoCambiaDeCategoria() throws Exception {
-		Usuario usuarioBasico = this.fixture.nuevoUsuarioBasicoQueCumpleConEnviosPeroNoConRevisiones();
+		Usuario usuarioBasico = this.fixtureCreadorDeUsuariosBasicos.nuevoUsuarioBasicoQueCumpleConEnviosPeroNoConRevisiones();
 		usuarioBasico.actualizarCategoria();
 		assertTrue(usuarioBasico.esUsuarioBasico());
 	}
 	
 	@Test
 	void test_UnUsuarioBasicoQueTieneCategoriaExpertoBajaACategoriaBasicoPorNoCumplirLosRequisitos() {
-		Usuario usuarioNuevoBasico = this.fixture2;
+		Usuario usuarioNuevoBasico = this.fixtureUsuarioQueBajaDeCategoria;
 		Boolean estadoAnteriorEraExperto = usuarioNuevoBasico.esUsuarioExperto();
 		usuarioNuevoBasico.actualizarCategoria();
 		Boolean estadoNuevoEsBasico = usuarioNuevoBasico.esUsuarioBasico();

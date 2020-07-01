@@ -4,7 +4,7 @@ import ar.edu.unq.TPIntegrador.usuarioYEstadosDeUsuario.EstadoDeUsuario;
 import ar.edu.unq.TPIntegrador.usuarioYEstadosDeUsuario.EstadoDeUsuarioExperto;
 import ar.edu.unq.TPIntegrador.usuarioYEstadosDeUsuario.Usuario;
 
-public class FixtureUsuarioNovatoParaBajarDeCategoriaTest extends Usuario{
+public class FixtureUsuarioParaBajarDeCategoriaTest extends Usuario{
 	
 	/* 
 	 * La creacion de esta clase fue unicamente con motivo de test
@@ -13,7 +13,7 @@ public class FixtureUsuarioNovatoParaBajarDeCategoriaTest extends Usuario{
 	 * los metodos quedaron en package para usarlos solo en los test
 	*/
 
-	FixtureUsuarioNovatoParaBajarDeCategoriaTest(String identificacion, AplicacionWeb aplicacionWeb) {
+	FixtureUsuarioParaBajarDeCategoriaTest(String identificacion, AplicacionWeb aplicacionWeb) {
 		super(identificacion, aplicacionWeb);
 		this.setearEstadoDeUsuarioParaTest(new EstadoDeUsuarioExperto());
 	}
