@@ -144,18 +144,26 @@ class MuestraTest {
 
 	@Test
 	void test_cuandoDosUsuariosExpertosCoincidenEnLaOpinionSobreUnaMuestraEstaQuedaVerificada() throws Exception {
+		muestra.verificarMuestra();
 		muestra.agregarOpinionDeUsuario(opinionChincheFoliada, nahueExperto);
 		muestra.agregarOpinionDeUsuario(opinionChincheFoliada2, ximeExperto);
-		
+		muestra.verificarMuestra();
+
 		assertTrue(muestra.coincidenDosExpertosEnSuOpinion());
+		assertEquals("verificada", muestra.nivelDeVerificacion());
+		
 	}
 	
 	@Test
 	void test_cuandoDosUsuariosExpertosNOCoincidenEnLaOpinionSobreUnaMuestraEstaNOQuedaVerificada() throws Exception {
+		muestra.verificarMuestra();
 		muestra.agregarOpinionDeUsuario(opinionChincheFoliada, gonzaBasico);
 		muestra.agregarOpinionDeUsuario(opinionVinchucaGuasayana2, ximeExperto);
+		muestra.verificarMuestra();
 		
 		assertFalse(muestra.coincidenDosExpertosEnSuOpinion());
+		assertEquals("votada", muestra.nivelDeVerificacion());
+
 	}
 	
 	@Test
