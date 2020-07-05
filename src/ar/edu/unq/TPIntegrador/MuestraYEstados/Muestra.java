@@ -22,7 +22,7 @@ public class Muestra {
 	private Ubicacion ubicacion;
 	private LocalDate fechaDeCreacion;
 	private LocalDate fechaDeUltimaVotacion;
-	LinkedHashMap<Usuario, Opinion> historialDeOpiniones;
+	private LinkedHashMap<Usuario, Opinion> historialDeOpiniones;
 	private EstadoDeMuestra estadoActual;
 	private ArrayList<ZonaDeCobertura> zonasDeCobertura;
 
@@ -72,7 +72,7 @@ public class Muestra {
 		return this.historialDeOpiniones;
 	}
 
-	void setEstadoDeMuestra(EstadoDeMuestra estado){  
+	protected void setEstadoDeMuestra(EstadoDeMuestra estado){  
 		this.estadoActual = estado;
 	}
 
@@ -95,6 +95,7 @@ public class Muestra {
 	public void agregarOpinionDeUsuario(Opinion opinionAAgregar, Usuario usuario) {
 		this.historialDeOpiniones.put(usuario, opinionAAgregar);
 		this.actualizarFechaUltimaVotacion(opinionAAgregar);
+		usuario.agregarOpinionEnviada(opinionAAgregar);
 	}
 
 	public void verificarMuestra() throws Exception {
@@ -133,7 +134,7 @@ public class Muestra {
 		return (opinionMasVotada);
 	}	
 	
-	void avisarVerificacionAZonasDeCobertura() {
+	protected void avisarVerificacionAZonasDeCobertura() {
 		for(ZonaDeCobertura zona : this.zonasDeCobertura) {
 			zona.muestraVerificada(this);
 		}
